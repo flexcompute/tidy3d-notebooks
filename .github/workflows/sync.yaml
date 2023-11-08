@@ -56,15 +56,15 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'pip'
-      - run: cd ${{ github.workspace }}/docs && pip install beautifulsoup4 nbformat nbconvert pyyaml
-      - run: cd ${{ github.workspace }}/docs/source/notebooks && mkdir html && python convert.py
+      - run: cd ${{ github.workspace }} && pip install beautifulsoup4 nbformat nbconvert pyyaml
+      - run: cd ${{ github.workspace }}/notebooks && mkdir html && python convert.py
       - shell: bash
         run: |
           cd ${{ github.workspace }}
-          mkdir -p build && rsync -r ${{ github.workspace }}/docs/source/notebooks/html/ build
+          mkdir -p build && rsync -r ${{ github.workspace }}/notebooks/html/ build
           mkdir -p build/css && rsync -r build/css/ build-css
           mkdir -p build/image && rsync -r build/image/ build-image
-          mkdir -p build-source && cp docs/source/notebooks/*.ipynb build-source
+          mkdir -p build-source && cp notebooks/*.ipynb build-source
           rm -rf build/css
           rm -rf build/image
           ls -la build
