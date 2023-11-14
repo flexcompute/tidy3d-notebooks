@@ -1,14 +1,5 @@
-Tidy3D Example Library
-======================
-
-Lecture Series
---------------
-
-.. toctree::
-    :maxdepth: 1
-
-    ../fdtd101
-    ../inversedesign
+Example Library
+================
 
 Tidy3D Basics
 -------------
