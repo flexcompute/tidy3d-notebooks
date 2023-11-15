@@ -1,6 +1,8 @@
 Basics
 -------------
 
+Get started with these examples!
+
 .. toctree::
     :maxdepth: 0
 
