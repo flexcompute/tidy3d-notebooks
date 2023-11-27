@@ -6,5 +6,6 @@ Data Visualization and Postprocessing
 
     ../../VizSimulation
     ../../VizData
+    ../../XarrayTutorial
     ../../AnimationTutorial
     ../../FieldProjections

@@ -13,3 +13,4 @@ Metamaterials, Gratings, and Other Periodic Structures
     ../../GratingEfficiency
     ../../BiosensorGrating
     ../../DistributedBraggReflectorCavity
+    ../../CMOSRGBSensor
