@@ -1,8 +1,8 @@
-Symmetry and Boundary Conditions
+Boundary Conditions & Symmetry
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
     :maxdepth: 1
 
-    ../../Symmetry
     ../../BoundaryConditions
+    ../../Symmetry
