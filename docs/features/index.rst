@@ -15,3 +15,5 @@ Feature Tutorials
     scattering_matrix
     resonance
     adjoint
+    heat
+    advanced
