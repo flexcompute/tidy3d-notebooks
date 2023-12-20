@@ -119,6 +119,12 @@
     "keywords": "photonic crystal, band structure, Tidy3D, FDTD",
     "feature_image": "./img/band_structure.png"
   },
+  "BilayerSiNEdgeCoupler.ipynb": {
+    "title": "Visible Light Bi-layer SiN Edge Coupler | Flexcompute",
+    "description": "This notebook demonstrates a SiN bi-layer edge coupler design for efficient and broadband fiber-to-chip coupling in visible frequency.",
+    "keywords": "integrated photonics, silicon nitride, edge coupler, Tidy3D, FDTD",
+    "feature_image": "./img/bilayer_edge_coupler.png"
+  },
   "BilevelPSR.ipynb": {
     "title": "Broadband Polarization Rotator-splitter | Flexcompute",
     "description": "This notebook demonstrates how to model a broadband polarization rotator-splitter in Tidy3D FDTD.",
@@ -449,6 +455,12 @@
     "keywords": "ring resonator, Tidy3D, FDTD",
     "feature_image": "./img/ring_resonator_2d.png"
   },
+  "ScaleInvariantWaveguide.ipynb": {
+    "title": "Dielectric Scale-invariant Waveguide in Tidy3D | Flexcompute",
+    "description": "This notebook demonstrates how to perform mode solving for the scale-invariant waveguides as well as strip waveguides.",
+    "keywords": "waveguide, mode solver, scale-invariant, Tidy3D, FDTD",
+    "feature_image": "./img/scale_invariant_waveguide.png"
+  },
   "SelfIntersectingPolyslab.ipynb": {
     "title": "Modeling Complex Polygon Geometries in Tidy3D | Flexcompute",
     "description": "This notebook demonstrates how to model complex polygon geometries in Tidy3D for FDTD simulations.",
@@ -508,6 +520,12 @@
     "description": "This notebook demonstrates how to model a THz integrated demultiplexer/filter in Tidy3D FDTD.",
     "keywords": "THz, demultiplexer, filter, ring resonator, add-drop filter, Tidy3D, FDTD",
     "feature_image": "./img/thz_ring_resonator.png"
+  },
+  "TunableChiralMetasurface.ipynb": {
+    "title": "Tunable Chiral Metasurface Based on Phase Change Material | Flexcompute",
+    "description": "This notebook demonstrates how to model a chiral metasurface based on phase change material in Tidy3D FDTD.",
+    "keywords": "chiral, metasurface, circular dichroism, GST, phase change, Tidy3D, FDTD",
+    "feature_image": "./img/tunable_chiral_metasurface.png"
   },
   "VizData.ipynb": {
     "title": "Visualization of Simulation Data in Tidy3D | Flexcompute",
@@ -580,6 +598,30 @@
     "description": "This notebook demonstrates how to model a monolayer MoS2 waveguide in Tidy3D FDTD.",
     "keywords": "TMD, waveguide, MoS2, 2D material, Tidy3D, FDTD",
     "feature_image": "./img/MoS2_waveguide.png"
+  }
+  "HeatSolver.ipynb": {
+    "title": "Heat Solver in Tidy3D | Flexcompute",
+    "description": "This notebook demonstrates how to use Tidy3D's heat solver.",
+    "keywords": "thermo-optic, heat, Tidy3D, FDTD",
+    "feature_image": ""
+  }
+  "MetalHeaterPhaseShifter.ipynb": {
+    "title": "Modeling thermally tuned waveguide in Tidy3D | Flexcompute",
+    "description": "This notebook demonstrate how to couple heat and optic simulations in Tidy3D using thermally tuned waveguide as an example.",
+    "keywords": "waveguide, tuning, thermo-optic, heat, Tidy3D, FDTD",
+    "feature_image": ""
+  }
+  "TimeModulationTutorial.ipynb": {
+    "title": "How to apply time modulation to materials in Tidy3D FDTD | Flexcompute",
+    "description": "This notebook demonstrate how to simulation actively modulated devices such as electro-optical modulators in Tidy3D.",
+    "keywords": "active devices, electro-optical, EOM, modulators, electro-absorption, EAM, Tidy3D, FDTD",
+    "feature_image": ""
+  }
+  "ThermallyTunedRingResonator.ipynb": {
+    "title": "Modeling thermo-optic phase-shift in a ring resonator using Tidy3D | Flexcompute",
+    "description": "This notebook investigates how temperature distribution affects the response of a ring resonator using Tidy3D thermal and optic solvers.",
+    "keywords": "ring resonator, waveguide, phase-shifter, thermo-optic, heat, Tidy3D, FDTD",
+    "feature_image": ""
   }
 
 }
