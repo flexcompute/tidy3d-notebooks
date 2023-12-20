@@ -30,3 +30,5 @@ Photonic Integrated Circuit Components
     ../../ParticleSwarmOptimizedPBS
     ../../BullseyeCavityPSO
     ../../PlasmonicWaveguideCO2Sensor
+    ../../BilayerSiNEdgeCoupler
+    ../../ScaleInvariantWaveguide

@@ -7,6 +7,7 @@ Metamaterials, Gratings, and Other Periodic Structures
     ../../DielectricMetasurfaceAbsorber
     ../../GradientMetasurfaceReflector
     ../../GrapheneMetamaterial
+    ../../TunableChiralMetasurface
     ../../MicrowaveFrequencySelectiveSurface
     ../../HighQSi
     ../../HighQGe
