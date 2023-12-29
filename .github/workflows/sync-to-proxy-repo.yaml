@@ -50,9 +50,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - run: |
-          cp -r docs/ toc/
-          mv toc/index.rst toc/examples.rst
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10.x"  # Replace with your desired Python version
+      - name: Run Python script
+        run: |
+          cd ${{ github.workspace }}/docs
+          pip install --upgrade pip
+          pip install glob2  # Install the glob2 package if necessary
+          python compile_to_examples.py
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs
+          token: ${{ secrets.GH_PAT }}
+          repository-name: flexcompute/tidy3d-example-library
+          target-folder: toc
+          branch: ${{ needs.set_env.outputs.dest-branch }}
       - uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: .
