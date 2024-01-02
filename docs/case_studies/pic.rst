@@ -27,8 +27,6 @@ Photonic Integrated Circuit Components
     ../../ZeroCrossTalkTE
     ../../AdiabaticCouplerLN
     ../../90BendPolarizationSplitterRotator
-    ../../ParticleSwarmOptimizedPBS
-    ../../BullseyeCavityPSO
     ../../PlasmonicWaveguideCO2Sensor
     ../../BilayerSiNEdgeCoupler
     ../../ScaleInvariantWaveguide
