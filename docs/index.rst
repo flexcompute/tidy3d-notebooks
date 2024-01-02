@@ -1,5 +1,5 @@
-Example Library
-================
+Example Library |:notebook:|
+============================
 
 .. toctree::
     :maxdepth: 2
