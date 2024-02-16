@@ -3,14 +3,6 @@ import pathlib
 import pytest
 from testbook import testbook
 
-# # note: these libraries throw Deprecation warnings in python 3.9, so they are ignored in pytest.ini
-# import nbformat
-# from nbconvert.preprocessors import CellExecutionError
-# from nbconvert.preprocessors import ExecutePreprocessor
-
-# sys.path.append("tidy3d")
-
-# ep = ExecutePreprocessor(timeout=3000, kernel_name="python3")
 
 # Get the directory where the current script (or notebook) is located
 NOTEBOOKS_DIR = pathlib.Path(__file__).parent.parent.resolve()
