@@ -7,3 +7,4 @@ Active Photonic Integrated Circuit Components
     ../../MetalHeaterPhaseShifter
     ../../ThermallyTunedRingResonator
     ../../MachZehnderModulator
+    ../../ThermoOpticDopedModulator
