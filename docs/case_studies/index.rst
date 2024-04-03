@@ -13,3 +13,4 @@ Case Studies
     scattering_far_field
     lenses
     nanophotonics
+    fiber
