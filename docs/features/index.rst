@@ -16,4 +16,5 @@ Feature Tutorials
     resonance
     adjoint
     heat
+    eme
     advanced
