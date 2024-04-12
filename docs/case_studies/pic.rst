@@ -9,6 +9,7 @@ Passive Photonic Integrated Circuit Components
     ../../WaveguideCrossing
     ../../EulerWaveguideBend
     ../../EdgeCoupler
+    ../../EffectiveIndexApproximation
     ../../GratingCoupler
     ../../FocusedApodGC
     ../../MMI1x4
@@ -30,3 +31,4 @@ Passive Photonic Integrated Circuit Components
     ../../PlasmonicWaveguideCO2Sensor
     ../../BilayerSiNEdgeCoupler
     ../../ScaleInvariantWaveguide
+    ../../WaveguideGratingAntenna

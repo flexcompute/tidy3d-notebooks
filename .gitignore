@@ -8,6 +8,9 @@ batch*.json
 *.vtu
 !misc/unstructured_grid.vtu
 
+# Exceptions (don't ignore)
+!misc/prefab_base_sim.hdf5
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
