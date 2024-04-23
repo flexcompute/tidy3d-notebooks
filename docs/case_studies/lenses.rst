@@ -6,4 +6,5 @@ Lenses
 
     ../../OpticalLuneburgLens
     ../../Metalens
+    ../../MidIRMetalens
     ../../FresnelLens
