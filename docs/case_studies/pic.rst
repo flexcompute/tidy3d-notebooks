@@ -32,3 +32,4 @@ Passive Photonic Integrated Circuit Components
     ../../BilayerSiNEdgeCoupler
     ../../ScaleInvariantWaveguide
     ../../WaveguideGratingAntenna
+    ../../FreeFormCoupler
