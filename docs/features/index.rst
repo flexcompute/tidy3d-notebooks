@@ -18,4 +18,3 @@ Feature Tutorials
     heat
     eme
     advanced
-    microwave
