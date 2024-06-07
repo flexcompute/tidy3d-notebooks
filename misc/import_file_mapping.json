@@ -22,5 +22,6 @@
     "XarrayTutorial.ipynb": ["gaussian_beam_data.h5", "mmi_simulation_data.h5", "waveguide_mode_data.h5"],
     "TunableChiralMetasurface.ipynb": ["GST_A_nk.csv", "GST_C_nk.csv"],
     "MoS2Waveguide.ipynb": ["MoS2_nk.csv"],
-    "FreeFormCoupler.ipynb": ["chip_to_chip_coupler.stl"]
+    "FreeFormCoupler.ipynb": ["chip_to_chip_coupler.stl"],
+    "UnstructuredData.ipynb": ["unstructured_grid.vtu"],
 }

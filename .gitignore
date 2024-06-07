@@ -6,6 +6,7 @@ data/
 output/
 batch*.json
 *.vtu
+!misc/unstructured_grid.vtu
 
 # Exceptions (don't ignore)
 !misc/prefab_base_sim.hdf5
