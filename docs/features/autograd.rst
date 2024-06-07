@@ -5,6 +5,7 @@ Automatic Differentiation in Tidy3d
     :maxdepth: 1
 
     ../../InverseDesign
+    ../../Autograd0Quickstart
     ../../Autograd1Intro
     ../../Autograd2GradientChecking
     ../../Autograd3InverseDesign
