@@ -6,3 +6,4 @@ Mode Solver
 
     ../../ModeSolver
     ../../WaveguidePluginDemonstration
+    ../../BatchModeSolver
