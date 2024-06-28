@@ -34,3 +34,4 @@ Passive Photonic Integrated Circuit Components
     ../../WaveguideGratingAntenna
     ../../FreeFormCoupler
     ../../MultiplexingMMI
+    ../../TaperedWgDispersion
