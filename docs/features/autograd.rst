@@ -14,5 +14,7 @@ Automatic Differentiation in Tidy3d
     ../../Autograd6GratingCoupler
     ../../Autograd7Metalens
     ../../Autograd8WaveguideBend
-    ../../Autograd16BilayerCoupler
+    ../../Autograd9WDM
     ../../Autograd15Antenna
+    ../../Autograd16BilayerCoupler
+    ../../Autograd17BandPassFilter
