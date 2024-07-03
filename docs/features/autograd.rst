@@ -13,4 +13,4 @@ Automatic Differentiation in Tidy3d
     ../../Autograd5BoundaryGradients
     ../../Autograd6GratingCoupler
     ../../Autograd8WaveguideBend
-    ../../AutogradCoupler
+    ../../Autograd16BilayerCoupler
