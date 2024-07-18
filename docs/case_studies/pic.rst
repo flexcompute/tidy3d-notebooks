@@ -35,4 +35,3 @@ Passive Photonic Integrated Circuit Components
     ../../FreeFormCoupler
     ../../MultiplexingMMI
     ../../TaperedWgDispersion
-    ../../LNOIPolarizationSplitterRotator
