@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Verify Payload
+        run: |
+          echo "{submodule: ${{ github.repository }}, branch: ${{ github.ref_name }}}"
       - name: Trigger Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
