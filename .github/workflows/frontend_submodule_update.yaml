@@ -1,4 +1,4 @@
-name: Dispatch Request for Frontend Submodule Update
+name: request-frontend-submodule-update
 
 on:
   workflow_dispatch:
@@ -21,7 +21,7 @@ jobs:
       - name: Trigger Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
           repository: flexcompute/tidy3d
           event-type: submodule_update
           client-payload: '{"submodule": "${{ github.repository }}", "branch": "${{ github.ref_name }}"}'
