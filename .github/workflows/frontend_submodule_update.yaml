@@ -1,0 +1,24 @@
+name: Dispatch Request for Frontend Submodule Update
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - latest
+      - develop
+      - 'pre/*'
+      - 'demo/test/*'
+
+jobs:
+  notify-main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: flexcompute/tidy3d
+          event-type: submodule_update
+          client-payload: '{"submodule": "${{ github.repository }}", "branch": "${{ github.ref_name }}"}'
