@@ -36,3 +36,4 @@ Passive Photonic Integrated Circuit Components
     ../../MultiplexingMMI
     ../../TaperedWgDispersion
     ../../LNOIPolarizationSplitterRotator
+    ../../IntegratedVivaldiAntenna
