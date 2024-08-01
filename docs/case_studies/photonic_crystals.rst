@@ -7,3 +7,4 @@ Photonic Crystals
     ../../Bandstructure
     ../../OptimizedL3
     ../../BistablePCCavity
+    ../../NanobeamCavity
