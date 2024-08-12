@@ -1,5 +1,5 @@
-Automatic Differentiation in Tidy3d
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Inverse Design
+~~~~~~~~~~~~~~
 
 .. toctree::
     :maxdepth: 1
