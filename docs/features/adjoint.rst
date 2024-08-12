@@ -1,5 +1,5 @@
-Inverse Design / Adjoint Optimization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Inverse Design with the Adjoint Plugin (Deprecated)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
     :maxdepth: 1
