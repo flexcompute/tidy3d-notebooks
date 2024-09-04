@@ -18,3 +18,4 @@ Automatic Differentiation in Tidy3d
     ../../Autograd15Antenna
     ../../Autograd16BilayerCoupler
     ../../Autograd17BandPassFilter
+    ../../Autograd18PhotonicCrystal
