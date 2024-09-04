@@ -27,3 +27,4 @@ The adjoint method is an extremely powerful tool for photonics optimization, all
     ../../Autograd19ApodizedCoupler
     ../../Autograd20MetalensWaveguideTaper
     ../../Autograd21GaPLightExtractor
+    ../../Autograd22PhotonicCrystal
