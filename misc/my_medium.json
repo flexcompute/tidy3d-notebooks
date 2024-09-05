@@ -1,21 +1,25 @@
 {
+    "attrs": {},
     "name": null,
-    "frequency_range": null,
+    "frequency_range": [
+        15048764544660.518,
+        97485556621412.89
+    ],
     "allow_gain": false,
     "nonlinear_spec": null,
     "modulation_spec": null,
     "heat_spec": null,
     "type": "PoleResidue",
-    "eps_inf": 3.3946193815572663,
+    "eps_inf": 3.3946193815569723,
     "poles": [
         [
             {
-                "real": -1667817350156709.8,
-                "imag": -206849778477666.2
+                "real": -1667817350156750.5,
+                "imag": -206849778477345.28
             },
             {
-                "real": 1.0047082751084586e+16,
-                "imag": -2.307684527442218e+16
+                "real": 1.0047082751085424e+16,
+                "imag": -2.3076845274464636e+16
             }
         ]
     ]
