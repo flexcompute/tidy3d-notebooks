@@ -6,6 +6,7 @@ The following notebooks demonstrate photonic inverse design in Tidy3D using the 
 For gradient-free optimization examples, please see the global optimization section.
 
 .. toctree::
+    :class: example-notebook-toc
     :maxdepth: 1
 
     ../../Invdes

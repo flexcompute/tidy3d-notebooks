@@ -2,6 +2,7 @@ Case Studies
 ------------
 
 .. toctree::
+    :class: example-notebook-toc
     :maxdepth: 2
 
     pic

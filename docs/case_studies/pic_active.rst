@@ -5,6 +5,7 @@ Active photonic integrated circuit (PIC) components are pivotal in enabling dyna
 At the moment, Tidy3D’s heat solver can be used with the FDTD solver to model thermo-optic devices. To model electro-optic devices, a third-party semiconductor device simulator can be used and coupled to Tidy3D’s FDTD.
 
 .. toctree::
+    :class: example-notebook-toc
     :maxdepth: 1
 
     ../../MetalHeaterPhaseShifter
