@@ -4,6 +4,7 @@ Photonic design optimization represents a cutting-edge frontier in photonics eng
 For gradient-based optimization examples, please see the inverse design/ adjoint optimization section.
 
 .. toctree::
+    :class: example-notebook-toc
     :maxdepth: 1
 
     ../../ParticleSwarmOptimizedPBS

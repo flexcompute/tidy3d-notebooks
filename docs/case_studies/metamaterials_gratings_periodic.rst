@@ -5,6 +5,7 @@ Periodic structures, including metamaterials and diffractive gratings, harness t
 In addition, Tidy3D’s speed and scalability allow users to model the response of a large finite array of periodic devices, making it a more realistic simulation compared to real-world scenarios where the device size or the beam size is always finite.
 
 .. toctree::
+    :class: example-notebook-toc
     :maxdepth: 1
 
     ../../DielectricMetasurfaceAbsorber
