@@ -15,8 +15,8 @@ Feature Tutorials
     scattering_matrix
     resonance
     autograd
-    adjoint
     heat
     eme
     advanced
     microwave
+    adjoint
