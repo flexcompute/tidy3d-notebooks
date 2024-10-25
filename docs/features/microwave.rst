@@ -5,3 +5,4 @@ Microwave and RF
     :maxdepth: 1
 
     ../../CharacteristicImpedanceCalculator
+    ../../LinearLumpedElements
