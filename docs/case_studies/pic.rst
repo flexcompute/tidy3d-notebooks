@@ -40,3 +40,4 @@ Passive photonic integrated circuit (PIC) components form the backbone of many o
     ../../TaperedWgDispersion
     ../../LNOIPolarizationSplitterRotator
     ../../IntegratedVivaldiAntenna
+    ../../KerrSidebands
