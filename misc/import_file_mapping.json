@@ -7,6 +7,7 @@
     "AdjointPlugin9WDM.ipynb": ["inv_des_wdm.gds"],    
     "AdjointPlugin10YBranchLevelSet.ipynb": ["y_branch_fab.pkl", "inv_des_ybranch.gds"],
     "AdjointPlugin12LightExtractor.ipynb": ["qe_light_coupler.pkl", "inv_des_light_extractor.gds"],
+    "Autograd6GratingCoupler.ipynb": ["grating_coupler_history_autograd.pkl"],
     "CMOSRGBSensor": ["red_eps.csv", "green_eps.csv", "blue_eps.csv"],    
     "Fitting.ipynb": ["nk_data.csv"],
     "FocusedApodGC.ipynb": ["Focusing_GC.gds"],
