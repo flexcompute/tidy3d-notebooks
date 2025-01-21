@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 595.28 150">
+  <!-- Generator: Adobe Illustrator 29.2.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 116)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+      }
+
+      .st1 {
+        fill: #f15a29;
+      }
+
+      .st1, .st2, .st3, .st4, .st5 {
+        opacity: .3;
+      }
+
+      .st6, .st7 {
+        fill: #231f20;
+      }
+
+      .st2 {
+        fill: #1c75bc;
+      }
+
+      .st3 {
+        fill: #c49a6c;
+      }
+
+      .st4 {
+        fill: #39b54a;
+      }
+
+      .st7 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 12px;
+      }
+
+      .st5 {
+        fill: #662d91;
+      }
+    </style>
+  </defs>
+  <rect class="st1" x="146.54" y="66.9" width="62.7" height="45.69" rx="7.7" ry="7.7"/>
+  <rect class="st2" x="38.32" y="45.69" width="65.2" height="88.11" rx="7.7" ry="7.7"/>
+  <text class="st7" transform="translate(151.13 86.07)"><tspan x="0" y="0">directional</tspan><tspan x="5.3" y="14.4">couplers</tspan></text>
+  <g>
+    <line class="st0" x1="141.03" y1="86.15" x2="104.43" y2="67.42"/>
+    <path class="st6" d="M146.4,88.9c-2.05-2.23-4.37-5.44-5.44-8.13l-.63,5.02-3.7,3.45c2.81-.7,6.77-.7,9.78-.34Z"/>
+  </g>
+  <text class="st7" transform="translate(43.27 111.69)"><tspan x="0" y="0">waveguide</tspan><tspan x="8.2" y="14.4">spacing</tspan></text>
+  <text class="st7" transform="translate(48.72 61.62)"><tspan x="0" y="0">coupling</tspan><tspan x="5.78" y="14.4">length</tspan></text>
+  <text class="st7" transform="translate(40.17 27.74)"><tspan x="0" y="0">Monte Carlo</tspan><tspan x="-12.86" y="14.4">parameter sweep</tspan></text>
+  <g>
+    <line class="st0" x1="141.03" y1="93.28" x2="104.43" y2="112.01"/>
+    <path class="st6" d="M146.4,90.54c-3.01.36-6.96.36-9.78-.34l3.7,3.45.63,5.02c1.08-2.69,3.39-5.9,5.44-8.13Z"/>
+  </g>
+  <g>
+    <line class="st0" x1="246.99" y1="89.41" x2="210.88" y2="89.41"/>
+    <path class="st6" d="M253.02,89.41c-2.84-1.05-6.36-2.85-8.55-4.76l1.72,4.76-1.72,4.75c2.18-1.9,5.71-3.7,8.55-4.75Z"/>
+  </g>
+  <text class="st7" transform="translate(144.09 49.31)"><tspan x="0" y="0">simulate with</tspan><tspan x="17.74" y="14.4">tidy3d</tspan></text>
+  <rect class="st4" x="252.53" y="66.9" width="77.32" height="45.69" rx="7.7" ry="7.7"/>
+  <text class="st7" transform="translate(257.71 86.07)"><tspan x="0" y="0">splitting ratio</tspan><tspan x="14.96" y="14.4">dataset</tspan></text>
+  <text class="st7" transform="translate(253.2 49.39)"><tspan x="0" y="0">neural network</tspan><tspan x="18.33" y="14.4">training</tspan></text>
+  <rect class="st3" x="373.6" y="66.68" width="77.32" height="45.69" rx="7.7" ry="7.7"/>
+  <text class="st7" transform="translate(378.96 85.84)"><tspan x="0" y="0">NN surrogate</tspan><tspan x="18.37" y="14.4">solver</tspan></text>
+  <g>
+    <line class="st0" x1="367.2" y1="89.41" x2="331.09" y2="89.41"/>
+    <path class="st6" d="M373.23,89.41c-2.84-1.05-6.36-2.85-8.55-4.76l1.72,4.76-1.72,4.75c2.18-1.9,5.71-3.7,8.55-4.75Z"/>
+  </g>
+  <text class="st7" transform="translate(393.18 49.39)"><tspan x="0" y="0">coupler</tspan><tspan x="-12.89" y="14.4">optimization</tspan></text>
+  <text class="st7" transform="translate(484.16 27.74)"><tspan x="0" y="0">simulate optimal</tspan><tspan x="8.16" y="14.4">25:75 coupler</tspan></text>
+  <g>
+    <line class="st0" x1="451.29" y1="88.92" x2="487.89" y2="70.2"/>
+    <path class="st6" d="M493.26,67.45c-2.05,2.23-4.37,5.44-5.44,8.13l-.63-5.02-3.7-3.45c2.81.7,6.77.7,9.78.34Z"/>
+  </g>
+  <g>
+    <line class="st0" x1="451.29" y1="90.56" x2="487.89" y2="109.29"/>
+    <path class="st6" d="M493.26,112.04c-3.01-.36-6.96-.36-9.78.34l3.7-3.45.63-5.02c1.08,2.69,3.39,5.9,5.44,8.13Z"/>
+  </g>
+  <rect class="st5" x="493.63" y="45.69" width="65.2" height="88.11" rx="7.7" ry="7.7"/>
+  <text class="st7" transform="translate(498.58 111.69)"><tspan x="0" y="0">waveguide</tspan><tspan x="8.2" y="14.4">spacing</tspan></text>
+  <text class="st7" transform="translate(504.03 61.62)"><tspan x="0" y="0">coupling</tspan><tspan x="5.78" y="14.4">length</tspan></text>
+</svg>
