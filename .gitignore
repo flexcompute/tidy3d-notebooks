@@ -1,4 +1,5 @@
 tests/tmp/*
+_docs/*
 docs/source/notebooks/tmp/*
 *.hdf5
 *.hdf5.gz
