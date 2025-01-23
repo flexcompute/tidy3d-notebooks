@@ -7,5 +7,5 @@ Analyzing resonant frequencies in photonic cavities is a common task in electrom
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ResonanceFinder>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CavityFOM>
+    Extracting resonance information using Resonance Finder <https://www.flexcompute.com/tidy3d/examples/notebooks/ResonanceFinder>
+    Cavity quality factor, effective mode volume, and Purcell factor <https://www.flexcompute.com/tidy3d/examples/notebooks/CavityFOM>

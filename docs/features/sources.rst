@@ -7,7 +7,7 @@ Sources are a fundamental component for input power in electromagnetic simulatio
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ModalSourcesMonitors>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ModesBentAngled>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/TFSF>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CustomFieldSource>
+    Defining mode sources and monitors <https://www.flexcompute.com/tidy3d/examples/notebooks/ModalSourcesMonitors>
+    Injecting modes in bent and angled waveguides <https://www.flexcompute.com/tidy3d/examples/notebooks/ModesBentAngled>
+    Defining a total-field scattered-field (TFSF) plane wave source <https://www.flexcompute.com/tidy3d/examples/notebooks/TFSF>
+    Defining spatially-varying sources <https://www.flexcompute.com/tidy3d/examples/notebooks/CustomFieldSource>

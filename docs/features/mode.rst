@@ -7,7 +7,7 @@ Tidy3D offers convenient plugins for optical and waveguide mode analysis. With m
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ModeSolver>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/WaveguidePluginDemonstration>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/BatchModeSolver>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/RadiativeLossesModeSolver>
+    Using the mode solver for optical mode analysis <https://www.flexcompute.com/tidy3d/examples/notebooks/ModeSolver>
+    Using the waveguide plugin to analyze waveguide modes <https://www.flexcompute.com/tidy3d/examples/notebooks/WaveguidePluginDemonstration>
+    Running mode solver tasks in parallel <https://www.flexcompute.com/tidy3d/examples/notebooks/BatchModeSolver>
+    Radiative losses analysis with ModeSolver <https://www.flexcompute.com/tidy3d/examples/notebooks/RadiativeLossesModeSolver>

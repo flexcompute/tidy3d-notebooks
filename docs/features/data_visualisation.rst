@@ -7,9 +7,9 @@ Visualizing and analyzing data is crucial for validating and extracting meaningf
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/VizSimulation>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/VizData>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/XarrayTutorial>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AnimationTutorial>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/FieldProjections>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/UnstructuredData>
+    Visualizing geometries in Tidy3D <https://www.flexcompute.com/tidy3d/examples/notebooks/VizSimulation>
+    Performing visualization of simulation data <https://www.flexcompute.com/tidy3d/examples/notebooks/VizData>
+    Advanced monitor data (xarray) manipulation and visualization <https://www.flexcompute.com/tidy3d/examples/notebooks/XarrayTutorial>
+    Creating FDTD animations <https://www.flexcompute.com/tidy3d/examples/notebooks/AnimationTutorial>
+    Performing near field to far field projections <https://www.flexcompute.com/tidy3d/examples/notebooks/FieldProjections>
+    Unstructured datasets <https://www.flexcompute.com/tidy3d/examples/notebooks/UnstructuredData>

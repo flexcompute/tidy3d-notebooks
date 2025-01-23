@@ -7,11 +7,11 @@ Tidy3D natively supports the definition of various primitive geometries such as 
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GDSImport>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GDSExport>   
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/STLImport>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/SelfIntersectingPolyslab>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GeometryTransformations>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PICComponents>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PhotonicCrystalsComponents>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CreatingGeometryUsingTrimesh>
+    Importing GDS files <https://www.flexcompute.com/tidy3d/examples/notebooks/GDSImport>
+    Export to GDS file <https://www.flexcompute.com/tidy3d/examples/notebooks/GDSExport>
+    Importing STL files <https://www.flexcompute.com/tidy3d/examples/notebooks/STLImport>
+    Defining self-intersecting polygons <https://www.flexcompute.com/tidy3d/examples/notebooks/SelfIntersectingPolyslab>
+    Geometry transformations <https://www.flexcompute.com/tidy3d/examples/notebooks/GeometryTransformations>
+    Defining common integrated photonic components <https://www.flexcompute.com/tidy3d/examples/notebooks/PICComponents>
+    Defining common photonic crystal structures <https://www.flexcompute.com/tidy3d/examples/notebooks/PhotonicCrystalsComponents>
+    Defining complex geometries using trimesh <https://www.flexcompute.com/tidy3d/examples/notebooks/CreatingGeometryUsingTrimesh>

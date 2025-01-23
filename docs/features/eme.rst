@@ -7,5 +7,5 @@ Eigenmode expansion (EME) is a frequency-domain method particularly suitable for
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/EMESolver>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/EMEBends>
+    EME solver <https://www.flexcompute.com/tidy3d/examples/notebooks/EMESolver>
+    Simulating bent waveguides using the EME solver <https://www.flexcompute.com/tidy3d/examples/notebooks/EMEBends>

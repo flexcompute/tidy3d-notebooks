@@ -7,9 +7,9 @@ Tidy3D supports a variety of medium types: nondispersive, dispersive, anisotropi
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Dispersion>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Fitting>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/FullyAnisotropic>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Gyrotropic>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CustomMediumTutorial>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/TimeModulationTutorial>
+    Modeling dispersive materials <https://www.flexcompute.com/tidy3d/examples/notebooks/Dispersion>
+    Fitting dispersive material models <https://www.flexcompute.com/tidy3d/examples/notebooks/Fitting>
+    Defining fully anisotropic materials <https://www.flexcompute.com/tidy3d/examples/notebooks/FullyAnisotropic>
+    Defining gyrotropic materials <https://www.flexcompute.com/tidy3d/examples/notebooks/Gyrotropic>
+    Defining spatially-varying dielectric structures <https://www.flexcompute.com/tidy3d/examples/notebooks/CustomMediumTutorial>
+    Applying time modulation to materials <https://www.flexcompute.com/tidy3d/examples/notebooks/TimeModulationTutorial>
