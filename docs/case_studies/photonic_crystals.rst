@@ -7,7 +7,7 @@ Photonic crystals utilize periodic optical nanostructures to affect the motion o
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Bandstructure>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/OptimizedL3>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/BistablePCCavity>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/NanobeamCavity>
+    Band structure calculation of a photonic crystal slab <https://www.flexcompute.com/tidy3d/examples/notebooks/Bandstructure>
+    Optimized photonic crystal L3 cavity <https://www.flexcompute.com/tidy3d/examples/notebooks/OptimizedL3>
+    Bistability in photonic crystal microcavities <https://www.flexcompute.com/tidy3d/examples/notebooks/BistablePCCavity>
+    Nanobeam cavity <https://www.flexcompute.com/tidy3d/examples/notebooks/NanobeamCavity>

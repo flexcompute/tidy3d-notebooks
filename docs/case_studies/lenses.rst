@@ -7,7 +7,7 @@ Lenses are pivotal components in many optical systems. In this section, we delve
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/OpticalLuneburgLens>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Metalens>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MidIRMetalens>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/FresnelLens>
+    3D optical Luneburg lens <https://www.flexcompute.com/tidy3d/examples/notebooks/OpticalLuneburgLens>
+    Metalens in the visible frequency range <https://www.flexcompute.com/tidy3d/examples/notebooks/Metalens>
+    Mid-IR metalens based on silicon nanopillars <https://www.flexcompute.com/tidy3d/examples/notebooks/MidIRMetalens>
+    Spherical Fresnel lens <https://www.flexcompute.com/tidy3d/examples/notebooks/FresnelLens>

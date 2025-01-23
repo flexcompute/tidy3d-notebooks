@@ -7,4 +7,4 @@ Fiber optics play a crucial role in optical communication, enabling the transmis
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AntiResonantHollowCoreFiber>
+    Anti-resonant hollow-core fiber <https://www.flexcompute.com/tidy3d/examples/notebooks/AntiResonantHollowCoreFiber>

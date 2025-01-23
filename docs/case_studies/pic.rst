@@ -7,17 +7,17 @@ Passive photonic integrated circuit (PIC) components form the backbone of many o
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/YJunction>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/WaveguideToRingCoupling>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/WaveguideCrossing>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/EulerWaveguideBend>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/EdgeCoupler>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/EffectiveIndexApproximation>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GratingCoupler>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/FocusedApodGC>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MMI1x4>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/RingResonator>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/BilevelPSR>
+    Waveguide Y junction <https://www.flexcompute.com/tidy3d/examples/notebooks/YJunction>
+    Waveguide to ring coupling <https://www.flexcompute.com/tidy3d/examples/notebooks/WaveguideToRingCoupling>
+    Waveguide crossing based on cosine tapers <https://www.flexcompute.com/tidy3d/examples/notebooks/WaveguideCrossing>
+    Euler waveguide bend <https://www.flexcompute.com/tidy3d/examples/notebooks/EulerWaveguideBend>
+    Inverse taper edge coupler <https://www.flexcompute.com/tidy3d/examples/notebooks/EdgeCoupler>
+    2D effective index approximation of 3D simulations <https://www.flexcompute.com/tidy3d/examples/notebooks/EffectiveIndexApproximation>
+    Uniform grating coupler <https://www.flexcompute.com/tidy3d/examples/notebooks/GratingCoupler>
+    Focusing apodized grating coupler <https://www.flexcompute.com/tidy3d/examples/notebooks/FocusedApodGC>
+    1x4 MMI power splitter <https://www.flexcompute.com/tidy3d/examples/notebooks/MMI1x4>
+    2D ring resonator <https://www.flexcompute.com/tidy3d/examples/notebooks/RingResonator>
+    Broadband bi-level taper polarization rotator-splitter <https://www.flexcompute.com/tidy3d/examples/notebooks/BilevelPSR>
     Test <https://www.flexcompute.com/tidy3d/examples/notebooks/WaveguideSizeConverter>
     Test <https://www.flexcompute.com/tidy3d/examples/notebooks/StripToSlotConverters>
     Test <https://www.flexcompute.com/tidy3d/examples/notebooks/BraggGratings>

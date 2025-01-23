@@ -7,5 +7,5 @@ Microwave and RF (Radio Frequency) devices are essential for communication and s
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CoupledLineBandpassFilter>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/RadarAbsorbingMetamaterial>
+    Designing and optimizing a coupled line bandpass filter <https://www.flexcompute.com/tidy3d/examples/notebooks/CoupledLineBandpassFilter>
+    Radar absorbing metamaterial <https://www.flexcompute.com/tidy3d/examples/notebooks/RadarAbsorbingMetamaterial>

@@ -8,18 +8,18 @@ In addition, Tidy3D’s speed and scalability allow users to model the response 
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/DielectricMetasurfaceAbsorber>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GradientMetasurfaceReflector>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GrapheneMetamaterial>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/TunableChiralMetasurface>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MicrowaveFrequencySelectiveSurface>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/HighQSi>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/HighQGe>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GratingEfficiency>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/BiosensorGrating>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/DistributedBraggReflectorCavity>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CMOSRGBSensor>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PlasmonicNanorodArray>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AllDielectricStructuralColor>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MIMResonator>
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/VortexMetasurface>
+    Dielectric metasurface absorber <https://www.flexcompute.com/tidy3d/examples/notebooks/DielectricMetasurfaceAbsorber>
+    Gradient metasurface reflector <https://www.flexcompute.com/tidy3d/examples/notebooks/GradientMetasurfaceReflector>
+    Graphene metamaterial absorber <https://www.flexcompute.com/tidy3d/examples/notebooks/GrapheneMetamaterial>
+    Tunable chiral metasurface based on phase change material <https://www.flexcompute.com/tidy3d/examples/notebooks/TunableChiralMetasurface>
+    Microwave frequency selective surface <https://www.flexcompute.com/tidy3d/examples/notebooks/MicrowaveFrequencySelectiveSurface>
+    High-Q silicon resonator <https://www.flexcompute.com/tidy3d/examples/notebooks/HighQSi>
+    Germanium Fano metasurface  <https://www.flexcompute.com/tidy3d/examples/notebooks/HighQGe>
+    Multilevel blazed diffraction grating <https://www.flexcompute.com/tidy3d/examples/notebooks/GratingEfficiency>
+    Biosensor grating simulation <https://www.flexcompute.com/tidy3d/examples/notebooks/BiosensorGrating>
+    Distributed Bragg reflector and cavity <https://www.flexcompute.com/tidy3d/examples/notebooks/DistributedBraggReflectorCavity>
+    CMOS RGB image sensor <https://www.flexcompute.com/tidy3d/examples/notebooks/CMOSRGBSensor>
+    Plasmonic cavity resonator consisting of a gold nanorod array <https://www.flexcompute.com/tidy3d/examples/notebooks/PlasmonicNanorodArray>
+    All-dielectric structural colors <https://www.flexcompute.com/tidy3d/examples/notebooks/AllDielectricStructuralColor>
+    MIM resonator <https://www.flexcompute.com/tidy3d/examples/notebooks/MIMResonator>
+    Vortex beam metasurface <https://www.flexcompute.com/tidy3d/examples/notebooks/VortexMetasurface>
