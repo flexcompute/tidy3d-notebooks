@@ -24,8 +24,6 @@ import re
 import subprocess
 import sys
 
-import tidy3d
-
 # import sphinxcontrib.divparams as divparams
 
 full_build = True
@@ -197,11 +195,11 @@ myst_enable_extensions = [
 nbsphinx_allow_errors = True  # Continue through Jupyter errors
 nbsphinx_execute = "never"
 project = "tidy3d"
-release = tidy3d.__version__
+release = "0.0.0"
 set_type_checking_flag = True  # Enable 'expensive' imports for sphinx_autodoc_typehints
 sitemap_url_scheme = "{lang}{version}{link}"
 sphinx_tabs_disable_css_loading = True
-source_suffix = [".rst", ".md", ".ipynb"]
+source_suffix = [".rst", ".md"]
 templates_path = [
     # "./_templates",
     # divparams.get_templates_path() # TODO FIX
