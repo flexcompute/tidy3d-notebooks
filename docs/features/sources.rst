@@ -7,7 +7,7 @@ Sources are a fundamental component for input power in electromagnetic simulatio
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../ModalSourcesMonitors
-    ../../ModesBentAngled
-    ../../TFSF
-    ../../CustomFieldSource
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ModalSourcesMonitors>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ModesBentAngled>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/TFSF>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CustomFieldSource>

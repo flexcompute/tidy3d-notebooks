@@ -7,4 +7,4 @@ The scattering matrix (S-matrix) calculation is a fundamental aspect of analyzin
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../SMatrix
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/SMatrix>

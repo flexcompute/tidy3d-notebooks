@@ -7,4 +7,4 @@ This section illustrates essential microwave simulation components, such as lump
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../CharacteristicImpedanceCalculator
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CharacteristicImpedanceCalculator>

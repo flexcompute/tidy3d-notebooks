@@ -7,8 +7,8 @@ For gradient-based optimization examples, please see the inverse design/ adjoint
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../ParticleSwarmOptimizedPBS
-    ../../BullseyeCavityPSO
-    ../../OpticalSwitchDBS
-    ../../SbendCMAES
-    ../../GeneticAlgorithmReflector
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ParticleSwarmOptimizedPBS
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/BullseyeCavityPSO
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/OpticalSwitchDBS
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/SbendCMAES
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GeneticAlgorithmReflector

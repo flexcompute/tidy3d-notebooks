@@ -7,4 +7,4 @@ This section introduces the HEAT solver, a Tidy3D feature that solves the steady
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../HeatSolver
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/HeatSolver>

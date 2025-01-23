@@ -7,11 +7,11 @@ Tidy3D natively supports the definition of various primitive geometries such as 
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../GDSImport
-    ../../GDSExport    
-    ../../STLImport
-    ../../SelfIntersectingPolyslab
-    ../../GeometryTransformations
-    ../../PICComponents
-    ../../PhotonicCrystalsComponents
-    ../../CreatingGeometryUsingTrimesh
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GDSImport>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GDSExport>   
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/STLImport>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/SelfIntersectingPolyslab>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GeometryTransformations>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PICComponents>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PhotonicCrystalsComponents>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CreatingGeometryUsingTrimesh>

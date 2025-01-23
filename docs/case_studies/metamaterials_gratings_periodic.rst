@@ -8,18 +8,18 @@ In addition, Tidy3D’s speed and scalability allow users to model the response 
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../DielectricMetasurfaceAbsorber
-    ../../GradientMetasurfaceReflector
-    ../../GrapheneMetamaterial
-    ../../TunableChiralMetasurface
-    ../../MicrowaveFrequencySelectiveSurface
-    ../../HighQSi
-    ../../HighQGe
-    ../../GratingEfficiency
-    ../../BiosensorGrating
-    ../../DistributedBraggReflectorCavity
-    ../../CMOSRGBSensor
-    ../../PlasmonicNanorodArray
-    ../../AllDielectricStructuralColor
-    ../../MIMResonator  
-    ../../VortexMetasurface
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/DielectricMetasurfaceAbsorber
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GradientMetasurfaceReflector
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GrapheneMetamaterial
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/TunableChiralMetasurface
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MicrowaveFrequencySelectiveSurface
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/HighQSi
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/HighQGe
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/GratingEfficiency
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/BiosensorGrating
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/DistributedBraggReflectorCavity
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/CMOSRGBSensor
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PlasmonicNanorodArray
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AllDielectricStructuralColor
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MIMResonator
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/VortexMetasurface

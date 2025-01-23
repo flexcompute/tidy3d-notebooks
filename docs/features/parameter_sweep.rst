@@ -7,5 +7,5 @@ Tidy3D excels at exploring a high-dimensional design space because it is able to
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../ParameterScan
-    ../../Design   
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ParameterScan>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Design>

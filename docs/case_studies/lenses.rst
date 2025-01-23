@@ -7,7 +7,7 @@ Lenses are pivotal components in many optical systems. In this section, we delve
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../OpticalLuneburgLens
-    ../../Metalens
-    ../../MidIRMetalens
-    ../../FresnelLens
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/OpticalLuneburgLens
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Metalens
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MidIRMetalens
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/FresnelLens
