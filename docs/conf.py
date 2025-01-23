@@ -76,8 +76,8 @@ copybutton_prompt_is_regexp = True
 # custom_sitemap_excludes = [r"/notebooks/"]
 # divparams_enable_postprocessing = True # TODO FIX
 exclude_patterns = [
-    "_docs/",
-    "_templates/",
+    "../_docs/",
+    "../_templates/",
     "_ext/",
     "**.ipynb_checkpoints",
     ".DS_Store",
@@ -131,23 +131,23 @@ html_baseurl = "https://docs.flexcompute.com/projects/tidy3d/"  # for sphinx-sit
 html_css_files = [
     "css/custom.css",
 ]
-html_extra_path = ["./_static/robots.txt", "./_static/"]
+html_extra_path = ["../_static/robots.txt", "../_static/"]
 html_js_files = ["js/custom-download.js"]
 htmlhelp_basename = "tidy3ddoc"
 html_show_sourcelink = True  # Remove 'view source code' from top of page (for html, not python)
 html_sourcelink_suffix = ""
 html_static_path = [
-    "./_static",
+    "../_static",
     # divparams.get_static_path() # TODO FIX
 ]
 html_theme = "sphinx_book_theme"
 html_title = "Tidy3D Electromagnetic Solver"
 html_theme_options = {
     "logo": {
-        "image_light": "./_static/img/Tidy3D-logo.svg",
-        "image_dark": "./_static/img/Tidy3D-logo-white.svg",
+        "image_light": "../_static/img/Tidy3D-logo.svg",
+        "image_dark": "../_static/img/Tidy3D-logo-white.svg",
     },
-    "path_to_docs": "docs",
+    "path_to_docs": "",
     "repository_url": "https://github.com/flexcompute/tidy3d",
     "repository_branch": "main",
     "launch_buttons": {
@@ -201,7 +201,7 @@ sitemap_url_scheme = "{lang}{version}{link}"
 sphinx_tabs_disable_css_loading = True
 source_suffix = [".rst", ".md"]
 templates_path = [
-    # "./_templates",
+    "./_templates",
     # divparams.get_templates_path() # TODO FIX
 ]
 texinfo_documents = [
