@@ -8,7 +8,7 @@ At the moment, Tidy3D’s heat solver can be used with the FDTD solver to model 
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MetalHeaterPhaseShifter
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ThermallyTunedRingResonator
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MachZehnderModulator
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ThermoOpticDopedModulator
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MetalHeaterPhaseShifter>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ThermallyTunedRingResonator>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MachZehnderModulator>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ThermoOpticDopedModulator>

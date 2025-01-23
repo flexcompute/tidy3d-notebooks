@@ -7,9 +7,9 @@ Nanophotonics, a broad field at the intersection of photonics and nanotechnology
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/NanostructuredBoronNitride
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/NonHermitianMetagratings
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AndersonLocalization
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MoS2Waveguide
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/RadiativeCoolingGlass
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MetalOxideSunscreen
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/NanostructuredBoronNitride>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/NonHermitianMetagratings>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AndersonLocalization>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MoS2Waveguide>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/RadiativeCoolingGlass>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MetalOxideSunscreen>

@@ -7,8 +7,8 @@ In this section, we explore the interaction between light and materials at the n
     :class: example-notebook-toc
     :maxdepth: 1
 
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Near2FarSphereRCS
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PlasmonicNanoparticle
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PlasmonicYagiUdaNanoantenna
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ZonePlateFieldProjection
-    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MultipoleExpansion
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Near2FarSphereRCS>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PlasmonicNanoparticle>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/PlasmonicYagiUdaNanoantenna>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/ZonePlateFieldProjection>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/MultipoleExpansion>
