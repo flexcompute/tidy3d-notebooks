@@ -9,7 +9,7 @@ For gradient-free optimization examples, please see the global optimization sect
     :class: example-notebook-toc
     :maxdepth: 1
 
-    TODO NOT IN WEBCENTER <https://www.flexcompute.com/tidy3d/examples/notebooks/Invdes/>
+    Inverse design plugin <https://www.flexcompute.com/tidy3d/examples/notebooks/InverseDesign/>
     Inverse design quickstart <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin0Quickstart>
     Jax, automatic differentiation, and adjoint optimization: basics <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin1Intro>
     Adjoint analysis of a multi-layer slab <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin2GradientChecking>
