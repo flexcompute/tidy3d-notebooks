@@ -9,8 +9,8 @@ This section provides a quick and general introduction to Tidy3D, serving as a g
     :class: example-notebook-toc
     :maxdepth: 0
 
-    ../../StartHere
-    ../../Simulation
-    ../../Primer
-    ../../WebAPI
-    ../../DivergedFDTDSimulation
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/StartHere>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Simulation>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Primer>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/WebAPI>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/DivergedFDTDSimulation>

@@ -7,4 +7,6 @@ Tidy3D grid specifications enable the efficient simulation of intricate geometri
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../AutoGrid
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AutoGrid>
+
+

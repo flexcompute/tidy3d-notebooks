@@ -9,19 +9,19 @@ For gradient-free optimization examples, please see the global optimization sect
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../Invdes
-    ../../AdjointPlugin0Quickstart
-    ../../AdjointPlugin1Intro
-    ../../AdjointPlugin2GradientChecking
-    ../../AdjointPlugin3InverseDesign
-    ../../AdjointPlugin4MultiObjective
-    ../../AdjointPlugin5BoundaryGradients
-    ../../AdjointPlugin6GratingCoupler
-    ../../AdjointPlugin7Metalens
-    ../../AdjointPlugin8WaveguideBend
-    ../../AdjointPlugin9WDM
-    ../../AdjointPlugin10YBranchLevelSet
-    ../../AdjointPlugin11CircuitMZI
-    ../../AdjointPlugin12LightExtractor
-    ../../AdjointPlugin13Metasurface
-    ../../AdjointPlugin14PreFab
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/Invdes/>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin0Quickstart>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin1Intro>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin2GradientChecking>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin3InverseDesign>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin4MultiObjective>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin5BoundaryGradients>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin6GratingCoupler>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin7Metalens>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin8WaveguideBend>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin9WDM>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin10YBranchLevelSet>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin11CircuitMZI>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin12LightExtractor>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin13Metasurface>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/AdjointPlugin14PreFab>

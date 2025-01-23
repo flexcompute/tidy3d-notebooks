@@ -7,5 +7,5 @@ In this section, we demonstrate more advanced applications of Tidy3D. For exampl
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../WaveguideBendSimulator
-    ../../SimpleModeSolverGUI
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/WaveguideBendSimulator>
+    Test <https://www.flexcompute.com/tidy3d/examples/notebooks/SimpleModeSolverGUI>
