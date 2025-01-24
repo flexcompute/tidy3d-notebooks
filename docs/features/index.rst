@@ -14,7 +14,6 @@ Feature Tutorials
     parameter_sweep
     scattering_matrix
     resonance
-    autograd
     heat
     eme
     advanced
