@@ -8,4 +8,3 @@ Eigenmode expansion (EME) is a frequency-domain method particularly suitable for
     :maxdepth: 1
 
     ../../EMESolver
-    ../../EMEBends

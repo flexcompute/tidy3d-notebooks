@@ -18,7 +18,6 @@ The adjoint method is an extremely powerful tool for photonics optimization, all
     ../../Autograd7Metalens
     ../../Autograd8WaveguideBend
     ../../Autograd9WDM
-    ../../Autograd10YBranchLevelSet
     ../../Autograd13Metasurface
     ../../Autograd12LightExtractor
     ../../Autograd15Antenna
@@ -29,4 +28,3 @@ The adjoint method is an extremely powerful tool for photonics optimization, all
     ../../Autograd20MetalensWaveguideTaper
     ../../Autograd21GaPLightExtractor
     ../../Autograd22PhotonicCrystal
-    ../../Autograd23FabricationAwareInvdes
