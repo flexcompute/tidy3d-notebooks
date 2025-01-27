@@ -16,6 +16,7 @@ Feature Tutorials
     resonance
     autograd
     heat
+    charge
     eme
     advanced
     microwave
