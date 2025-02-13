@@ -15,7 +15,6 @@ In addition, Tidy3D’s speed and scalability allow users to model the response 
     ../../MicrowaveFrequencySelectiveSurface
     ../../HighQSi
     ../../HighQGe
-    ../../GratingEfficiency
     ../../BiosensorGrating
     ../../DistributedBraggReflectorCavity
     ../../CMOSRGBSensor
