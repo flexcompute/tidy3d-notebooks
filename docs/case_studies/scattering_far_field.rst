@@ -7,8 +7,6 @@ In this section, we explore the interaction between light and materials at the n
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../Near2FarSphereRCS
-    ../../PlasmonicNanoparticle
     ../../PlasmonicYagiUdaNanoantenna
     ../../ZonePlateFieldProjection
     ../../MultipoleExpansion
