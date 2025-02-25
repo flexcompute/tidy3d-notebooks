@@ -8,3 +8,5 @@ This section illustrates essential microwave simulation components, such as lump
     :maxdepth: 1
 
     ../../CharacteristicImpedanceCalculator
+    ../../LinearLumpedElements
+    ../../AntennaCharacteristics
