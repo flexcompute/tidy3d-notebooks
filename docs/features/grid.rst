@@ -8,3 +8,4 @@ Tidy3D grid specifications enable the efficient simulation of intricate geometri
     :maxdepth: 1
 
     ../../AutoGrid
+    ../../LayerRefinement
