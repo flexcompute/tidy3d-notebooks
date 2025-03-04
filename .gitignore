@@ -145,3 +145,5 @@ dmypy.json
 .pyre/
 
 .idea
+docs/case_studies/.DS_Store
+docs/.DS_Store
