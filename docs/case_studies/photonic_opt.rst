@@ -12,3 +12,4 @@ For gradient-based optimization examples, please see the inverse design/ adjoint
     ../../OpticalSwitchDBS
     ../../SbendCMAES
     ../../GeneticAlgorithmReflector
+    ../../BayesianOptimizationYJunction
