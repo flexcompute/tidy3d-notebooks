@@ -1,0 +1,45 @@
+target-version = "py39"
+line-length = 100
+extend-include = ["*.ipynb"]
+
+[lint]
+typing-modules = ["tidy3d.components.types"]
+select = [
+    "B",      # flake8-bugbear
+    "C",      # flake8-comprehensions
+    "E",      # pycodestyle errors
+    "F",      # pyflakes
+    "I",      # isort
+    "NPY201", # numpy 2.* compatibility check
+    "UP",
+    "W",      # pycodestyle warnings
+]
+ignore = [
+    "B006",   # allow mutable defaults for notebooks
+    "B007",   # Loop control variable not used within loop body
+    "B008",   # do not perform function calls in argument defaults
+    "B028",   # stacklevel
+    "B904",
+    "B905",   # `zip()` without an explicit `strict=` parameter
+    "C408",   # Unnecessary `dict` call
+    "C417",   # allow map
+    "C901",   # too complex
+    "E402",   # module level import not at top of file
+    "E501",   # line too long (handled by formatter)
+    "E722",   # we'll allow bare excepts in notebooks
+    "E731",   # allow lambda assignment
+    "E741",   # "l" is ok as a variable name
+    "F401",   # imported but unused (common in notebooks for exploration)
+    "NPY201", # allow numpy<2 for now
+    "UP006",  # type annotation with Tuple[float] messes up pydantic
+    "UP007",  # use x | y instead of union[x,y] (does not work)
+    "UP035",
+    "UP038",
+]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true

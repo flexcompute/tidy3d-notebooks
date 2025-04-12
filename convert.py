@@ -1,18 +1,19 @@
-from subprocess import run, CalledProcessError
-from bs4 import BeautifulSoup
-import nbformat
-import yaml
-import re
 import glob
 import os
+import re
 import shutil
+from subprocess import CalledProcessError, run
+
+import nbformat
+import yaml
+from bs4 import BeautifulSoup
 from nbconvert import HTMLExporter
 
 output_dir = "./html"
 css_file_name = "example-notebook.css"
 
 
-def creat_yaml(meta, anchor={}):
+def creat_yaml(meta, anchor={}):  # noqa: B006
     data = {
         "layout": "example",
         "custom_css": "cobalt",
@@ -37,7 +38,7 @@ def creat_yaml(meta, anchor={}):
 
 
 def read_template():
-    with open(f"./_template/template.html", "r") as f:
+    with open("./_template/template.html") as f:
         html = f.read()
         return BeautifulSoup(html, "html.parser")
 
@@ -85,7 +86,7 @@ def write_css_file(style_tags, output_dir):
 def write_template(meta, file_name, create_css=False):
     html_output_file = f"{output_dir}/{file_name}.html"
     css_output_directory = f"{output_dir}/css/"
-    with open(html_output_file, "r") as html_file:
+    with open(html_output_file) as html_file:
         content = html_file.read()
 
         # Parse the HTML content using BeautifulSoup
@@ -175,7 +176,7 @@ for input_file in ipynb_files:
             result = run(cmd, shell=True, capture_output=True, text=True, check=True)
 
             if result.returncode == 0:
-                with open(input_file, "r", encoding="utf-8") as f:
+                with open(input_file, encoding="utf-8") as f:
                     nb = nbformat.read(f, as_version=4)
                     default_title = ""
                     for cell in nb.cells:
