@@ -1,0 +1,7 @@
+[codespell]
+skip = .git,*.pdf,*.png,*.jpg,*.jpeg,*.gif,*.svg,*.bmp,*.tiff,*.pyc,venv,.venv,.ipynb_checkpoints
+check-filenames = true
+quiet-level = 2
+ignore-words-list = flexcompute,tidy3d,TE,TM,te,tm,FOM,fom,Commun,Thru
+ignore-regex = [a-f0-9]{40}
+builtin = clear,rare,informal 
