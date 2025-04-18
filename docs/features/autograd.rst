@@ -7,8 +7,10 @@ The adjoint method is an extremely powerful tool for photonics optimization, all
     :class: example-notebook-toc
     :maxdepth: 1
 
-    ../../InverseDesign
     ../../Autograd0Quickstart
+    ../../Autograd0QuickstartII
+    ../../Autograd0Overview
+    ../../InverseDesign
     ../../Autograd1Intro
     ../../Autograd2GradientChecking
     ../../Autograd3InverseDesign
