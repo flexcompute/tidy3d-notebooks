@@ -21,6 +21,7 @@ Passive photonic integrated circuit (PIC) components form the backbone of many o
     ../../WaveguideSizeConverter
     ../../StripToSlotConverters
     ../../BraggGratings
+    ../../PCMBraggGratingFilter
     ../../BroadbandDirectionalCoupler
     ../../PolarizationSplitterRotator
     ../../8ChannelDemultiplexer
@@ -43,3 +44,4 @@ Passive photonic integrated circuit (PIC) components form the backbone of many o
     ../../KerrSidebands
     ../../AnisotropicMetamaterialBroadbandPBS
     ../../SWGWaveguideCrossing
+    
