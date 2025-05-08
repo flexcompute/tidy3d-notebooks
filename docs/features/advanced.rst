@@ -10,3 +10,4 @@ In this section, we demonstrate more advanced applications of Tidy3D. For exampl
     ../../WaveguideBendSimulator
     ../../SimpleModeSolverGUI
     ../../DirectionalCouplerSurrogate
+    ../../LowContrastWaveguide
