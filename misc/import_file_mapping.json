@@ -26,4 +26,5 @@
     "FreeFormCoupler.ipynb": ["chip_to_chip_coupler.stl"],
     "UnstructuredData.ipynb": ["unstructured_grid.vtu"],
     "MMIMeepBenchmark.ipynb": ["MeepMMI.txt"],
+    "Autograd13Metasurface.ipynb": ["logo.png"],
 }
