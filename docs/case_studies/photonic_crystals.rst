@@ -11,3 +11,4 @@ Photonic crystals utilize periodic optical nanostructures to affect the motion o
     ../../OptimizedL3
     ../../BistablePCCavity
     ../../NanobeamCavity
+    ../../TopoQuantumPhC
