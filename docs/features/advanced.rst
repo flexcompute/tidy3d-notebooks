@@ -11,3 +11,4 @@ In this section, we demonstrate more advanced applications of Tidy3D. For exampl
     ../../SimpleModeSolverGUI
     ../../DirectionalCouplerSurrogate
     ../../LowContrastWaveguide
+    ../../SourceNormalization
