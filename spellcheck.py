@@ -19,12 +19,11 @@ from enum import Enum
 from typing import Optional
 
 import nbformat
-from spellchecker import SpellChecker
-from pydantic import BaseModel
 from google import genai
 from google.genai import types
+from pydantic import BaseModel
+from spellchecker import SpellChecker
 from tqdm import tqdm
-
 
 CUSTOM_DICT_PATH = "custom_dictionary.json"
 
@@ -59,7 +58,43 @@ def add_words_to_custom_dictionary(new_words: set[str]):
     logging.info(f"Updated {CUSTOM_DICT_PATH} with {len(new_words)} new word(s).")
 
 
-def run_interactive_mode(notebooks: list[str], reference_words: set[str]):
+def run_manual_interactive_mode(notebooks: list[str], base_spell: SpellChecker):
+    """Runs the spell checker in interactive mode manually."""
+    for notebook in notebooks:
+        logging.info(f"Checking notebook: {notebook}")
+        texts, all_identifiers = extract_text_from_notebook(notebook)
+        misspelled_lines = find_misspelled_in_notebook_texts(texts, all_identifiers, base_spell)
+
+        if not misspelled_lines:
+            logging.info(f"No spelling errors found in {notebook}.")
+            continue
+
+        unique_misspelled = {}  # {lower_word: (original_word, context)}
+        for cell_num, line_num, source_line, words in misspelled_lines:
+            for word in words:
+                if word.lower() not in unique_misspelled:
+                    context = f"Found in Cell {cell_num}, Line {line_num}: {source_line.strip()}"
+                    unique_misspelled[word.lower()] = (word, context)
+
+        for word_lower, (original_word, context) in sorted(unique_misspelled.items()):
+            print(f"\nMisspelled word: '{original_word}'")
+            print(context)
+            answer = input(f"Add '{original_word}' to dictionary? [Y/n/q] (yes/no/quit) ").lower()
+
+            if answer.strip() == "" or answer == "y":
+                add_words_to_custom_dictionary({word_lower})
+                base_spell.word_frequency.add(word_lower)
+                print(f"Added '{word_lower}' to dictionary for this session.")
+            elif answer == "q":
+                print("Quitting interactive session.")
+                return
+            else:  # 'n'
+                print(f"Skipping '{word_lower}'.")
+
+    print("\nManual interactive session finished.")
+
+
+def run_llm_interactive_mode(notebooks: list[str], base_spell: SpellChecker):
     """Runs the spell checker in interactive mode using an LLM to make decisions."""
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
@@ -67,49 +102,34 @@ def run_interactive_mode(notebooks: list[str], reference_words: set[str]):
         sys.exit(1)
 
     client = genai.Client(api_key=api_key)
-
-    spell = SpellChecker()
-    load_custom_words(spell)
-    spell.word_frequency.load_words(reference_words)
+    model = "gemini-2.5-flash-lite-preview-06-17"
 
     for notebook in notebooks:
         logging.info(f"Checking notebook: {notebook}")
         texts, all_identifiers = extract_text_from_notebook(notebook)
-        spell.word_frequency.load_words([word.lower() for word in all_identifiers])
+        misspelled_lines = find_misspelled_in_notebook_texts(texts, all_identifiers, base_spell)
 
-        words_to_check = set()
-        words_in_parens = set()
-        for _, _, text, _ in texts:
-            if "/" in text or "\\" in text or "http" in text:
-                continue
-            words_in_parens.update(w.lower() for w in re.findall(r"\(([a-zA-Z\-']+)\)", text))
-            found_words = re.findall(r"\b[a-zA-Z-']+\b", text)
-            words_to_check.update(w.lower() for w in found_words if not w.isupper())
-
-        words_to_check -= words_in_parens
-        misspelled = spell.unknown(words_to_check)
-
-        if not misspelled:
+        if not misspelled_lines:
             logging.info(f"No spelling errors found in {notebook}.")
             continue
 
-        logging.info(f"Found {len(misspelled)} potential misspellings. Checking with LLM...")
-        for word in tqdm(sorted(misspelled), desc=f"Checking {os.path.basename(notebook)}"):
-            context_line = "No context found."
-            original_word = word
-            for cell_num, line_num, text, source_line in texts:
-                match = re.search(r"\b" + re.escape(word) + r"\b", text, re.IGNORECASE)
-                if match:
-                    original_word = match.group(0)
-                    context_line = (
-                        f"Found in Cell {cell_num}, Line {line_num}: {source_line.strip()}"
-                    )
-                    break
+        unique_misspelled = {}  # {lower_word: (original_word, context)}
+        for cell_num, line_num, source_line, words in misspelled_lines:
+            for word in words:
+                if word.lower() not in unique_misspelled:
+                    context = f"Found in Cell {cell_num}, Line {line_num}: {source_line.strip()}"
+                    unique_misspelled[word.lower()] = (word, context)
 
+        logging.info(
+            f"Found {len(unique_misspelled)} potential misspellings in {os.path.basename(notebook)}. Checking with LLM..."
+        )
+        for word_lower, (original_word, context) in tqdm(
+            sorted(unique_misspelled.items()), desc=f"Checking {os.path.basename(notebook)}"
+        ):
             prompt = f"""You are an expert spell checker. Your task is to analyze a word and determine if it's a misspelling or a valid word that should be added to a custom dictionary.
 The word to check is: "{original_word}"
 It was found in the notebook: "{os.path.basename(notebook)}"
-Here is the line of context: "{context_line}"
+Here is the line of context: "{context}"
 
 Analyze the word in its context. Consider that it might be a technical term, a variable name, a product name, or a non-English word.
 
@@ -131,38 +151,19 @@ class SpellcheckDecision(BaseModel):
 """
             try:
                 response = client.models.generate_content(
-                    model="gemini-2.5-flash-lite-preview-06-17",
+                    model=model,
                     contents=prompt,
                     config=types.GenerateContentConfig(
-                        response_mime_type="application/json",
-                        response_schema=SpellcheckDecision,
-                        safety_settings=[
-                            types.SafetySetting(
-                                category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                                threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                            ),
-                            types.SafetySetting(
-                                category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
-                                threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                            ),
-                            types.SafetySetting(
-                                category=types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                                threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                            ),
-                            types.SafetySetting(
-                                category=types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                                threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                            ),
-                        ],
+                        response_mime_type="application/json", response_schema=SpellcheckDecision
                     ),
                 )
                 decision = SpellcheckDecision.model_validate_json(response.text)
 
                 if decision.decision == Decision.ADD_TO_VOCABULARY:
-                    add_words_to_custom_dictionary({word})
-                    spell.word_frequency.add(word)
+                    add_words_to_custom_dictionary({word_lower})
+                    base_spell.word_frequency.add(word_lower)
                     logging.debug(
-                        f"LLM added '{word}' to vocabulary. Reasoning: {decision.reasoning}"
+                        f"LLM added '{word_lower}' to vocabulary. Reasoning: {decision.reasoning}"
                     )
                 elif decision.decision == Decision.IS_A_MISSPELLING:
                     logging.warning(
@@ -171,7 +172,7 @@ class SpellcheckDecision(BaseModel):
                         f"Reasoning: {decision.reasoning}"
                     )
             except Exception as e:
-                logging.error(f"Error checking word '{word}' with LLM: {e}")
+                logging.error(f"Error checking word '{word_lower}' with LLM: {e}")
 
     print("\nInteractive LLM session finished.")
 
@@ -295,21 +296,20 @@ def build_reference_word_set(reference_notebooks: list[str], threshold: int) -> 
     return reference_words
 
 
-def check_text_against_dictionary(
+def find_misspelled_in_notebook_texts(
     texts: list[tuple[int, int, str, str]],
-    code_identifiers: set[str],
-    reference_words: set[str],
-) -> list[str]:
+    all_identifiers: set[str],
+    base_spell: SpellChecker,
+) -> list[tuple[int, int, str, list[str]]]:
     """
-    Checks spelling of words from text.
-    Returns list of formatted error strings.
+    Finds misspelled words in texts from a notebook.
+    Returns a list of tuples: (cell_num, line_num, source_line, list_of_misspelled_words).
     """
-    spell = SpellChecker()
-    load_custom_words(spell)
-    spell.word_frequency.load_words([word.lower() for word in code_identifiers])
-    spell.word_frequency.load_words(reference_words)
+    notebook_spell = SpellChecker(language=None)
+    notebook_spell.word_frequency.load_words(base_spell.word_frequency.words())
+    notebook_spell.word_frequency.load_words([word.lower() for word in all_identifiers])
 
-    misspelled_lines = []
+    misspelled_lines_info = []
 
     for cell_num, line_num, text, source_line in texts:
         if "/" in text or "\\" in text or "http" in text:
@@ -322,16 +322,20 @@ def check_text_against_dictionary(
         if not words_to_check:
             continue
 
-        misspelled = spell.unknown(words_to_check)
+        # Check lowercase words, as pyspellchecker is case-insensitive
+        misspelled_lower = notebook_spell.unknown(w.lower() for w in words_to_check)
 
-        if misspelled:
-            misspelled_info = ", ".join(f"'{w}'" for w in misspelled)
-
-            misspelled_lines.append(
-                f"Cell {cell_num}, Line {line_num}: {misspelled_info}\n  > {source_line.strip()}"
+        if misspelled_lower:
+            # Find original cased words that are misspelled
+            misspelled_original_case = sorted(
+                {w for w in words_to_check if w.lower() in misspelled_lower}
             )
+            if misspelled_original_case:
+                misspelled_lines_info.append(
+                    (cell_num, line_num, source_line, misspelled_original_case)
+                )
 
-    return misspelled_lines
+    return misspelled_lines_info
 
 
 def get_relative_path(notebook: str) -> str:
@@ -339,7 +343,7 @@ def get_relative_path(notebook: str) -> str:
     return os.path.relpath(notebook, os.getcwd())
 
 
-def check_spelling(notebook: str, reference_words: set[str]) -> Optional[str]:
+def check_spelling(notebook: str, base_spell: SpellChecker) -> Optional[str]:
     """
     Check spelling in a notebook using pyspellchecker.
 
@@ -351,10 +355,22 @@ def check_spelling(notebook: str, reference_words: set[str]) -> Optional[str]:
 
     try:
         texts, all_identifiers = extract_text_from_notebook(notebook)
-        pyspell_errors = check_text_against_dictionary(texts, all_identifiers, reference_words)
-        if pyspell_errors:
-            error_details = "\n".join(pyspell_errors)
+        misspelled_lines = find_misspelled_in_notebook_texts(texts, all_identifiers, base_spell)
+
+        if not misspelled_lines:
+            return None
+
+        error_strings = []
+        for cell_num, line_num, source_line, misspelled_words in misspelled_lines:
+            misspelled_info = ", ".join(f"'{w}'" for w in misspelled_words)
+            error_strings.append(
+                f"Cell {cell_num}, Line {line_num}: {misspelled_info}\n  > {source_line.strip()}"
+            )
+
+        if error_strings:
+            error_details = "\n".join(error_strings)
             return f"**{rel_path}**:\n```\n{error_details}\n```"
+
     except Exception as e:
         logging.error(f"An unexpected error processing notebook {rel_path}", exc_info=True)
         return f"**{rel_path}**: An unexpected error with pyspellchecker:\n```\n{str(e)}\n```"
@@ -370,6 +386,11 @@ def main():
         "--interactive",
         action="store_true",
         help="Run in interactive mode to add words to the dictionary.",
+    )
+    parser.add_argument(
+        "--llm",
+        action="store_true",
+        help="Use LLM for decision making in interactive mode. Requires GEMINI_API_KEY.",
     )
     parser.add_argument(
         "--reference-notebooks",
@@ -404,8 +425,15 @@ def main():
 
     reference_words = build_reference_word_set(reference_notebooks, args.threshold)
 
+    base_spell = SpellChecker()
+    load_custom_words(base_spell)
+    base_spell.word_frequency.load_words(reference_words)
+
     if args.interactive:
-        run_interactive_mode(args.notebooks, reference_words)
+        if args.llm:
+            run_llm_interactive_mode(args.notebooks, base_spell)
+        else:
+            run_manual_interactive_mode(args.notebooks, base_spell)
         sys.exit(0)
 
     all_errors: list[str] = []
@@ -416,7 +444,7 @@ def main():
     futures = []
     with concurrent.futures.ProcessPoolExecutor() as executor:
         for notebook in args.notebooks:
-            futures.append(executor.submit(check_spelling, notebook, reference_words))
+            futures.append(executor.submit(check_spelling, notebook, base_spell))
 
         for future in concurrent.futures.as_completed(futures):
             num_files_processed += 1
