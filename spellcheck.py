@@ -94,7 +94,9 @@ def run_interactive_mode(notebooks: list[str]):
             context_line = "No context found."
             for cell_num, line_num, text, source_line in texts:
                 if re.search(r"\b" + re.escape(word) + r"\b", text, re.IGNORECASE):
-                    context_line = f"Found in Cell {cell_num}, Line {line_num}: {source_line.strip()}"
+                    context_line = (
+                        f"Found in Cell {cell_num}, Line {line_num}: {source_line.strip()}"
+                    )
                     break
 
             print(f"\nMisspelled word: '{word}'")
@@ -150,7 +152,9 @@ def extract_text_from_code(source: str) -> list[tuple[int, str]]:
     return text_nodes
 
 
-def extract_text_from_notebook(notebook_path: str) -> tuple[list[tuple[int, int, str, str]], set[str]]:
+def extract_text_from_notebook(
+    notebook_path: str,
+) -> tuple[list[tuple[int, int, str, str]], set[str]]:
     """
     Extracts markdown text, comments, and strings from a notebook.
     Also extracts all python identifiers from code cells.
@@ -175,9 +179,7 @@ def extract_text_from_notebook(notebook_path: str) -> tuple[list[tuple[int, int,
             all_identifiers.update(extract_identifiers_from_code(cell.source))
             code_texts = extract_text_from_code(cell.source)
             for line_num, text in code_texts:
-                source_line = (
-                    source_lines[line_num - 1] if line_num <= len(source_lines) else ""
-                )
+                source_line = source_lines[line_num - 1] if line_num <= len(source_lines) else ""
                 texts.append((cell_num, line_num, text, source_line))
 
     return texts, all_identifiers
@@ -202,9 +204,7 @@ def check_text_against_dictionary(
 
         words_in_parens = {w.lower() for w in re.findall(r"\(([a-zA-Z\-']+)\)", text)}
         words = re.findall(r"\b[a-zA-Z-']+\b", text)
-        words_to_check = [
-            w for w in words if w.lower() not in words_in_parens and not w.isupper()
-        ]
+        words_to_check = [w for w in words if w.lower() not in words_in_parens and not w.isupper()]
 
         if not words_to_check:
             continue
