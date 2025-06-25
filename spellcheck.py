@@ -2,71 +2,52 @@
 #
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["nbformat", "pyspellchecker", "nbstripout", "codespell"]
+# dependencies = ["nbformat", "pyspellchecker"]
 # ///
 
 import argparse
 import concurrent.futures
 import os
 import re
-import subprocess
 import sys
 import ast
-import configparser
 import io
+import logging
 import tokenize
+from collections import Counter
 from typing import Optional
 
 import nbformat
 from spellchecker import SpellChecker
 
 
-def get_ignore_words_from_config(config_file=".codespellrc") -> list[str]:
-    """Reads ignore-words-list from codespell config."""
-    config = configparser.ConfigParser()
-    try:
-        config.read(config_file)
-        if "codespell" in config and "ignore-words-list" in config["codespell"]:
-            words_str = config["codespell"]["ignore-words-list"]
-            return [word.strip().lower() for word in words_str.split(",")]
-    except Exception:
-        pass  # file not found, or parsing error
-    return []
+CUSTOM_DICT_PATH = "custom_dictionary.json"
 
 
-def add_words_to_config(new_words: set, config_file=".codespellrc"):
-    """Adds words to the ignore-words-list in the codespell config."""
-    config = configparser.ConfigParser()
-    config.read(config_file)
+def load_custom_words(spell: SpellChecker):
+    """Loads words from a custom dictionary file into the SpellChecker instance."""
+    if os.path.exists(CUSTOM_DICT_PATH):
+        spell.word_frequency.load_dictionary(CUSTOM_DICT_PATH)
 
-    if not config.has_section("codespell"):
-        config.add_section("codespell")
 
-    if config.has_option("codespell", "ignore-words-list"):
-        words_str = config.get("codespell", "ignore-words-list")
-        existing_words = {word.strip() for word in words_str.split(",") if word.strip()}
-    else:
-        existing_words = set()
+def add_words_to_custom_dictionary(new_words: set[str]):
+    """Adds words to the custom dictionary file."""
+    temp_spell = SpellChecker(language=None)
+    if os.path.exists(CUSTOM_DICT_PATH):
+        temp_spell.word_frequency.load_dictionary(CUSTOM_DICT_PATH)
 
-    word_map = {w.lower(): w for w in existing_words}
     for word in new_words:
-        # new_words are already lowercase from pyspellchecker
-        word_map[word] = word
+        temp_spell.word_frequency.add(word)
 
-    updated_words = sorted(list(word_map.values()), key=str.lower)
-    config.set("codespell", "ignore-words-list", ",".join(updated_words))
-
-    with open(config_file, "w") as f:
-        config.write(f)
-
-    print(f"\nUpdated {config_file} with {len(new_words)} new word(s).")
+    temp_spell.export(CUSTOM_DICT_PATH, gzipped=False)
+    print(f"\nUpdated {CUSTOM_DICT_PATH} with {len(new_words)} new word(s).")
 
 
-def run_interactive_mode(notebooks: list[str]):
+def run_interactive_mode(notebooks: list[str], reference_words: set[str]):
     """Runs the spell checker in interactive mode."""
-    ignore_words = get_ignore_words_from_config()
     spell = SpellChecker()
-    spell.word_frequency.load_words(ignore_words)
+    load_custom_words(spell)
+    spell.word_frequency.load_words(reference_words)
 
     for notebook in notebooks:
         print(f"\nChecking notebook: {notebook}")
@@ -104,7 +85,7 @@ def run_interactive_mode(notebooks: list[str]):
             answer = input(f"Add '{word}' to dictionary? [Y/n/q] (yes/no/quit) ").lower()
 
             if answer.strip() == "" or answer == "y":
-                add_words_to_config({word})
+                add_words_to_custom_dictionary({word})
                 spell.word_frequency.add(word)  # update current session for next notebooks
             elif answer == "q":
                 print("Quitting interactive session.")
@@ -116,21 +97,29 @@ def run_interactive_mode(notebooks: list[str]):
 
 
 def extract_identifiers_from_code(source: str) -> set[str]:
-    """Extracts all identifiers from a python code string."""
+    """Extracts and splits identifiers from a python code string."""
     identifiers = set()
+    raw_identifiers = set()
     try:
         tree = ast.parse(source)
         for node in ast.walk(tree):
             if isinstance(node, ast.Name):
-                identifiers.add(node.id)
+                raw_identifiers.add(node.id)
             elif isinstance(node, ast.Attribute):
-                identifiers.add(node.attr)
+                raw_identifiers.add(node.attr)
             elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
-                identifiers.add(node.name)
+                raw_identifiers.add(node.name)
             elif isinstance(node, ast.arg):
-                identifiers.add(node.arg)
+                raw_identifiers.add(node.arg)
     except SyntaxError:
         pass  # ignore code that can't be parsed
+
+    for identifier in raw_identifiers:
+        # Split by snake_case and camelCase
+        words = re.sub(r"_", " ", identifier)
+        words = re.sub(r"([a-z])([A-Z])", r"\1 \2", words)
+        identifiers.update(word.lower() for word in words.split() if word)
+
     return identifiers
 
 
@@ -164,7 +153,8 @@ def extract_text_from_notebook(
     """
     try:
         notebook = nbformat.read(notebook_path, as_version=4)
-    except Exception:
+    except Exception as e:
+        logging.warning(f"Could not read or parse notebook '{notebook_path}': {e}")
         return [], set()
 
     texts = []
@@ -185,16 +175,59 @@ def extract_text_from_notebook(
     return texts, all_identifiers
 
 
+def get_all_words_from_notebook(notebook_path: str) -> set[str]:
+    """Extracts all unique words from a notebook."""
+    words = set()
+    texts, identifiers = extract_text_from_notebook(notebook_path)
+    words.update(identifiers)
+
+    for _, _, text, _ in texts:
+        if "/" in text or "\\" in text or "http" in text:
+            continue
+        found_words = re.findall(r"\b[a-zA-Z-']+\b", text)
+        words.update(w.lower() for w in found_words)
+    return words
+
+
+def build_reference_word_set(reference_notebooks: list[str], threshold: int) -> set[str]:
+    """Builds a set of words that appear in at least 'threshold' reference notebooks."""
+    if not reference_notebooks or threshold <= 0:
+        return set()
+
+    logging.info(f"Building reference dictionary from {len(reference_notebooks)} notebooks...")
+
+    word_counts = Counter()
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        future_to_notebook = {
+            executor.submit(get_all_words_from_notebook, nb): nb for nb in reference_notebooks
+        }
+        for future in concurrent.futures.as_completed(future_to_notebook):
+            try:
+                words_in_notebook = future.result()
+                # Each word is counted once per notebook
+                word_counts.update(words_in_notebook)
+            except Exception as exc:
+                notebook = future_to_notebook[future]
+                logging.warning(f"Could not process reference notebook {notebook}: {exc}")
+
+    reference_words = {word for word, count in word_counts.items() if count >= threshold}
+    logging.info(f"Found {len(reference_words)} words meeting the threshold of {threshold}.")
+    return reference_words
+
+
 def check_text_against_dictionary(
-    texts: list[tuple[int, int, str, str]], ignore_words: list[str], code_identifiers: set[str]
+    texts: list[tuple[int, int, str, str]],
+    code_identifiers: set[str],
+    reference_words: set[str],
 ) -> list[str]:
     """
     Checks spelling of words from text.
     Returns list of formatted error strings.
     """
     spell = SpellChecker()
-    spell.word_frequency.load_words([word.lower() for word in ignore_words])
+    load_custom_words(spell)
     spell.word_frequency.load_words([word.lower() for word in code_identifiers])
+    spell.word_frequency.load_words(reference_words)
 
     misspelled_lines = []
 
@@ -226,86 +259,28 @@ def get_relative_path(notebook: str) -> str:
     return os.path.relpath(notebook, os.getcwd())
 
 
-def check_spelling(notebook: str) -> Optional[str]:
+def check_spelling(notebook: str, reference_words: set[str]) -> Optional[str]:
     """
-    Check spelling in a notebook using both codespell and pyspellchecker.
+    Check spelling in a notebook using pyspellchecker.
 
     Returns:
         A formatted Markdown string containing spelling errors for the notebook,
-        using a code block to show codespell's output, or None if no errors were found.
+        or None if no errors were found.
     """
     rel_path = get_relative_path(notebook)
-    all_errors = []
 
-    # codespell
     try:
-        with open(notebook, encoding="utf-8") as f:
-            content = f.read()
-
-        # nbstripout to remove outputs
-        nbstripout_proc = subprocess.run(
-            ["nbstripout"], input=content, capture_output=True, text=True, check=True
-        )
-
-        # remove image tags with base64 data
-        stripped_content = re.sub(
-            r'<img\s+src="data:image/[^"]+;base64,[^"]+"[^>]*>|<img\s+src="data:image/[^"]+;base64,[^"]+"[^/>]*/>',
-            "",
-            nbstripout_proc.stdout,
-            flags=re.DOTALL,
-        )
-
-        # remove any remaining base64 strings that might appear without proper HTML tags
-        stripped_content = re.sub(
-            r"data:image/[^;]+;base64,[A-Za-z0-9+/=]+", "", stripped_content, flags=re.DOTALL
-        )
-
-        codespell_proc = subprocess.run(
-            ["codespell", "-"],
-            input=stripped_content,
-            capture_output=True,
-            text=True,
-            check=False,  # codespell exits non-zero on errors, which is expected
-        )
-
-        # filter codespell's config file lines
-        output_lines = []
-        for line in codespell_proc.stdout.splitlines():
-            if line.strip().startswith("Used config files:") or re.match(
-                r"^\s+\d+:\s+\.codespellrc", line
-            ):
-                continue
-            output_lines.append(line.replace("-:", "Line ", 1))
-        filtered_output = "\n".join(output_lines).strip()
-        if filtered_output:
-            all_errors.append(f"**{rel_path} (codespell)**:\n```\n{filtered_output}\n```")
-    except FileNotFoundError:
-        all_errors.append(f"**{rel_path}**: Error - File not found.")
-    except subprocess.CalledProcessError as e:
-        cmd_str = " ".join(e.cmd)
-        all_errors.append(
-            f"**{rel_path}**: Error running command `{cmd_str}`:\n```\n{e.stderr}\n```"
-        )
-    except Exception as e:
-        all_errors.append(
-            f"**{rel_path}**: An unexpected error occurred with codespell:\n```\n{str(e)}\n```"
-        )
-
-    # pyspellchecker
-    try:
-        ignore_words = get_ignore_words_from_config()
         texts, all_identifiers = extract_text_from_notebook(notebook)
-        pyspell_errors = check_text_against_dictionary(texts, ignore_words, all_identifiers)
+        pyspell_errors = check_text_against_dictionary(
+            texts, all_identifiers, reference_words
+        )
         if pyspell_errors:
             error_details = "\n".join(pyspell_errors)
-            all_errors.append(f"**{rel_path} (pyspellchecker)**:\n```\n{error_details}\n```")
+            return f"**{rel_path}**:\n```\n{error_details}\n```"
     except Exception as e:
-        all_errors.append(
-            f"**{rel_path}**: An unexpected error with pyspellchecker:\n```\n{str(e)}\n```"
-        )
+        logging.error(f"An unexpected error processing notebook {rel_path}", exc_info=True)
+        return f"**{rel_path}**: An unexpected error with pyspellchecker:\n```\n{str(e)}\n```"
 
-    if all_errors:
-        return "\n\n".join(all_errors)
     return None
 
 
@@ -318,10 +293,41 @@ def main():
         action="store_true",
         help="Run in interactive mode to add words to the dictionary.",
     )
+    parser.add_argument(
+        "--reference-notebooks",
+        nargs="+",
+        default=None,
+        help="Reference notebooks to build a dictionary of common words. If not provided, all other notebooks in the current directory are used.",
+    )
+    parser.add_argument(
+        "--threshold",
+        type=int,
+        default=3,
+        help="Minimum number of occurrences in reference notebooks for a word to be ignored.",
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Enable verbose logging output."
+    )
     args = parser.parse_args()
 
+    log_level = logging.DEBUG if args.verbose else logging.INFO
+    logging.basicConfig(level=log_level, format="%(levelname)s: %(message)s")
+
+    reference_notebooks = args.reference_notebooks
+    if reference_notebooks is None:
+        logging.info(
+            "No reference notebooks provided, using all other notebooks in the current directory as reference."
+        )
+        all_notebooks_in_dir = [f for f in os.listdir(".") if f.endswith(".ipynb")]
+        notebooks_to_check_set = set(args.notebooks)
+        reference_notebooks = [
+            nb for nb in all_notebooks_in_dir if nb not in notebooks_to_check_set
+        ]
+
+    reference_words = build_reference_word_set(reference_notebooks, args.threshold)
+
     if args.interactive:
-        run_interactive_mode(args.notebooks)
+        run_interactive_mode(args.notebooks, reference_words)
         sys.exit(0)
 
     all_errors: list[str] = []
@@ -332,7 +338,7 @@ def main():
     futures = []
     with concurrent.futures.ProcessPoolExecutor() as executor:
         for notebook in args.notebooks:
-            futures.append(executor.submit(check_spelling, notebook))
+            futures.append(executor.submit(check_spelling, notebook, reference_words))
 
         for future in concurrent.futures.as_completed(futures):
             num_files_processed += 1
@@ -349,7 +355,7 @@ def main():
                     else:
                         num_files_with_errors += 1
             except Exception as exc:
-                print(f"An unexpected error occurred processing a task: {exc}", file=sys.stderr)
+                logging.error("An unexpected error occurred processing a task", exc_info=True)
                 num_files_with_processing_errors += 1
                 all_errors.append(
                     f"**Unknown File**: An unexpected error occurred during processing:\n```\n{exc}\n```"
