@@ -6,20 +6,19 @@
 # ///
 
 import argparse
+import ast
 import concurrent.futures
+import io
+import logging
 import os
 import re
 import sys
-import ast
-import io
-import logging
 import tokenize
 from collections import Counter
 from typing import Optional
 
 import nbformat
 from spellchecker import SpellChecker
-
 
 CUSTOM_DICT_PATH = "custom_dictionary.json"
 
@@ -70,7 +69,7 @@ def run_interactive_mode(notebooks: list[str], reference_words: set[str]):
             print("No spelling errors found.")
             continue
 
-        for word in sorted(list(misspelled)):
+        for word in sorted(misspelled):
             # Find first occurrence for context
             context_line = "No context found."
             for cell_num, line_num, text, source_line in texts:
@@ -271,9 +270,7 @@ def check_spelling(notebook: str, reference_words: set[str]) -> Optional[str]:
 
     try:
         texts, all_identifiers = extract_text_from_notebook(notebook)
-        pyspell_errors = check_text_against_dictionary(
-            texts, all_identifiers, reference_words
-        )
+        pyspell_errors = check_text_against_dictionary(texts, all_identifiers, reference_words)
         if pyspell_errors:
             error_details = "\n".join(pyspell_errors)
             return f"**{rel_path}**:\n```\n{error_details}\n```"
