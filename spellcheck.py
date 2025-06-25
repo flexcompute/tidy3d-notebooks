@@ -2,7 +2,7 @@
 #
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["nbformat", "pyspellchecker"]
+# dependencies = ["nbformat", "pyspellchecker", "google-genai", "pydantic", "tqdm"]
 # ///
 
 import argparse
@@ -15,12 +15,29 @@ import re
 import sys
 import tokenize
 from collections import Counter
+from enum import Enum
 from typing import Optional
 
 import nbformat
 from spellchecker import SpellChecker
+from pydantic import BaseModel
+from google import genai
+from google.genai import types
+from tqdm import tqdm
+
 
 CUSTOM_DICT_PATH = "custom_dictionary.json"
+
+
+class Decision(str, Enum):
+    ADD_TO_VOCABULARY = "add_to_vocabulary"
+    IS_A_MISSPELLING = "is_a_misspelling"
+
+
+class SpellcheckDecision(BaseModel):
+    decision: Decision
+    reasoning: str
+    corrected_word: Optional[str] = None
 
 
 def load_custom_words(spell: SpellChecker):
@@ -39,17 +56,24 @@ def add_words_to_custom_dictionary(new_words: set[str]):
         temp_spell.word_frequency.add(word)
 
     temp_spell.export(CUSTOM_DICT_PATH, gzipped=False)
-    print(f"\nUpdated {CUSTOM_DICT_PATH} with {len(new_words)} new word(s).")
+    logging.info(f"Updated {CUSTOM_DICT_PATH} with {len(new_words)} new word(s).")
 
 
 def run_interactive_mode(notebooks: list[str], reference_words: set[str]):
-    """Runs the spell checker in interactive mode."""
+    """Runs the spell checker in interactive mode using an LLM to make decisions."""
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        logging.error("GEMINI_API_KEY environment variable not set for interactive LLM mode.")
+        sys.exit(1)
+
+    client = genai.Client(api_key=api_key)
+
     spell = SpellChecker()
     load_custom_words(spell)
     spell.word_frequency.load_words(reference_words)
 
     for notebook in notebooks:
-        print(f"\nChecking notebook: {notebook}")
+        logging.info(f"Checking notebook: {notebook}")
         texts, all_identifiers = extract_text_from_notebook(notebook)
         spell.word_frequency.load_words([word.lower() for word in all_identifiers])
 
@@ -66,33 +90,90 @@ def run_interactive_mode(notebooks: list[str], reference_words: set[str]):
         misspelled = spell.unknown(words_to_check)
 
         if not misspelled:
-            print("No spelling errors found.")
+            logging.info(f"No spelling errors found in {notebook}.")
             continue
 
-        for word in sorted(misspelled):
-            # Find first occurrence for context
+        logging.info(f"Found {len(misspelled)} potential misspellings. Checking with LLM...")
+        for word in tqdm(sorted(misspelled), desc=f"Checking {os.path.basename(notebook)}"):
             context_line = "No context found."
+            original_word = word
             for cell_num, line_num, text, source_line in texts:
-                if re.search(r"\b" + re.escape(word) + r"\b", text, re.IGNORECASE):
+                match = re.search(r"\b" + re.escape(word) + r"\b", text, re.IGNORECASE)
+                if match:
+                    original_word = match.group(0)
                     context_line = (
                         f"Found in Cell {cell_num}, Line {line_num}: {source_line.strip()}"
                     )
                     break
 
-            print(f"\nMisspelled word: '{word}'")
-            print(context_line)
-            answer = input(f"Add '{word}' to dictionary? [Y/n/q] (yes/no/quit) ").lower()
+            prompt = f"""You are an expert spell checker. Your task is to analyze a word and determine if it's a misspelling or a valid word that should be added to a custom dictionary.
+The word to check is: "{original_word}"
+It was found in the notebook: "{os.path.basename(notebook)}"
+Here is the line of context: "{context_line}"
 
-            if answer.strip() == "" or answer == "y":
-                add_words_to_custom_dictionary({word})
-                spell.word_frequency.add(word)  # update current session for next notebooks
-            elif answer == "q":
-                print("Quitting interactive session.")
-                return
-            else:  # 'n'
-                print(f"Skipping '{word}'.")
+Analyze the word in its context. Consider that it might be a technical term, a variable name, a product name, or a non-English word.
 
-    print("\nInteractive session finished.")
+Based on your analysis, decide one of the following:
+1. 'add_to_vocabulary': The word is correct in this context (e.g., technical term, name, code identifier) and should be added to the dictionary.
+2. 'is_a_misspelling': The word is a misspelling.
+
+If you decide it's a misspelling, provide a correction.
+
+Provide your response in JSON format matching this Pydantic schema:
+class Decision(str, Enum):
+    ADD_TO_VOCABULARY = "add_to_vocabulary"
+    IS_A_MISSPELLING = "is_a_misspelling"
+
+class SpellcheckDecision(BaseModel):
+    decision: Decision
+    reasoning: str
+    corrected_word: Optional[str] = None
+"""
+            try:
+                response = client.models.generate_content(
+                    model="gemini-2.5-flash-lite-preview-06-17",
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        response_schema=SpellcheckDecision,
+                        safety_settings=[
+                            types.SafetySetting(
+                                category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                                threshold=types.HarmBlockThreshold.BLOCK_NONE,
+                            ),
+                            types.SafetySetting(
+                                category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
+                                threshold=types.HarmBlockThreshold.BLOCK_NONE,
+                            ),
+                            types.SafetySetting(
+                                category=types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                                threshold=types.HarmBlockThreshold.BLOCK_NONE,
+                            ),
+                            types.SafetySetting(
+                                category=types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                                threshold=types.HarmBlockThreshold.BLOCK_NONE,
+                            ),
+                        ],
+                    ),
+                )
+                decision = SpellcheckDecision.model_validate_json(response.text)
+
+                if decision.decision == Decision.ADD_TO_VOCABULARY:
+                    add_words_to_custom_dictionary({word})
+                    spell.word_frequency.add(word)
+                    logging.debug(
+                        f"LLM added '{word}' to vocabulary. Reasoning: {decision.reasoning}"
+                    )
+                elif decision.decision == Decision.IS_A_MISSPELLING:
+                    logging.warning(
+                        f"Misspelled: '{original_word}' in {notebook}. "
+                        f"Suggestion: {decision.corrected_word or 'None'}. "
+                        f"Reasoning: {decision.reasoning}"
+                    )
+            except Exception as e:
+                logging.error(f"Error checking word '{word}' with LLM: {e}")
+
+    print("\nInteractive LLM session finished.")
 
 
 def extract_identifiers_from_code(source: str) -> set[str]:
