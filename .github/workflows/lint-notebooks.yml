@@ -42,7 +42,7 @@ jobs:
         if: github.event_name == 'pull_request' && steps.changed_notebooks.outputs.any_changed == 'true'
         continue-on-error: true
         run: |
-          uvx python spellcheck.py ${{ steps.changed_notebooks.outputs.all_changed_files }} > spellcheck_output.txt || true
+          uv run spellcheck.py ${{ steps.changed_notebooks.outputs.all_changed_files }} > spellcheck_output.txt || true
 
       - name: Prepare spellcheck comment body
         id: prepare_comment
