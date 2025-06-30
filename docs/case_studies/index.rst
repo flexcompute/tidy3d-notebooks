@@ -1,5 +1,5 @@
-Case Studies
-------------
+Use Cases
+---------
 
 .. toctree::
     :class: example-notebook-toc
