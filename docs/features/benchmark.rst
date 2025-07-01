@@ -12,3 +12,4 @@ In this section, we showcase solver accuracy benchmarks. We either compare simul
     ../../Near2FarSphereRCS
     ../../PlasmonicNanoparticle
     ../../GratingEfficiency
+    ../../MMIMeepBenchmark
