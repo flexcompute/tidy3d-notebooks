@@ -11,6 +11,7 @@
     "CMOSRGBSensor": ["red_eps.csv", "green_eps.csv", "blue_eps.csv"],
     "DifferentialStripline.ipynb": ["stripline_fem_mode.csv", "stripline_fit_mode.txt", "stripline_fem_sparam_long.csv", "stripline_fit_sparams_long.txt"],
     "GroundedCPWViaFence.ipynb": ["gcpw_sain_experimental.csv", "gcpw_sain_simulated.csv"],
+    "EdgeFeedPatchAntennaBenchmark.ipynb": ["edge_feed_patch_fem.csv", "edge_feed_patch_fem_gain.csv"],
     "Fitting.ipynb": ["nk_data.csv"],
     "FocusedApodGC.ipynb": ["Focusing_GC.gds"],
     "GDSImport.ipynb": ["coupler.gds"],
