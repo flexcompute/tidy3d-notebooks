@@ -8,5 +8,4 @@ Tidy3D excels at exploring a high-dimensional design space because it is able to
     :maxdepth: 1
 
     ../../ParameterScan
-    ../../Design   
-    ../../DirectionalCoupler
+    ../../Design
