@@ -15,3 +15,4 @@ Tidy3D natively supports the definition of various primitive geometries such as 
     ../../PICComponents
     ../../PhotonicCrystalsComponents
     ../../CreatingGeometryUsingTrimesh
+    ../../GDSCreation
