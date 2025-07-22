@@ -30,4 +30,5 @@
     "UnstructuredData.ipynb": ["unstructured_grid.vtu"],
     "MMIMeepBenchmark.ipynb": ["MeepMMI.txt"],
     "Autograd13Metasurface.ipynb": ["logo.png"],
+    "DirectionalCoupler.ipynb": [ "misc/coupler.gds"]
 }
