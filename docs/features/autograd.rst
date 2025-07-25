@@ -35,3 +35,4 @@ The adjoint method is an extremely powerful tool for photonics optimization, all
     ../../Autograd24DigitalSplitter
     ../../Autograd25WaveguideCrossing.ipynb
     ../../Autograd26DiffractiveBeamSplitter
+    ../../Autograd27Smatrix
