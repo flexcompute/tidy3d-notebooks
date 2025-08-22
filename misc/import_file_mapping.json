@@ -12,7 +12,10 @@
     "DifferentialStripline.ipynb": [ "stripline_fem_mode.csv",  "stripline_fit_mode.txt",  "stripline_fem_sparam_long.csv",  "stripline_fit_sparams_long.txt"], 
     "GroundedCPWViaFence.ipynb": [ "gcpw_sain_experimental.csv",  "gcpw_sain_simulated.csv"], 
     "EdgeFeedPatchAntennaBenchmark.ipynb": [ "edge_feed_patch_fem.csv",  "edge_feed_patch_fem_gain.csv"], 
-    "HybridMicrostripCPWBandpassFilter.ipynb": [ "mccpw_fem.csv"], 
+    "HybridMicrostripCPWBandpassFilter.ipynb": [ "mccpw_fem.csv"],
+    "WPDHarmonicSuppression1.ipynb": [ "wpd-part1-fem.csv"],
+    "WPDHarmonicSuppression2.ipynb": [ "wpd-part2-fem.csv"],
+    "WPDHarmonicSuppression3.ipynb": [ "wpd-part3-fem.csv"], 
     "Fitting.ipynb": [ "nk_data.csv"], 
     "FocusedApodGC.ipynb": [ "Focusing_GC.gds"], 
     "GDSImport.ipynb": [ "coupler.gds"], 
@@ -31,6 +34,6 @@
     "UnstructuredData.ipynb": [ "unstructured_grid.vtu"], 
     "MMIMeepBenchmark.ipynb": [ "MeepMMI.txt"], 
     "Autograd13Metasurface.ipynb": [ "logo.png"], 
-    "DirectionalCoupler.ipynb": [ "misc/coupler.gds"], 
-    "MultipoleExpansion.ipynb": [ "misc/mie_electric_dipole",  "misc/mie_magnetic_dipole",  "misc/mie_electric_quadrupole",  "misc/mie_magnetic_quadrupole"]
+    "DirectionalCoupler.ipynb": [ "coupler.gds"], 
+    "MultipoleExpansion.ipynb": [ "mie_electric_dipole",  "mie_magnetic_dipole",  "mie_electric_quadrupole",  "mie_magnetic_quadrupole"]
 }
