@@ -34,6 +34,6 @@
     "UnstructuredData.ipynb": [ "unstructured_grid.vtu"], 
     "MMIMeepBenchmark.ipynb": [ "MeepMMI.txt"], 
     "Autograd13Metasurface.ipynb": [ "logo.png"], 
-    "DirectionalCoupler.ipynb": [ "misc/coupler.gds"], 
-    "MultipoleExpansion.ipynb": [ "misc/mie_electric_dipole",  "misc/mie_magnetic_dipole",  "misc/mie_electric_quadrupole",  "misc/mie_magnetic_quadrupole"]
+    "DirectionalCoupler.ipynb": [ "coupler.gds"], 
+    "MultipoleExpansion.ipynb": [ "mie_electric_dipole",  "mie_magnetic_dipole",  "mie_electric_quadrupole",  "mie_magnetic_quadrupole"]
 }
