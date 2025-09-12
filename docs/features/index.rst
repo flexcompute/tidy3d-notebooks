@@ -21,5 +21,4 @@ Feature Tutorials
     advanced
     microwave
     benchmark
-    adjoint
   

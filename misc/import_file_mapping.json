@@ -6,29 +6,32 @@
         "mmi_stl.stl",
         "optical_hybrid_stl.stl"
     ],
-    "AdjointPlugin3InverseDesign.ipynb": [
+    "AutogradPlugin3InverseDesign.ipynb": [
         "inv_des_mode_conv.gds"
     ],
-    "AdjointPlugin6GratingCoupler.ipynb": [
+    "AutogradPlugin6GratingCoupler.ipynb": [
         "invdes_gc.json",
         "inverse_designed_gc.gds"
     ],
-    "AdjointPlugin8WaveguideBend.ipynb": [
+    "AutogradPlugin8WaveguideBend.ipynb": [
         "inverse_des_wg_bend.gds"
     ],
-    "AdjointPlugin9WDM.ipynb": [
+    "AutogradPlugin9WDM.ipynb": [
         "inv_des_wdm.gds"
     ],
-    "AdjointPlugin10YBranchLevelSet.ipynb": [
+    "AutogradPlugin10YBranchLevelSet.ipynb": [
         "y_branch_fab.pkl",
         "inv_des_ybranch.gds"
     ],
-    "AdjointPlugin12LightExtractor.ipynb": [
+    "AutogradPlugin12LightExtractor.ipynb": [
         "qe_light_coupler.pkl",
         "inv_des_light_extractor.gds"
     ],
     "Autograd6GratingCoupler.ipynb": [
         "grating_coupler_history_autograd.pkl"
+    ],
+    "Autograd13Metasurface.ipynb": [
+        "logo.png"
     ],
     "DifferentialStripline.ipynb": [
         "stripline_fem_mode.csv",
@@ -135,9 +138,6 @@
     "MMIMeepBenchmark.ipynb": [
         "MeepMMI.txt"
     ],
-    "Autograd13Metasurface.ipynb": [
-        "logo.png"
-    ],
     "DirectionalCoupler.ipynb": [
         "coupler.gds"
     ],
@@ -146,13 +146,6 @@
         "mie_magnetic_dipole",
         "mie_electric_quadrupole",
         "mie_magnetic_quadrupole"
-    ],
-    "AdjointPlugin13Metasurface.ipynb": [
-        "logo.png"
-    ],
-    "AdjointPlugin14PreFab.ipynb": [
-        "prefab_base_sim.hdf5",
-        "prefab_gc.gds"
     ],
     "CMOSRGBSensor.ipynb": [
         "green_eps.csv",
