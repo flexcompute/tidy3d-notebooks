@@ -17,6 +17,7 @@ Microwave and RF (Radio Frequency) devices are essential for communication and s
     ../../GroundedCPWViaFence
     ../../EdgeFeedPatchAntennaBenchmark
     ../../HybridMicrostripCPWBandpassFilter
+    ../../MicroringRFElectrode
     ../../WPDHarmonicSuppression1
     ../../WPDHarmonicSuppression2
     ../../WPDHarmonicSuppression3

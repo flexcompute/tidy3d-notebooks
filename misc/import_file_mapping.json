@@ -15,6 +15,7 @@
     "CPWRFPhotonics2.ipynb": [ "seg_fem_sparam.csv" ], 
     "EdgeFeedPatchAntennaBenchmark.ipynb": [ "edge_feed_patch_fem.csv",  "edge_feed_patch_fem_gain.csv"], 
     "HybridMicrostripCPWBandpassFilter.ipynb": [ "mccpw_fem.csv"],
+    "MicroringRFElectrode.ipynb": [ "mrr_fem_sparam.csv", "mrr-electrode.gds"],
     "WPDHarmonicSuppression1.ipynb": [ "wpd-part1-fem.csv"],
     "WPDHarmonicSuppression2.ipynb": [ "wpd-part2-fem.csv"],
     "WPDHarmonicSuppression3.ipynb": [ "wpd-part3-fem.csv"], 
