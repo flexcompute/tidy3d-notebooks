@@ -23,3 +23,4 @@ Microwave and RF (Radio Frequency) devices are essential for communication and s
     ../../WPDHarmonicSuppression3
     ../../ThroughSiliconVia
     ../../SMAEdgeMount
+    ../../PlanarHelicalAntennaArray
