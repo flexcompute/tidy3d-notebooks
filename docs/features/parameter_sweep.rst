@@ -9,4 +9,3 @@ Tidy3D excels at exploring a high-dimensional design space because it is able to
 
     ../../ParameterScan
     ../../Design
-    ../../LedLEECalculation
