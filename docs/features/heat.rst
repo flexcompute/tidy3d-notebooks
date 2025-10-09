@@ -9,3 +9,4 @@ This section introduces the HEAT solver, a Tidy3D feature that solves the steady
 
     ../../HeatSolver
     ../../CPOHeat
+    ../../TransientThermoOpticShifter
