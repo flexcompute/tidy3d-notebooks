@@ -14,3 +14,4 @@ At the moment, Tidy3D’s heat solver can be used with the FDTD solver to model 
     ../../ThermoOpticDopedModulator
     ../../HeatDissipationSOI
     ../../TransientThermoOpticShifter
+    ../../CPOHeat
