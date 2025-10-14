@@ -16,6 +16,7 @@ Passive photonic integrated circuit (PIC) components form the backbone of many o
     ../../GratingCoupler
     ../../FocusedApodGC
     ../../MMI1x4
+    ../../MMIPowerSplitter2x2
     ../../RingResonator
     ../../BilevelPSR
     ../../WaveguideSizeConverter
