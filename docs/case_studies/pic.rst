@@ -11,6 +11,7 @@ Passive photonic integrated circuit (PIC) components form the backbone of many o
     ../../WaveguideToRingCoupling
     ../../WaveguideCrossing
     ../../EulerWaveguideBend
+    ../../DirectionalCoupler
     ../../EdgeCoupler
     ../../EffectiveIndexApproximation
     ../../GratingCoupler
@@ -46,4 +47,4 @@ Passive photonic integrated circuit (PIC) components form the backbone of many o
     ../../AnisotropicMetamaterialBroadbandPBS
     ../../SWGWaveguideCrossing
     ../../SiWaveguideTPA    
-    ../../DirectionalCoupler
+    ../../SiliconToPlasmonicCoupler
