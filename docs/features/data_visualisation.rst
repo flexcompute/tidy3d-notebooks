@@ -15,3 +15,4 @@ Visualizing and analyzing data is crucial for validating and extracting meaningf
     ../../GroupDelayCalculation
     ../../UnstructuredData
     ../../GUIDataTutorial
+    ../../FarFieldProjectionNonDecayingField
