@@ -7,4 +7,5 @@ Example Library |:books:|
     basics/index
     features/index
     case_studies/index
+    ai/index
 
