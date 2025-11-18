@@ -13,3 +13,4 @@ Tidy3D supports a variety of medium types: nondispersive, dispersive, anisotropi
     ../../Gyrotropic
     ../../CustomMediumTutorial
     ../../TimeModulationTutorial
+    ../../BeerLambert

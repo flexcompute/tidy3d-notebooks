@@ -13,4 +13,8 @@ Nanophotonics, a broad field at the intersection of photonics and nanotechnology
     ../../MoS2Waveguide
     ../../RadiativeCoolingGlass
     ../../MetalOxideSunscreen
-    ../../DisorderedPlasmonicColor
+    ../../DisorderedPlasmonicColor    
+    ../../DirectionalScatteringNanodisks
+    ../../PlasmonicPhotothermalHeating
+    ../../BlueMicroLED
+    --/../LedLEECalculation

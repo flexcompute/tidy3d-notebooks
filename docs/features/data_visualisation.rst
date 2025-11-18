@@ -12,4 +12,7 @@ Visualizing and analyzing data is crucial for validating and extracting meaningf
     ../../XarrayTutorial
     ../../AnimationTutorial
     ../../FieldProjections
+    ../../GroupDelayCalculation
     ../../UnstructuredData
+    ../../GUIDataTutorial
+    ../../FarFieldProjectionNonDecayingField

@@ -13,3 +13,7 @@ At the moment, Tidy3D’s heat solver can be used with the FDTD solver to model 
     ../../MachZehnderModulator
     ../../ThermoOpticDopedModulator
     ../../HeatDissipationSOI
+    ../../TransientThermoOpticShifter
+    ../../CPOHeat
+    ../../PhotoThermalWaveguides
+    ../../PINMachZehnder

@@ -1,0 +1,10 @@
+# Simple DRC rules for testing
+source($gdsfile)
+report('DRC results', $resultsfile)
+
+input(0, 0).width(300.nm).output("min_width", "minimum width")
+input(0, 0).space(300.nm).output("min_gap", "minimum gap")
+input(0, 0).drc(area < 10000000).output("min_area", "minimum area")
+input(0, 0).holes.drc(area < 100000).output("min_hole", "minimum hole")
+
+    
