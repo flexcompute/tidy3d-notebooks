@@ -33,6 +33,9 @@
     "Autograd13Metasurface.ipynb": [
         "logo.png"
     ],
+    "Autograd6GratingCoupler.ipynb": [
+        "grating_coupler_history_autograd.pkl"
+    ],
     "DifferentialStripline.ipynb": [
         "stripline_fem_mode.csv",
         "stripline_fit_mode.txt",
@@ -138,6 +141,9 @@
     "MMIMeepBenchmark.ipynb": [
         "MeepMMI.txt"
     ],
+    "Autograd13Metasurface.ipynb": [
+        "logo.png"
+    ],
     "DirectionalCoupler.ipynb": [
         "coupler.gds"
     ],
@@ -162,3 +168,4 @@
         "amorphous_silicon_from_paper.txt"
     ]
 }
+
