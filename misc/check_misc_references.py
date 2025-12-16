@@ -41,7 +41,7 @@ def load_import_file_mapping(misc_dir: Path) -> dict[str, list[str]]:
     if not mapping_file.exists():
         print(f"Error: Cannot find {mapping_file}")
         sys.exit(1)
-    with open(mapping_file, "r", encoding="utf-8") as f:
+    with open(mapping_file, encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -80,7 +80,7 @@ def find_misc_references(notebook_path: Path) -> set[str]:
     Returns a set of referenced file names (without misc/ prefix).
     Excludes references that appear in write method contexts.
     """
-    with open(notebook_path, "r", encoding="utf-8") as f:
+    with open(notebook_path, encoding="utf-8") as f:
         content = f.read()
 
     # ipynb files are JSON format, double quotes in strings are escaped as \"
