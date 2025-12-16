@@ -30,11 +30,6 @@
     "Autograd6GratingCoupler.ipynb": [
         "grating_coupler_history_autograd.pkl"
     ],
-    "CMOSRGBSensor": [
-        "red_eps.csv",
-        "green_eps.csv",
-        "blue_eps.csv"
-    ],
     "DifferentialStripline.ipynb": [
         "stripline_fem_mode.csv",
         "stripline_fit_mode.txt",
@@ -49,7 +44,6 @@
         "cpw_fem_mode.csv",
         "cpw_fit_mode.csv",
         "cpw_fem_sparam.csv",
-        "cpw_fit_sparam",
         "cpw_fit_sparam.csv"
     ],
     "CPWRFPhotonics2.ipynb": [
