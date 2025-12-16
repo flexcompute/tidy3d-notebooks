@@ -187,19 +187,11 @@ def update_import_file_mapping(
             # Create new entry
             import_mapping[notebook_name] = files
 
-    # Write back to file in original one-line-per-entry format
+    # Write back to file with standard JSON formatting
     mapping_file = misc_dir / "import_file_mapping.json"
     with open(mapping_file, "w", encoding="utf-8") as f:
-        f.write("{\n")
-        items = list(import_mapping.items())
-        for i, (notebook_name, files) in enumerate(items):
-            # Format: "notebook.ipynb": [ "file1.ext",  "file2.ext"]
-            files_str = ", ".join(f' "{file}"' for file in files)
-            line = f'    "{notebook_name}": [{files_str}]'
-            if i < len(items) - 1:
-                line += ","
-            f.write(line + "\n")
-        f.write("}\n")
+        json.dump(import_mapping, f, indent=4)
+        f.write("\n")
 
     print(f"\nUpdated {mapping_file}")
     print(f"Added mappings for {len(missing_mappings)} notebook(s)")
