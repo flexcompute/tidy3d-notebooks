@@ -29,6 +29,9 @@ jobs:
       - name: Run ruff lint check
         run: uvx ruff check .
 
+      - name: Check misc file references
+        run: python3 misc/check_misc_references.py
+
       - name: Get changed notebook files
         id: changed_notebooks
         if: github.event_name == 'pull_request'
