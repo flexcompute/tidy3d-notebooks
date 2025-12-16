@@ -88,7 +88,7 @@ def find_misc_references(notebook_path: Path) -> set[str]:
     # File names contain only valid characters: letters, numbers, underscores, hyphens, dots
     patterns = [
         # Match escaped quotes \"./misc/xxx\" or \"misc/xxx\"
-        r'\\\"(?:\./)?misc/([a-zA-Z0-9_\-\.]+)\\\"',
+        r"\\\"(?:\./)?misc/([a-zA-Z0-9_\-\.]+)\\\"",
         # Match regular quotes "./misc/xxx" or "misc/xxx" or './misc/xxx'
         r'["\'](?:\./)?misc/([a-zA-Z0-9_\-\.]+)["\']',
     ]
@@ -207,9 +207,7 @@ def update_import_file_mapping(
 
 def parse_args():
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(
-        description="Check misc directory references in notebooks."
-    )
+    parser = argparse.ArgumentParser(description="Check misc directory references in notebooks.")
     parser.add_argument(
         "--fix",
         action="store_true",
