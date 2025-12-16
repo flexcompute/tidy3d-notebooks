@@ -29,6 +29,12 @@ WRITE_VAR_PATTERNS = [
     "history_file_path",
 ]
 
+# File name whitelist - these are output files that should be ignored
+WRITE_FILE_WHITELIST = [
+    "my_medium.json",
+    "inv_des_diamond_light_extractor.gds",
+]
+
 
 def get_project_root() -> Path:
     """Get the project root directory (parent of misc)."""
@@ -106,6 +112,9 @@ def find_misc_references(notebook_path: Path) -> set[str]:
                 continue
             # Skip files ending with _ (likely part of string concatenation)
             if filename.endswith("_"):
+                continue
+            # Skip files in the whitelist (known output files)
+            if filename in WRITE_FILE_WHITELIST:
                 continue
             # Skip if this is in a write method context (output file, not input)
             if is_write_context(content, match.start()):
