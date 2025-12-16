@@ -50,3 +50,4 @@ Passive photonic integrated circuit (PIC) components form the backbone of many o
     ../../SWGWaveguideCrossing
     ../../SiWaveguideTPA    
     ../../SiliconToPlasmonicCoupler
+    ../../PhotonicSpinSelector
