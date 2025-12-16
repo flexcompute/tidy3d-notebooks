@@ -155,6 +155,20 @@ def check_notebook(
                 missing_mappings[notebook_name].append(ref)
 
 
+def check_mapping_keys(
+    import_mapping: dict[str, list[str]],
+    notebooks: set[str],
+    errors: list[str],
+) -> None:
+    """Check if all keys in import_file_mapping.json are existing notebook files."""
+    for notebook_name in import_mapping:
+        if notebook_name not in notebooks:
+            errors.append(
+                f"[INVALID MAPPING KEY] '{notebook_name}' in import_file_mapping.json "
+                f"does not exist as a notebook file"
+            )
+
+
 def update_import_file_mapping(
     misc_dir: Path,
     import_mapping: dict[str, list[str]],
@@ -224,11 +238,17 @@ def main():
 
     # Scan all ipynb files
     notebooks = list(root_dir.glob("*.ipynb"))
+    notebook_names = {nb.name for nb in notebooks}
     print(f"Found {len(notebooks)} notebook files")
     print("-" * 60)
 
     errors = []
     missing_mappings: dict[str, list[str]] = {}
+
+    # Check if all mapping keys are valid notebook files
+    check_mapping_keys(import_mapping, notebook_names, errors)
+
+    # Check each notebook for misc references
     for notebook_path in sorted(notebooks):
         check_notebook(notebook_path, misc_files, import_mapping, errors, missing_mappings)
 
