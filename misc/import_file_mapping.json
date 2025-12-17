@@ -6,45 +6,35 @@
         "mmi_stl.stl",
         "optical_hybrid_stl.stl"
     ],
-    "AutogradPlugin3InverseDesign.ipynb": [
-        "inv_des_mode_conv.gds"
-    ],
-    "AutogradPlugin6GratingCoupler.ipynb": [
-        "invdes_gc.json",
-        "inverse_designed_gc.gds"
-    ],
-    "AutogradPlugin8WaveguideBend.ipynb": [
-        "inverse_des_wg_bend.gds"
-    ],
-    "AutogradPlugin9WDM.ipynb": [
-        "inv_des_wdm.gds"
-    ],
-    "AutogradPlugin10YBranchLevelSet.ipynb": [
+    "Autograd10YBranchLevelSet.ipynb": [
         "y_branch_fab.pkl",
         "inv_des_ybranch.gds"
     ],
-    "AutogradPlugin12LightExtractor.ipynb": [
+    "Autograd12LightExtractor.ipynb": [
         "qe_light_coupler.pkl",
         "inv_des_light_extractor.gds"
-    ],
-    "Autograd6GratingCoupler.ipynb": [
-        "grating_coupler_history_autograd.pkl"
     ],
     "Autograd13Metasurface.ipynb": [
         "logo.png"
     ],
+    "Autograd3InverseDesign.ipynb": [
+        "inv_des_mode_conv.gds"
+    ],
     "Autograd6GratingCoupler.ipynb": [
+        "invdes_gc.json",
+        "inverse_designed_gc.gds",
         "grating_coupler_history_autograd.pkl"
     ],
-    "DifferentialStripline.ipynb": [
-        "stripline_fem_mode.csv",
-        "stripline_fit_mode.txt",
-        "stripline_fem_sparam_long.csv",
-        "stripline_fit_sparams_long.txt"
+    "Autograd8WaveguideBend.ipynb": [
+        "inverse_des_wg_bend.gds"
     ],
-    "GroundedCPWViaFence.ipynb": [
-        "gcpw_sain_experimental.csv",
-        "gcpw_sain_simulated.csv"
+    "Autograd9WDM.ipynb": [
+        "inv_des_wdm.gds"
+    ],
+    "CMOSRGBSensor.ipynb": [
+        "green_eps.csv",
+        "blue_eps.csv",
+        "red_eps.csv"
     ],
     "CPWRFPhotonics1.ipynb": [
         "cpw_fem_mode.csv",
@@ -55,28 +45,18 @@
     "CPWRFPhotonics2.ipynb": [
         "seg_fem_sparam.csv"
     ],
-    "SMAEdgeMount.ipynb": [
-        "SMA_model.stl"
+    "DifferentialStripline.ipynb": [
+        "stripline_fem_mode.csv",
+        "stripline_fit_mode.txt",
+        "stripline_fem_sparam_long.csv",
+        "stripline_fit_sparams_long.txt"
+    ],
+    "DirectionalCoupler.ipynb": [
+        "coupler.gds"
     ],
     "EdgeFeedPatchAntennaBenchmark.ipynb": [
         "edge_feed_patch_fem.csv",
         "edge_feed_patch_fem_gain.csv"
-    ],
-    "HybridMicrostripCPWBandpassFilter.ipynb": [
-        "mccpw_fem.csv"
-    ],
-    "MicroringRFElectrode.ipynb": [
-        "mrr_fem_sparam.csv",
-        "mrr-electrode.gds"
-    ],
-    "WPDHarmonicSuppression1.ipynb": [
-        "wpd-part1-fem.csv"
-    ],
-    "WPDHarmonicSuppression2.ipynb": [
-        "wpd-part2-fem.csv"
-    ],
-    "WPDHarmonicSuppression3.ipynb": [
-        "wpd-part3-fem.csv"
     ],
     "Fitting.ipynb": [
         "nk_data.csv"
@@ -84,11 +64,46 @@
     "FocusedApodGC.ipynb": [
         "Focusing_GC.gds"
     ],
-    "GDSImport.ipynb": [
-        "coupler.gds"
+    "FreeFormCoupler.ipynb": [
+        "chip_to_chip_coupler.stl"
     ],
     "GDSExport.ipynb": [
         "dc_export_gds.gds"
+    ],
+    "GDSImport.ipynb": [
+        "coupler.gds"
+    ],
+    "GroundedCPWViaFence.ipynb": [
+        "gcpw_sain_experimental.csv",
+        "gcpw_sain_simulated.csv"
+    ],
+    "HeatDissipationSOI.ipynb": [
+        "heat_dissipation_SOI.xlsx"
+    ],
+    "HybridMicrostripCPWBandpassFilter.ipynb": [
+        "mccpw_fem.csv"
+    ],
+    "KLayoutPlugin_DRCQuickstart.ipynb": [
+        "drc_runset.drc"
+    ],
+    "MMIMeepBenchmark.ipynb": [
+        "MeepMMI.txt"
+    ],
+    "MetasurfaceBIC.ipynb": [
+        "amorphous_silicon_from_paper.txt"
+    ],
+    "MicroringRFElectrode.ipynb": [
+        "mrr_fem_sparam.csv",
+        "mrr-electrode.gds"
+    ],
+    "MoS2Waveguide.ipynb": [
+        "MoS2_nk.csv"
+    ],
+    "MultipoleExpansion.ipynb": [
+        "mie_electric_dipole",
+        "mie_magnetic_dipole",
+        "mie_electric_quadrupole",
+        "mie_magnetic_quadrupole"
     ],
     "Near2FarSphereRCS.ipynb": [
         "mie_bRCS_phi0_2lambda_epsr4.txt",
@@ -108,6 +123,13 @@
     "PlasmonicYagiUdaNanoantenna.ipynb": [
         "McPeak.csv"
     ],
+    "RadiativeCoolingGlass.ipynb": [
+        "mat_SiO2.csv",
+        "mat_Al2O3.csv"
+    ],
+    "SMAEdgeMount.ipynb": [
+        "SMA_model.stl"
+    ],
     "STLImport.ipynb": [
         "box.stl",
         "box_with_hole.stl",
@@ -116,56 +138,25 @@
         "icecream_unionized.stl",
         "two_boxes.stl"
     ],
-    "RadiativeCoolingGlass.ipynb": [
-        "mat_SiO2.csv",
-        "mat_Al2O3.csv"
+    "TunableChiralMetasurface.ipynb": [
+        "GST_A_nk.csv",
+        "GST_C_nk.csv"
+    ],
+    "UnstructuredData.ipynb": [
+        "unstructured_grid.vtu"
+    ],
+    "WPDHarmonicSuppression1.ipynb": [
+        "wpd-part1-fem.csv"
+    ],
+    "WPDHarmonicSuppression2.ipynb": [
+        "wpd-part2-fem.csv"
+    ],
+    "WPDHarmonicSuppression3.ipynb": [
+        "wpd-part3-fem.csv"
     ],
     "XarrayTutorial.ipynb": [
         "gaussian_beam_data.h5",
         "mmi_simulation_data.h5",
         "waveguide_mode_data.h5"
-    ],
-    "TunableChiralMetasurface.ipynb": [
-        "GST_A_nk.csv",
-        "GST_C_nk.csv"
-    ],
-    "MoS2Waveguide.ipynb": [
-        "MoS2_nk.csv"
-    ],
-    "FreeFormCoupler.ipynb": [
-        "chip_to_chip_coupler.stl"
-    ],
-    "UnstructuredData.ipynb": [
-        "unstructured_grid.vtu"
-    ],
-    "MMIMeepBenchmark.ipynb": [
-        "MeepMMI.txt"
-    ],
-    "Autograd13Metasurface.ipynb": [
-        "logo.png"
-    ],
-    "DirectionalCoupler.ipynb": [
-        "coupler.gds"
-    ],
-    "MultipoleExpansion.ipynb": [
-        "mie_electric_dipole",
-        "mie_magnetic_dipole",
-        "mie_electric_quadrupole",
-        "mie_magnetic_quadrupole"
-    ],
-    "CMOSRGBSensor.ipynb": [
-        "green_eps.csv",
-        "blue_eps.csv",
-        "red_eps.csv"
-    ],
-    "HeatDissipationSOI.ipynb": [
-        "heat_dissipation_SOI.xlsx"
-    ],
-    "KLayoutPlugin_DRCQuickstart.ipynb": [
-        "drc_runset.drc"
-    ],
-    "MetasurfaceBIC.ipynb": [
-        "amorphous_silicon_from_paper.txt"
     ]
 }
-
