@@ -5,6 +5,7 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -28,6 +29,9 @@ jobs:
 
       - name: Run ruff lint check
         run: uvx ruff check .
+
+      - name: Check misc file references
+        run: python3 misc/check_misc_references.py
 
       - name: Get changed notebook files
         id: changed_notebooks
