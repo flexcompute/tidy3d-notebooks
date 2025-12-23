@@ -18,3 +18,4 @@ Nanophotonics, a broad field at the intersection of photonics and nanotechnology
     ../../PlasmonicPhotothermalHeating
     ../../BlueMicroLED
     --/../LedLEECalculation
+    --/../MaxwellStressTensor
