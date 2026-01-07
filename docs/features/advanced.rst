@@ -12,3 +12,4 @@ In this section, we demonstrate more advanced applications of Tidy3D. For exampl
     ../../DirectionalCouplerSurrogate
     ../../LowContrastWaveguide
     ../../SourceNormalization
+    ../../KLayoutPlugin_DRCQuickstart
