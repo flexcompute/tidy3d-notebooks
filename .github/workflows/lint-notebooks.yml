@@ -1,11 +1,14 @@
-name: "lint-notebooks"
+name: "public/tidy3d/lint-notebooks"
 
 on:
-  push:
-    branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
   workflow_dispatch:
+  # pull_request: # skip for the big migration
+  #  branches:
+  #    - main
+  #  types: ['opened', 'reopened', 'synchronize', 'ready_for_review', 'edited']
+  #  paths:
+  #    - 'public/tidy3d/docs/notebooks/**'
+  #    - '.github/workflows/public_tidy3d-*.yml'
 
 permissions:
   contents: read
@@ -15,12 +18,32 @@ jobs:
   lint:
     name: Run notebook linting and spell check
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: public/tidy3d/docs/notebooks
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: generate-app-token
+        id: app-token
+        uses: actions/create-github-app-token@v2
         with:
-          fetch-depth: 0  # required for changed-files action
+          app-id: ${{ secrets.COPYBARA_APP_ID }}
+          private-key: ${{ secrets.COPYBARA_APP_PRIVATE_KEY }}
+          repositories: flex
+          owner: flexcompute
 
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #v5.0.0
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0  # required for changed-files action
+          submodules: false
+          persist-credentials: false
+          lfs: true
+          sparse-checkout: |
+            public/tidy3d/docs/notebooks
+            .github/workflows
+          sparse-checkout-cone-mode: false
+      
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 
@@ -46,7 +69,9 @@ jobs:
         if: github.event_name == 'pull_request' && steps.changed_notebooks.outputs.any_changed == 'true'
         continue-on-error: true
         run: |
-          uv run spellcheck.py ${{ steps.changed_notebooks.outputs.all_changed_files }} > spellcheck_output.txt || true
+          # Strip working-directory prefix from paths since changed-files returns repo-relative paths
+          RELATIVE_PATHS=$(echo "${{ steps.changed_notebooks.outputs.all_changed_files }}" | sed 's|public/tidy3d/docs/notebooks/||g')
+          uv run spellcheck.py $RELATIVE_PATHS > spellcheck_output.txt || true
 
       - name: Prepare spellcheck comment body
         id: prepare_comment
@@ -54,7 +79,7 @@ jobs:
           github.event_name == 'pull_request' &&
           steps.changed_notebooks.outputs.any_changed == 'true' &&
           steps.spellcheck.outcome == 'success' &&
-          hashFiles('spellcheck_output.txt') != ''
+          hashFiles('public/tidy3d/docs/notebooks/spellcheck_output.txt') != ''
         run: |
           echo "<!-- lint-notebooks-spellcheck-comment -->" > comment_body.txt
           echo "" >> comment_body.txt
@@ -78,5 +103,5 @@ jobs:
           repository: ${{ github.repository }}
           issue-number: ${{ github.event.pull_request.number }}
           comment-id: ${{ steps.find_comment.outputs.comment-id }}
-          body-path: comment_body.txt
+          body-path: public/tidy3d/docs/notebooks/comment_body.txt
           edit-mode: replace
