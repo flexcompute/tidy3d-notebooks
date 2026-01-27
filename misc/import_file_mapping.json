@@ -43,7 +43,8 @@
         "cpw_fit_sparam.csv"
     ],
     "CPWRFPhotonics2.ipynb": [
-        "seg_fem_sparam.csv"
+        "seg_fem_sparam.csv",
+	"cpw_lxt_data.csv"
     ],
     "DifferentialStripline.ipynb": [
         "stripline_fem_mode.csv",
