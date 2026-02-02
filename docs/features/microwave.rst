@@ -10,3 +10,4 @@ This section illustrates essential microwave simulation components, such as lump
     ../../CharacteristicImpedanceCalculator
     ../../LinearLumpedElements
     ../../AntennaCharacteristics
+    ../../RFParameterSweep
