@@ -1,3 +1,4 @@
+results*
 tests/tmp/*
 docs/source/notebooks/tmp/*
 *.hdf5
