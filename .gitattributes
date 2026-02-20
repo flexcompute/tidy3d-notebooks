@@ -1,3 +1,4 @@
+* text=auto eol=lf
 # Linguist-vendored files
 docs/* linguist-vendored
 notebooks/* linguist-vendored
