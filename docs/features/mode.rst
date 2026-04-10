@@ -12,3 +12,4 @@ Tidy3D offers convenient plugins for optical and waveguide mode analysis. With m
     ../../BatchModeSolver
     ../../RadiativeLossesModeSolver
     ../../ModeOverlap
+    ../../ModeSimulation
