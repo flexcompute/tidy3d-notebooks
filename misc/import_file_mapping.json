@@ -132,6 +132,11 @@
         "rf_autograd_1_patch_antenna_optimization.npy",
         "rf_autograd_1_patch_opt_state.pkl"
     ],
+    "SIWCSRRFilter.ipynb": [
+        "siw_csrr_stackup_3d.png",
+        "siw_csrr_layout_2d.png",
+        "siw_csrr_cell.png"
+    ],
     "SMAEdgeMount.ipynb": [
         "SMA_model.stl"
     ],
