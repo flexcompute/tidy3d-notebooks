@@ -1,4 +1,4 @@
-name: "lint-notebooks"
+name: "notebook checks"
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   lint:
-    name: Run notebook linting and spell check
+    name: Run notebook checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,21 +25,38 @@ jobs:
         uses: astral-sh/setup-uv@v5
 
       - name: Run ruff format check
+        id: ruff_format
+        continue-on-error: true
         run: uvx ruff format --check --diff .
 
       - name: Run ruff lint check
+        id: ruff_check
+        continue-on-error: true
         run: uvx ruff check .
-
-      - name: Check misc file references
-        run: python3 misc/check_misc_references.py
 
       - name: Get changed notebook files
         id: changed_notebooks
-        if: github.event_name == 'pull_request'
         uses: tj-actions/changed-files@v46
         with:
           files: |
-            **.ipynb
+            *.ipynb
+
+      - name: Check metadata tag catalog is up to date
+        id: metadata_tags
+        continue-on-error: true
+        run: uv run --no-project python scripts/sync_metadata_tags.py --check
+
+      - name: Check changed notebooks for metadata format
+        id: notebook_metadata
+        if: steps.changed_notebooks.outputs.any_changed == 'true'
+        continue-on-error: true
+        run: |
+          uv run --no-project python scripts/validate_notebook_metadata.py ${{ steps.changed_notebooks.outputs.all_changed_files }}
+
+      - name: Check misc file references
+        id: misc_refs
+        continue-on-error: true
+        run: python3 misc/check_misc_references.py
 
       - name: Run spell check on changed notebooks
         id: spellcheck
@@ -80,3 +97,35 @@ jobs:
           comment-id: ${{ steps.find_comment.outputs.comment-id }}
           body-path: comment_body.txt
           edit-mode: replace
+
+      - name: Fail if blocking checks failed
+        if: always()
+        run: |
+          failed=0
+
+          if [ "${{ steps.ruff_format.outcome }}" = "failure" ]; then
+            echo "Blocking check failed: ruff format"
+            failed=1
+          fi
+
+          if [ "${{ steps.ruff_check.outcome }}" = "failure" ]; then
+            echo "Blocking check failed: ruff lint"
+            failed=1
+          fi
+
+          if [ "${{ steps.metadata_tags.outcome }}" = "failure" ]; then
+            echo "Blocking check failed: metadata tag catalog drift"
+            failed=1
+          fi
+
+          if [ "${{ steps.notebook_metadata.outcome }}" = "failure" ]; then
+            echo "Blocking check failed: changed notebook metadata validation"
+            failed=1
+          fi
+
+          if [ "${{ steps.misc_refs.outcome }}" = "failure" ]; then
+            echo "Blocking check failed: misc file references"
+            failed=1
+          fi
+
+          exit "$failed"

@@ -1,0 +1,25 @@
+minimum_pre_commit_version: "4.0.0"
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-format-notebooks
+        name: ruff-format-notebooks
+        entry: uvx ruff format --check --diff
+        language: system
+        files: ^[^/]+\.ipynb$
+      - id: ruff-check-notebooks
+        name: ruff-check-notebooks
+        entry: uvx ruff check
+        language: system
+        files: ^[^/]+\.ipynb$
+      - id: sync-metadata-tags
+        name: sync-metadata-tags
+        entry: uv run --no-project python scripts/sync_metadata_tags.py
+        language: system
+        files: ^[^/]+\.ipynb$
+        pass_filenames: false
+      - id: notebook-private-path-check
+        name: notebook-private-path-check
+        entry: uv run --no-project python scripts/check_notebook_private_paths.py
+        language: system
+        files: ^[^/]+\.ipynb$
