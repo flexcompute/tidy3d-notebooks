@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: _site
+  lib-dir: libs
+  render:
+    - StartHere.qmd
+    - Simulation.qmd
+    - Primer.qmd
+
+website:
+  title: "Tidy3D Basics"
+  navbar:
+    left:
+      - href: StartHere.qmd
+        text: Quickstart
+      - href: Simulation.qmd
+        text: Walkthrough
+      - href: Primer.qmd
+        text: Working principles
+
+format:
+  html:
+    embed-resources: false
+    toc: true
+
+execute:
+  enabled: false

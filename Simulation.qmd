@@ -1,0 +1,291 @@
+---
+title: Tidy3D first walkthrough
+jupyter: python3
+---
+
+
+Our first tutorial focuses on illustrating the basic setup, run, and analysis of a ``Tidy3D`` simulation. In this example, we will simulate a plane wave impinging on dielectric slab with a triangular pillar made of a lossy dielectric sitting on top. First, we import everything needed.
+
+
+```{python}
+# standard python imports
+import h5py
+import matplotlib.pyplot as plt
+import numpy as np
+
+# tidy3d imports
+import tidy3d as td
+from tidy3d import web
+```
+
+We begin by initializing general simulation parameters. To streamline the setup and management of frequency-related values, we use the convenience class [FreqRange](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FreqRange.html). 
+
+Note that the perfectly matched layer (PML) regions extend **outside** the user-defined simulation domain. As a result, the total computational domain is larger than the specified simulation region—unlike in some solvers where the PML occupies a portion of the domain itself.
+
+```{python}
+# Simulation domain size (in micron)
+sim_size = [4, 4, 4]
+
+# Central frequency and bandwidth of pulsed excitation, in Hz
+freq0 = 2e14
+fwidth = 1e13
+
+# set frequency range
+freq_range = td.FreqRange(freq0=freq0, fwidth=fwidth)
+
+# apply a PML in all directions
+boundary_spec = td.BoundarySpec.all_sides(boundary=td.PML())
+```
+
+The run time of a simulation depends a lot on whether there are any long-lived resonances. In our example here, there is no strong resonance. Thus, we do not need to run the simulation much longer than after the sources have decayed. We thus set the run time based on the source bandwidth.
+
+```{python}
+# Total time to run in seconds
+run_time = 2 / fwidth
+```
+
+### Structures and materials
+
+Next, we initialize the simulated structure. The structure consists of two [Structure](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Structure.html) objects. Each object consists of a [Geometry](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/index.html#geometry) and a [Medium](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/index.html#mediums)  to define the spatial extent and material properties, respectively. Note that the size of any object (structure, source, or monitor) can extend beyond the simulation domain, and is truncated at the edges of that domain. 
+
+Note: For best results, structures that intersect with the PML or simulation edges should extend extend all the way through. In many such cases, an "infinite" size `td.inf` can be used to define the size along that dimension.
+
+```{python}
+# Lossless dielectric specified directly using relative permittivity
+material1 = td.Medium(permittivity=6.0)
+
+# Lossy dielectric defined from the real and imaginary part of the refractive index
+material2 = td.Medium.from_nk(n=1.5, k=0.0, freq=freq_range.freq0)
+# material2 = td.Medium(permittivity=2.)
+
+
+# Rectangular slab, extending infinitely in x and y with medium `material1`
+box = td.Structure(geometry=td.Box(center=[0, 0, 0], size=[td.inf, td.inf, 1]), medium=material1)
+
+# Triangle in the xy-plane with a finite extent in z
+equi_tri_verts = [[-1 / 2, -1 / 4], [1 / 2, -1 / 4], [0, np.sqrt(3) / 2 - 1 / 4]]
+
+poly = td.Structure(
+    geometry=td.PolySlab(
+        vertices=(2 * np.array(equi_tri_verts)).tolist(),
+        # vertices=equi_tri_verts,
+        slab_bounds=(0.5, 1.0),
+        axis=2,
+    ),
+    medium=material2,
+)
+```
+
+### Sources
+
+Next, we define a source injecting a normal-incidence plane-wave from above. The time dependence of the source is a Gaussian pulse. A source can be added to multiple simulations. After we add the source to a specific simulation, such that the total run time is known, we can use in-built plotting tools to visualize its time- and frequency-dependence, which we will show below.
+
+```{python}
+psource = td.PlaneWave(
+    center=(0, 0, 1.5),
+    direction="-",
+    size=(td.inf, td.inf, 0),
+    source_time=freq_range.to_gaussian_pulse(),
+    pol_angle=np.pi / 2,
+)
+```
+
+### Monitors
+
+Finally, we can also add some monitors that will record the fields that we request during the simulation run. 
+
+The two monitor types for measuring fields are [FieldMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FieldMonitor.html) and [FieldTimeMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FieldTimeMonitor.html), which record the frequency-domain and time-domain fields, respectively.  
+
+[FieldMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FieldMonitor.html) objects operate by running a discrete Fourier transform of the fields at a given set of frequencies to perform the calculation "in-place" with the time stepping. [FieldMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FieldMonitor.html) objects are useful for investigating the steady-state field distribution in 2D or even 3D regions of the simulation.
+
+[FieldTimeMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FieldTimeMonitor.html) objects are best used to monitor the time dependence of the fields at a single point, but they can also be used to create "animations" of the field pattern evolution. Because spatially large [FieldMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FieldMonitor.html) objects can lead to a very large amount of data that needs to be stored, an optional start and stop time can be supplied, as well as an `interval` specifying the amount of time steps between each measurement (default of 1).
+
+```{python}
+# measure time domain fields at center location, measure every 5 time steps
+time_mnt = td.FieldTimeMonitor(center=[0, 0, 0], size=[0, 0, 0], interval=5, name="field_time")
+
+# measure the steady state fields at central frequency in the xy plane and the xz plane.
+freq_mnt1 = td.FieldMonitor(
+    center=[0, 0, -1], size=[20, 20, 0], freqs=freq_range.freqs(num_points=1), name="field1"
+)
+freq_mnt2 = td.FieldMonitor(
+    center=[0, 0, 0], size=[20, 0, 20], freqs=freq_range.freqs(num_points=1), name="field2"
+)
+```
+
+### Simulation
+
+Now we can initialize the [Simulation](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Simulation.html) with all the elements defined above. A nonuniform simulation grid is generated automatically based on a given minimum number of cells per wavelength in each material (10 by default), using the frequencies defined in the source.
+
+Tidy3D uses a hybrid floating-point precision by default as it is practically sufficient in almost all cases, double precision should only be explored in large simulations when very high accuracy is desired. Even then, it might not have a noticeable effect over other sources of numerical error like the finite grid. As this is a small example with a minimal cost, we will simply demonstrate you can leverage this option depending on your simulation goals.
+
+```{python}
+# Initialize simulation
+sim = td.Simulation(
+    size=sim_size,
+    grid_spec=td.GridSpec.auto(min_steps_per_wvl=20),
+    structures=[box, poly],
+    sources=[psource],
+    monitors=[time_mnt, freq_mnt1, freq_mnt2],
+    run_time=run_time,
+    boundary_spec=boundary_spec,
+    precision="double",
+)
+```
+
+We can check the simulation monitors just to make sure everything looks right.
+
+```{python}
+for m in sim.monitors:
+    m.help()
+```
+
+### Visualization functions
+
+We can now use the some in-built plotting functions to make sure that we have set up the simulation as we desire.
+
+First, let's take a look at the source time dependence.
+
+```{python}
+# Visualize source
+psource.source_time.plot(np.linspace(0, run_time, 1001))
+plt.show()
+```
+
+And now let's visualize the simulation. 
+
+For this, we will plot three cross sections at `z=0.75`, `y=0`, and `x=0`, respectively. 
+
+The relative permittivity of objects is plotted in grayscale.
+
+By default, sources are overlaid in green, monitors in yellow, and PML boundaries in gray.
+
+```{python}
+fig, ax = plt.subplots(1, 3, figsize=(13, 4))
+sim.plot_eps(z=0.75, freq=freq_range.freq0, ax=ax[0])
+sim.plot_eps(y=0.01, freq=freq_range.freq0, ax=ax[1])
+sim.plot_eps(x=0, freq=freq_range.freq0, ax=ax[2])
+plt.show()
+```
+
+Alternatively, we can also plot the structures with a fake color based on the material they are made of.
+
+```{python}
+fig, ax = plt.subplots(1, 3, figsize=(12, 3))
+sim.plot(z=0.75, ax=ax[0])
+sim.plot(y=0.01, ax=ax[1])
+sim.plot(x=0, ax=ax[2])
+plt.show()
+```
+
+### Running through the web API
+
+Now that the simulation is constructed, we can run it using the [web](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/index.html#submitting-simulations) API of ``Tidy3D``. First, we submit the project. Note that we can give it a custom name.
+
+```{python}
+task_id = web.upload(sim, task_name="Simulation")
+```
+
+The task is still in draft status and will not run until we call the start function. Before that, we may want to check the estimated cost of the task. This is the maximum possible cost, and can be lower in case of early shutoff.
+
+```{python}
+estimate_cost = web.estimate_cost(task_id)
+```
+
+We can now start the task, and if we want to, continuously monitor its status and wait until the run is successful. The [monitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.web.api.webapi.monitor.html#tidy3d.web.monitor) function will keep running until either a `'success'` or `'error'` status is returned.
+
+```{python}
+# web.start(task_id, solver_version="improve_python_overgap-0.0.0")
+web.start(task_id)
+web.monitor(task_id, verbose=True)
+```
+
+We can also use the ``real_cost`` function once the task is complete to check the cost that was actually billed. It may take a few seconds before it is available.
+
+```{python}
+import time
+
+time.sleep(4)
+real_cost = web.real_cost(task_id)
+```
+
+## Loading and analyzing data
+
+After a successful run, we can download the results and load them into our simulation model. We use the `download_results` function from our web API, which downloads a single `hdf5` file containing all the monitor data, a log file, and a `json` file defining the original simulation (same as what you'll get if you run `sim.to_json()` on the current object). Optionally, you can provide a folder in which to store the files. In the example below, the results are stored in the `data/` folder. 
+
+```{python}
+sim_data = web.load(task_id, path="data/sim_data.hdf5")
+
+# Show the output of the log file
+print(sim_data.log)
+```
+
+### Visualization functions
+
+Finally, we can now use the in-built visualization tools to examine the results. Below, we plot the `y`-component of the field recorded by the two frequency monitors (this is the dominant component since the source is `y`-polarized).
+
+```{python}
+fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+sim_data.plot_field("field1", "Ey", z=-1.0, ax=ax[0], val="real")
+sim_data.plot_field("field2", "Ey", ax=ax[1], val="real")
+plt.show()
+```
+
+### Monitor data
+The raw field data can be accessed through indexing by monitor name directly.
+
+For plenty of discussion on accessing and manipulating data, refer to the [data visualization tutorial](../notebooks/VizData.html).
+
+```{python}
+mon1_data = sim_data["field1"]
+mon1_data.Ex
+```
+
+```{python}
+ax = mon1_data.Ez.real.plot()
+```
+
+We can use this raw data for example to also plot the time-domain fields recorded in the [FieldTimeMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FieldTimeMonitor.html), which look largely like a delayed version of the source input, indicating that no resonant features were excited.
+
+```{python}
+time_data = sim_data["field_time"]
+fig, ax = plt.subplots(1)
+time_data.Ey.plot()
+ax.set_ylabel("$E_y(t)$ [V/m]")
+plt.show()
+```
+
+### Permittivity data
+
+We can also query the relative permittivity in the simulation within a volume parameterized by a `td.Box`. The method `Simulation.epsilon(box, coord_key)` returns the permittivity within the specified volume.
+
+The `coord_key` specifies at what locations in the yee cell to evaluate the permittivity at (eg. `'centers'`, `'Ey'`, `'Hz'`, etc.).
+
+```{python}
+volume = td.Box(center=(0, 0, 0.75), size=(5, 5, 0))
+
+# at Yee cell centers
+eps_centers = sim.epsilon(box=volume, coord_key="centers")
+
+# at Ex locations in the yee cell
+eps_Ex = sim.epsilon(box=volume, coord_key="Ex")
+```
+
+Return an xarray DataArray containing the complex-valued permittivity values at the Yee cell centers and the "Ex" within the [box](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Box.html).
+
+We can then plot or post-process this data as we wish.
+
+```{python}
+f, (ax1, ax2) = plt.subplots(1, 2, tight_layout=True, figsize=(10, 4))
+
+eps_centers.real.plot(x="x", y="y", cmap="Greys", ax=ax1)
+eps_Ex.real.plot(x="x", y="y", cmap="Greys", ax=ax2)
+ax1.set_title("epsilon_r at centers")
+ax2.set_title("epsilon_r at Ex locations")
+
+plt.show()
+```
+
+For simulation examples, please visit our [examples page](https://www.flexcompute.com/tidy3d/examples/). If you are new to the finite-difference time-domain (FDTD) method, we highly recommend going through our [FDTD101](https://www.flexcompute.com/fdtd101/) tutorials.
+
+

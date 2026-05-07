@@ -1,0 +1,648 @@
+---
+title: Introduction on Tidy3D working principles
+jupyter: python3
+---
+
+
+This notebook will walk through the basic working principles of the Tidy3D front end, including setting up and post processing simulation results.
+
+Note that this content serves as a reference for the details of operating the front end, but a lot of content is covered indirectly in the other [example notebooks](https://www.flexcompute.com/tidy3d/examples/).
+
+
+```{python}
+# First, let's import the main packages we'll need
+import matplotlib.pylab as plt
+import numpy as np
+import tidy3d as td
+```
+
+## Basics
+
+A Tidy3D simulation is essentially a python class that combines many Tidy3D "components", which store the specification for how we will run the simulation on our servers.
+
+Here we will discuss some of the basics that apply to all of these components.
+
+Topics covered will include:
+
+- Defining Tidy3D components.
+
+- Saving and loading from file.
+
+- Getting help / debugging.
+
+- logging.
+
+### Background
+
+All Tidy3d components are defined using the [pydantic](https://pydantic-docs.helpmanual.io) package.  This means that each tidy3d object corresponds to a data structure that has rigidly defined allowable types and values, which get validated automatically whenever you initialize an object.
+
+This has several advantages, including.
+
+- Catching bugs in the tidy3d components as early as possible.
+
+- Automatically generated schema for tidy3d simulation specifications.
+
+- Simple and reliable IO, including exporting to various formats such as dictionaries or json.
+
+### Defining Tidy3d Components
+
+It also requires a bit more work on the user side to define these components, for example
+
+- All tidy3d components must use keyword arguments in their definitions, eg. `Medium(2.0)` becomes `Medium(permittivity=2.0)` to be explicit.
+
+- Components are immutable to avoid complications from not validating changes on components. This means modifying a component requires calling `new_obj = old_obj.updated_copy(val=new_val, ...)`.
+
+However, these decisions were made to make the overall use of Tidy3D more explicit and ensure that components are safely validated at all times, which pays off in the long run.
+
+Here's one example of what would happen if a user tried to pass fields (in this case, the relative permittivity of a medium) without using keyword arguments), followed by the correct way. We see that the positional argument construction fails. This is good practice in general to avoid bugs, but pydantic and Tidy3D require it.
+
+```{python}
+# wrong way
+try:
+    td.Medium(2.0)
+except Exception as e:
+    td.log.info(e)
+
+# correct way
+m = td.Medium(permittivity=2.0)
+```
+
+### Saving and Loading Tidy3d Components
+
+All tidy3d components can be saved to file as json or yaml format using the `instance.to_file(path)` and `class.from_file(path)` methods.
+
+For example, let's save and load a [td.Box](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Box.html) instance.
+
+```{python}
+my_box = td.Box(center=(1, 2, 3), size=(2, 2, 3))
+
+my_box.to_file("data/box.json")
+
+# note, `from_file` is a @classmethod so it can be called from `td.Box` or `my_box`.
+your_box = td.Box.from_file("data/box.json")
+
+print(my_box)
+print(your_box)
+print(my_box == your_box)
+```
+
+Similarly, the component can be converted to a `dict` or `str` in json format. Many other options exist and the [pydantic documentation](https://docs.pydantic.dev/usage/exporting_models/) is a good place to see what else is supported.
+
+```{python}
+print(my_box.json())
+print(my_box.dict())
+```
+
+### Getting Help
+
+Sometimes you might want to get some information about a component without needing to look at the documentation.  For this, each tidy3d component has a `.help()` method that will print out information about the stored data inside of the component.
+
+Here's an example.
+
+```{python}
+monitor = td.FieldMonitor(size=(2, 2, 0), freqs=[200e12], name="monitor")
+
+monitor.help()
+```
+
+Alternatively, one can use the standard `help(cls)` syntax to get a look at the docstring of a component.
+
+```{python}
+# help(td.FieldMonitor) # commented out for brevity
+```
+
+### Logging
+
+Tidy3D logs information based on the following levels ranked from least to most critical.
+```
+"DEBUG"
+"INFO"
+"WARNING"
+"ERROR"
+"CRITICAL"
+```
+The "logging level" controls what types of messages get shown. The default logging level is `"WARNING"`, which means logging messages of "warning" or more critical ("error", "critical") will be shown, whereas "info" and "debug" messages will not. The "info" and "debug" messages are sometimes useful for the user, but are mainly for debugging purposes.
+
+The user can change this logging level through modifying the `tidy3d.config.logging.level` value, for example
+```
+tidy3d.config.logging.level = "INFO"
+```
+will make it so that "info" messages are shown in addition to the "warning", "error", and "critical" messages.
+
+## Core Components
+
+Here we will discuss the core components of the package (sources, monitors, etc) and how they are defined.
+
+Topics covered will include:
+
+- Mediums.
+
+- Geometries.
+
+- Structures.
+
+- Sources.
+
+- Monitors.
+
+- Modes.
+
+- PML / Absorbing boundaries.
+
+- Simulations.
+
+### Mediums
+
+Mediums define the optical properties of the materials within the simulation.
+
+#### PEC
+The simplest medium is `td.PEC`, which just signifies a perfect electrical conductor (no E field allowed within).
+
+```{python}
+pec_medium = td.PEC
+```
+
+#### Non-dispersive mediums
+Non-dispersive mediums are defined using the [Medium](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Medium.html) object and can be specified by either `permittivity` and `conductivity` (optional) values, or from `n`, `k` refractive index values.
+
+```{python}
+lossless_dielectric = td.Medium(permittivity=4.0)
+lossy_dielectric = td.Medium(permittivity=4.0, conductivity=1.0)
+lossy_dielectric_from_nk = td.Medium.from_nk(n=2.0, k=0.1, freq=150e12)
+```
+
+#### Anisotropic mediums
+
+Tidy3d supports fully anisotropic mediums, but in this example, we will show how to model diagonally anisotropic mediums. See [this tutorial](../notebooks/FullyAnisotropic.html) for the complete guide.
+
+Diagonally anisotropic mediums can be simply defined by specifying three [Medium](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Medium.html) objects for the xx, yy, zz components of the permittivity / conductivity tensor.
+
+```{python}
+anisotropic_medium = td.AnisotropicMedium(
+    xx=lossless_dielectric, yy=lossy_dielectric, zz=lossy_dielectric_from_nk
+)
+```
+
+#### Dispersive mediums
+
+Dispersive mediums can be defined in three ways:
+
+- Imported from our [material_library](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/material_library.html).
+
+- Defined directly by specifying the parameters in the various supplied dispersive models.
+
+- Fitted to optical n-k data using the dispersion fitting tool plugin (more info later).
+
+```{python}
+# material library
+silver = td.material_library["Ag"]
+silver_variants = silver.variants
+print("variants for silver include: ", list(silver_variants.keys()))
+silver = silver_variants["JohnsonChristy1972"]
+
+# models
+lorentz_model = td.Lorentz(eps_inf=2.0, coeffs=[(1, 2, 3), (4, 5, 6)])
+sellmeier_model = td.Sellmeier(coeffs=[(1, 2), (3, 4)])
+```
+
+### Medium Methods
+
+The complex-valued permittivity of a medium at a given frequency can be sampled using the `.eps_model(freq)` method.
+
+And the n, k values can be plotted over a frequency range using the `.plot(freqs)` method.
+
+```{python}
+freqs_hz = 1e12 * np.linspace(50, 200, 1001)
+print(f"complex relative permittivity at freqs_hz = \n\t {lossy_dielectric.eps_model(freqs_hz)}\n")
+
+ax = lossy_dielectric_from_nk.plot(freqs_hz)
+```
+
+### Geometries
+
+The new version of Tidy3D introduces [Geometry](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/index.html#geometry) objects, which do the heavy lifting for any components with some spatial extent.
+
+There are 5 primitive and 2 compound geometry classes:
+
+- [Box](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Box.html)
+
+- [Sphere](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Sphere.html)
+
+- [Cylinder](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Cylinder.html)
+
+- [Polyslab](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.PolySlab.html)
+
+- [TriangleMesh](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.TriangleMesh.html)
+
+- [GeometryGroup](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.GeometryGroup.html)
+
+- [ClipOperation](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ClipOperation.html)
+
+If your device is defined in GDS format, they may be loaded using the `Geometry.from_gds()` static method. Please refer to the [tutorial notebook on GDS importing](../notebooks/GDSImport.html) for more details.
+
+All [Geometry](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Geometry.html) objects have many useful methods for checking intersections, bounds, and other properties.
+
+```{python}
+s1 = td.Sphere(radius=1, center=(0, 0, 0))
+s2 = td.Box(center=(1, 1, 1), size=(1, 1, 1))
+
+# do two geometric objects intersect?
+print(s1.intersects(s2))
+
+# does the object intersect a plane?
+print(s1.intersects_plane(z=10))
+
+# get polygons that intersect sphere at plane x=0
+print(s1.intersects_plane(x=0))
+
+# get bounds (rmin, rmax) of geometry
+print(s1.bounds)
+
+# get td.Box() for bounding box of geometry
+print(s1.bounding_box.help())
+
+# evaluate whether point(s) are inside of geometry
+print(s1.inside(x=0, y=1, z=1))
+print(s1.inside(x=np.linspace(-1, 1, 5), y=np.zeros(5), z=np.ones(5)))
+
+# plot the geometry at a cross sectional plane
+ax = s1.plot(y=0)
+```
+
+Note, because simulations, monitors, and sources all are defined spatially, they inherit from [Box](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Box.html) and contain these methods as well, which can come in handy when doing validation.
+
+### Structures
+
+A [Structure](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Structure.html) is a component that simply contains a [Geometry](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/index.html#geometry) and a [Medium](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/index.html#mediums).  It therefore defines an object in the simulation with some geometry and optical properties, such as a waveguide or slab.
+
+```{python}
+dielectric_box = td.Structure(
+    geometry=td.Box(center=(0, 0, 0), size=(1, 1, 1)),
+    medium=td.Medium(permittivity=2.0),
+)
+```
+
+### Sources
+
+Sources define how the electromagnetic current is injected into the simulation to give rise to fields. There are several types of sources, each generally defines some spatial or polarization properties of the source and also contain a `source_time` field, which defines the time dependence. As an example
+
+```{python}
+# define time dependence
+gaussian = td.GaussianPulse(freq0=150e12, fwidth=10e12)
+
+# z polarized dipole at origin
+dipole = td.UniformCurrentSource(
+    center=(0, 0, 0), size=(0, 0, 0), source_time=gaussian, polarization="Ez"
+)
+
+# z polarized plane wave propagating in -x
+plane_wave = td.PlaneWave(
+    center=(0, 0, 0),
+    size=(0, td.inf, td.inf),
+    source_time=gaussian,
+    pol_angle=np.pi / 2,
+    direction="-",
+)
+```
+
+### Monitors
+
+Since it would be impractical to return the entire time series of all of the field data solved for by FDTD, "monitors" are specifications that tell Tidy3D what data should be returned by the solver.
+
+The following monitors measure their corresponding values in the frequency-domain
+
+- [FieldMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FieldMonitor.html)
+
+- [FluxMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FluxMonitor.html)
+
+- [ModeMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeMonitor.html)
+
+And the following measure their values in the time-domain
+
+- [FieldTimeMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FieldTimeMonitor.html)
+
+- [FluxTimeMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FluxTimeMonitor.html)
+
+There are also various monitors for field projections, diffraction efficiency, and other values. The [API reference](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/index.html#monitors) lists each of the monitor types, for reference.
+
+Note: all monitors must be *named* (have a `name: str` field supplied).  The data returned by the server will be indexed by the monitor name and accessed by the user using that name.
+
+```{python}
+# measures Ex, Ey, Hz fields on the plane at frequency 150THz
+mon1 = td.FieldMonitor(
+    center=(1, 0, 0),
+    size=(td.inf, td.inf, 0),
+    fields=["Ex", "Ey", "Hz"],
+    freqs=[150e12],
+    name="fields_at_150THz",
+)
+
+# measures time dependence of flux through a plane every 5 time steps between a window of (start, stop)
+mon2 = td.FluxTimeMonitor(
+    center=(1, 0, 0),
+    size=(td.inf, td.inf, 0),
+    start=1e-13,
+    stop=3e-13,
+    interval=5,
+    name="flux_over_time",
+)
+```
+
+### Modes
+
+Modes (for sources and monitors) are specified using a [ModeSpec](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeSpec.html) object. This component contains all of the specifications needed for the mode solver to know which modes to inject or measure in the [ModeSource](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeSource.html) and [ModeMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeMonitor.html) objects, such as the number of modes, mode index, or a target mode effective index.
+
+For example:
+
+```{python}
+# default mode solver spec (returns first mode)
+fundamental = td.ModeSpec()
+
+# tell the mode solver to return 4 modes
+first_4_modes = td.ModeSpec(num_modes=4)
+
+# have mode solver return 4 modes around the target effective index
+complicated = td.ModeSpec(num_modes=4, target_neff=2.0)
+```
+
+Using the mode specifications, we can make modal sources or monitors similar to before.
+
+```{python}
+# inject the fundamental mode
+mode_source = td.ModeSource(
+    center=(0, 0, -1),
+    size=(td.inf, td.inf, 0),
+    source_time=gaussian,
+    mode_spec=fundamental,
+    mode_index=0,
+    direction="+",
+)
+
+# do modal decomposition and return amplitude data for the first 4 modes
+mode_mon = td.ModeMonitor(
+    center=(0, 0, +1),
+    size=(td.inf, td.inf, 0),
+    freqs=freqs_hz,
+    mode_spec=first_4_modes,
+    name="modes",
+)
+```
+
+The [ModeSolver](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.plugins.mode.ModeSolver.html) is designed to help users come up with the correct [ModeSpec](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeSpec.html) for their problem, at which point it can be used directly in [ModeSource](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeSource.html) and [ModeMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeMonitor.html) objects without setting it explicitly using a [Simulation](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Simulation.html) method.  For more details, refer to the [mode solver tutorial notebook](../notebooks/ModeSolver.html).
+
+### Absorbing Boundaries
+
+Absorbing boundaries are defined as one of three types of boundaries
+
+- [td.PML()](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.PML.html) defines a standard PML, with an adjustable number of layers.
+
+- [td.StablePML()](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.StablePML.html) defines a PML with a 'stable' profile, which can reduce divergence at the expense of more layers.
+
+- [td.Absorber()](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Absorber.html) defines adiabatically increasing conductivity values at the edges of the simulation, which can dramatically improve stability of simulations involving dispersive materials, again at the expense of more layers.
+
+As before, these layers *add* to the simulation size defined in [Simulation](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Simulation.html).
+
+Also as before, it is important to extend any structures all the way through the PML if they are meant to be touching the simulation boundary on that side.
+
+To define a sequence of PML layers on the x, y, z sides of the simulation, one may use the convenience functions provided in [td.BoundarySpec()](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.BoundarySpec.html) and [td.Boundary()](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Boundary.html), as shown below.
+
+Default PML boundaries are always used on each side of the simulation, so if a boundary is not specified along a dimension, the simulation will have PML on that boundary.
+
+```{python}
+# standard absorber on x, PML with 20 layers on y, no PML on z (periodic BC)
+boundary_spec = td.BoundarySpec(
+    x=td.Boundary.absorber(), y=td.Boundary.pml(num_layers=20), z=td.Boundary.periodic()
+)
+```
+
+### Simulations
+
+Finally, the [Simulation](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Simulation.html) objects contain all of the specifications needed to run the Tidy3D simulation and contain all of the previous components.
+
+A few notes:
+
+- [Simulation](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Simulation.html) accepts an optional `medium` parameter, specifying the background medium (air by default).
+
+- Each simulation must define the discretization using a `grid_spec`, which specifies how the grid is to be generated along each of the three directions. These are discussed in more detail [here](../notebooks/AutoGrid.html).
+
+```{python}
+sim = td.Simulation(
+    size=(4, 4, 4),
+    grid_spec=td.GridSpec.uniform(dl=0.2),
+    run_time=1e-12,
+    boundary_spec=td.BoundarySpec(
+        x=td.Boundary.periodic(), y=td.Boundary.pml(), z=td.Boundary.periodic()
+    ),
+    structures=[dielectric_box],
+    sources=[dipole],
+    monitors=[mon1, mon2],
+)
+```
+
+A defined [Simulation](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Simulation.html) also provides several useful methods in addition to the ones inherited from [Box](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Box.html).
+
+```{python}
+# get permittivity at yee cell centers in a volume defined by a box.
+sim.epsilon(td.Box(size=(1, 0, 1)), "centers")
+
+# get a `td.Grid` containing all information about spatial locations in the FDTD / yee grid
+print(sim.grid.centers)
+
+# plot the simulation cross section
+f, (ax1, ax2) = plt.subplots(1, 2, tight_layout=True, figsize=(10, 4))
+
+# plot the structures, PML, sources, mediums
+ax1 = sim.plot(x=0, ax=ax1)
+
+# same thing but plot structure in grayscale using permittivity value
+ax1 = sim.plot_eps(x=0, ax=ax2)
+
+# add the FDTD grid boundaries
+ax2 = sim.plot_grid(x=0, ax=ax2)
+```
+
+## Simulation Submission
+
+Here we discuss the process for submitting, managing, monitoring, and loading simulations from our server.
+
+Topics covered will include:
+
+* [tidy3d.web](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/index.html#submitting-simulations) functions.
+
+* working with [tidy3d.web.Job](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.web.api.container.Job.html#tidy3d.web.Job) and [tidy3d.web.Batch](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.web.api.container.Batch.html#tidy3d.web.Batch) convenience containers.
+
+```{python}
+import tidy3d.web as web
+```
+
+### Web interface
+
+The web interface provides a number of basic functions, but usually, the most convenient way to run a single simulation in one line is with [sim_data = web.run(sim)](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.web.api.webapi.run.html#tidy3d.web.run), which simply performs all of the necessary steps under the hood.
+
+The output of the simulation is a separate data object called a [SimulationData](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.SimulationData.html), which provides an interface for post processing and visualizing the data.
+
+```{python}
+sim_data = web.run(sim, task_name="web_demo", path="data/data.hdf5", verbose=True)
+```
+
+> Note: the warning here tells us that we should probably increase the `run_time` of our `Simulation` to ensure the fields properly decay. Since this notebook is just a demonstration and we don't care about the results, we can ignore it in this case.
+
+### Containers and Batching
+Since `Tidy3D` version `2.10`, [web.run](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.web.api.run.run.html) is also capable of running any nested combination of lists, tuples, and dictionaries of simulations and returning them in the same structure. The legacy function `web.run_async` will be deprecated.
+
+The convenience containers [Job](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.web.api.container.Job.html#tidy3d.web.Job) and [Batch](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.web.api.container.Batch.html#tidy3d.web.Batch) allow one to manage single and multiple tasks in a more "object oriented" fashion.
+
+They follow the same basic API as the `web.` functions, except [Batch](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.web.api.container.Batch.html#tidy3d.web.Batch) objects accept a dictionary of simulations and return generators that can be iterated through to give [SimulationData](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.SimulationData.html) for each task, rather than returning it one by one.  This cuts down on memory for several large jobs.  
+
+While we won't cover all of the details here, for more information, see the [tutorial on the Web API](../notebooks/Webapi/index.html) or look at the examples in the other notebooks.
+
+## Output Data
+
+Here we will discuss working with output data from a simulation.
+
+Topics covered will include:
+
+- [SimulationData](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.SimulationData.html) objects.
+
+- Obtaining information about a completed FDTD simulation.
+
+- Selecting data by monitor or field value.
+
+- Post-processing and visualizing data.
+
+### Simulation Data
+
+As mentioned, tidy3d data for a single task is stored in a [SimulationData](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.SimulationData.html) object.
+
+In addition to storing the data for each of the individual monitors in the simulation, it has its own useful functionality.
+
+```{python}
+# print the log, which is stored as an attribute rather than as its own file
+print(sim_data.log)
+
+# get a copy of the original Simulation, so it also doesn't need to be stored separately
+sim_data.simulation.help()
+```
+
+### Monitor Data
+
+Data for each monitor is stored as its corresponding MonitorData instance.
+
+The monitor data can be found using the `monitor.name` by indexing into the [SimulationData](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.SimulationData.html) using square brackets.
+
+The data are stored as [xarray](http://xarray.pydata.org/en/stable/) objects, which means they work similarly to numpy arrays but provide many additional useful features.  For more details refer to the [tutorial on data visualization](../notebooks/VizData.html).
+
+```{python}
+flux_data = sim_data["flux_over_time"].flux
+flux_data.plot()
+plt.title("flux over time")
+plt.show()
+```
+
+For field data, we can further index by `fields` specified in the monitor, as follows.
+
+```{python}
+Ey = sim_data["fields_at_150THz"].Ey
+
+Ey.real.plot(x="x", y="y", robust=True)
+plt.title("real{Ey(x, y)}")
+plt.show()
+```
+
+Finally, [SimulationData](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.SimulationData.html) provides a method for potting field data with structure overlay, similar to `sim.viz_fields2D()`.
+
+```{python}
+sim_data.plot_field("fields_at_150THz", "Ey", val="real")
+plt.show()
+```
+
+## Plugins
+
+Here we will discuss the plugins that support and extend functionalities of Tidy3D, including:
+
+- [Dispersion fitting tool](../notebooks/Fitting.html).
+
+- [Mode solver](../notebooks/ModeSolver.html).
+
+- [Near field to far field transformations](../notebooks/FieldProjections.html).
+
+These plugins are designed to import and make use of Tidy3D components described above, but the Tidy3D components have no dependence on the plugins by design.  In this sense, they can be considered "external" packages that are useful for defining simulation components.
+
+The components from these plugins can be imported as 
+```
+from tidy3d.plugins.{plugin_name} import {component}
+```
+for example
+```
+from tidy3d.plugins.mode import ModeSolver
+```
+
+We won't go into the details in this notebook as each of the plugins has its own example tutorial notebook, but here is a summary:
+
+### Dispersion Fitting
+
+We provide a [tool for fitting optical data to create dispersive mediums](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.plugins.dispersion.DispersionFitter.html).
+
+Given a file or arrays containing wavelength, n, and (optionally) k data, this tool will fit the data to a pole-residue model with some constraints and parameters.
+
+After fitting, the user can visualize and inspect the results.  
+
+This process can be repeated until the user is satisfied, at which point the tool can return a [dispersive medium](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.PoleResidue.html) for use in the Simulation.
+
+For more details, see the corresponding [tutorial](../notebooks/Fitting.html).
+
+### Mode Solver
+
+The `mode` plugin provides a [mode solver](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.plugins.mode.ModeSolver.html), which is mainly useful for coming up with [ModeSpec](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeSpec.html) objects for a given source or monitor.
+
+The tool takes a reference simulation containing some waveguide or other structure definitions to feed to the core solver.  It also requires a [Box](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.Box.html) specifying the plane on which to solve the modes for.
+
+Then, the user can iteratively send different [ModeSpec](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeSpec.html) objects, solve for the results, visualize, and repeat the process until satisfied.
+
+The resulting [ModeSpec](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeSpec.html) can be saved directly, or used in conjunction with the mode solver settings to return a [ModeSource](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeSource.html) or [ModeMonitor](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.ModeMonitor.html).
+
+For more details, see the corresponding [tutorial](../notebooks/ModeSolver.html).
+
+
+### Scattering Matrix
+
+The `smatrix` plugin provides a wrapper for computing S-matrix components using Tidy3D simulations from the [Component Modeler](https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.plugins.smatrix.ComponentModeler.html) plugin.
+
+This tool allows users to connect "ports" to their simulation and post-processes the results into a datastructure that can be queried for S-matrix data.
+
+For more details, see the corresponding [tutorial](../notebooks/SMatrix.html).
+
+### Simple Inverse Design 
+
+The goal of invdes is to provide a simpler interface for setting up most practical inverse design problems. It wraps tidy3d's native automatic differentiation support to perform the gradient calculations, but allows the user to focus on the important aspects of their design without getting into the details of autograd.
+
+For more details, see the corresponding [tutorial](../notebooks/Autograd0Quickstart.html).
+
+### Adjoint
+
+The native autograd integration allows users to write functions involving a Tidy3D `Simulation` run and take efficient gradients of those functions. Regular `tidy3d` components and `web.run()` are differentiable without any change of syntax.
+
+For more details, see the corresponding [tutorial](../notebooks/Autograd1Intro.html).
+
+
+### Resonance Finder
+
+The `resonance` plugin provides an interface for analyzing time series data using the technique of "harmonic inversion" and using that data to find resonances in the simulation.
+
+For more details, see the corresponding [tutorial](../notebooks/Bandstructure.html).
+
+
+### PolySlab
+
+The `polyslab` plugin extends the normal `td.PolySlab` functionality to provide more features needed for self-intersecting and complex geometries.
+
+For more details, see the corresponding [tutorial](../notebooks/Self_intersecting_polyslab.html).
+
+## Conclusion
+
+We hope this gives a useful overview of the main changes in the revamped version of Tidy3D.
+
+We highly recommend you check out the various tutorials in our [examples page](https://www.flexcompute.com/tidy3d/examples/). If you are new to the finite-difference time-domain (FDTD) method, we highly recommend going through our [FDTD101](https://www.flexcompute.com/fdtd101/) tutorials.  
+
+FDTD simulations can diverge due to various reasons. If you run into any simulation divergence issues, please follow the steps outlined in our [troubleshooting guide](https://www.flexcompute.com/tidy3d/examples/notebooks/DivergedFDTDSimulation/) to resolve it.
+

@@ -93,6 +93,11 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# Quarto
+/.quarto/
+_site/
+**/*.quarto_ipynb
+
 # IPython
 profile_default/
 ipython_config.py
