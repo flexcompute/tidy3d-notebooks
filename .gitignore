@@ -95,7 +95,6 @@ target/
 
 # Quarto
 /.quarto/
-_site/
 **/*.quarto_ipynb
 
 # IPython

@@ -1,22 +1,11 @@
 project:
-  type: website
+  type: default
   output-dir: _site
   lib-dir: libs
   render:
-    - StartHere.qmd
-    - Simulation.qmd
-    - Primer.qmd
-
-website:
-  title: "Tidy3D Basics"
-  navbar:
-    left:
-      - href: StartHere.qmd
-        text: Quickstart
-      - href: Simulation.qmd
-        text: Walkthrough
-      - href: Primer.qmd
-        text: Working principles
+    - StartHere.ipynb
+    - Simulation.ipynb
+    - Primer.ipynb
 
 format:
   html:
