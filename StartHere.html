@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Quickstart</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="StartHere_files/libs/clipboard/clipboard.min.js"></script>
+<script src="StartHere_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="StartHere_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="StartHere_files/libs/quarto-html/popper.min.js"></script>
+<script src="StartHere_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="StartHere_files/libs/quarto-html/anchor.min.js"></script>
+<link href="StartHere_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="StartHere_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="StartHere_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="StartHere_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="StartHere_files/libs/bootstrap/bootstrap-a992c35adc97961de53480558adedc85.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Quickstart</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This is a minimal Tidy3D script showing the FDTD simulation of a dielectric cube in the presence of a point dipole.</p>
+<p>Before running this notebook, make sure to have:</p>
+<ol type="1">
+<li><a href="../quickstart.html#installation-of-tidy3d-python-api">Installed tidy3d</a></li>
+<li><a href="https://tidy3d.simulation.cloud/account">Generate your free API key</a></li>
+<li><a href="../quickstart.html#installation-of-tidy3d-python-api#linking-registration">Optional - Configured your API key</a></li>
+</ol>
+<div id="19787f48-98be-4f65-8fd1-7f46c398ca86" class="cell" data-is_executing="true" data-tags="[]" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages and authenticate (if needed)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tidy3d <span class="im">as</span> td</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tidy3d.web <span class="im">as</span> web</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># web.configure("YOUR API KEY GOES HERE")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>First, we use the convenience class <a href="https://docs.flexcompute.com/projects/tidy3d/en/latest/api/_autosummary/tidy3d.FreqRange.html">FreqRange</a> to define the basic frequency-related parameters of the simulation.</p>
+<div id="8a6c56eb-149c-4691-bd4a-7b48e8127933" class="cell" data-tags="[]" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lda0 <span class="op">=</span> <span class="fl">0.75</span>  <span class="co"># wavelength of interest (length scales are micrometers in Tidy3D)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>freq0 <span class="op">=</span> td.C_0 <span class="op">/</span> lda0  <span class="co"># frequency of interest</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fwidth <span class="op">=</span> freq0 <span class="op">/</span> <span class="fl">10.0</span>  <span class="co"># desired freq. bandwidth</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>freq_range <span class="op">=</span> td.FreqRange(freq0<span class="op">=</span>freq0, fwidth<span class="op">=</span>fwidth)  <span class="co"># set frequency range</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Create a <a href="../api/_autosummary/tidy3d.Structure.html#tidy3d.Structure">Structure</a> from a <a href="../api/geometry.html">Geometry</a> like this rectangular prism <a href="../api/_autosummary/tidy3d.Box.html#tidy3d.Box">Box</a> and assign a <a href="../api/_autosummary/tidy3d.Medium.html#tidy3d.Medium">Medium</a> to represent its optical properties.</p>
+<div id="269efda8-682f-4358-a052-58191856efc0" class="cell" data-tags="[]" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>square <span class="op">=</span> td.Structure(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    geometry<span class="op">=</span>td.Box(center<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), size<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">1.5</span>, <span class="fl">1.5</span>)), medium<span class="op">=</span>td.Medium(permittivity<span class="op">=</span><span class="fl">2.0</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Create a <a href="../api/sources.html">Source</a>. In this case, it is a <a href="../api/_autosummary/tidy3d.PointDipole.html#tidy3d.PointDipole">PointDipole</a>, which is a uniform current source with a zero size.</p>
+<div id="d1b33707-0a3a-4d21-89e3-730883b80753" class="cell" data-tags="[]" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create source</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> td.PointDipole(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    center<span class="op">=</span>(<span class="op">-</span><span class="fl">1.5</span>, <span class="dv">0</span>, <span class="dv">0</span>),  <span class="co"># position of the dipole</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    source_time<span class="op">=</span>freq_range.to_gaussian_pulse(),  <span class="co"># time profile of the source</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    polarization<span class="op">=</span><span class="st">"Ey"</span>,  <span class="co"># polarization of the dipole</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Create a <a href="../api/monitors.html">Monitor</a> like a <a href="../api/_autosummary/tidy3d.FieldMonitor.html#tidy3d.FieldMonitor">FieldMonitor</a> to record electromagnetic fields in the frequency domain at <code>freq0</code>.</p>
+<div id="dfbc36f5-2073-4b17-945e-500fd2c0d6c4" class="cell" data-tags="[]" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create monitor</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>monitor <span class="op">=</span> td.FieldMonitor(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    center<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),  <span class="co"># center of the monitor</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span>(td.inf, td.inf, <span class="dv">0</span>),  <span class="co"># size of the monitor</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    freqs<span class="op">=</span>freq_range.freqs(num_points<span class="op">=</span><span class="dv">1</span>),  <span class="co"># frequency points to record the fields at</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"fields"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>All these components are used to create a Tidy3D <a href="../api/_autosummary/tidy3d.Simulation.html">Simulation</a>:</p>
+<div id="8c735e33-7021-4193-9ab6-9860ae0d8a97" class="cell" data-tags="[]" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sim <span class="op">=</span> td.Simulation(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>),  <span class="co"># simulation domain size</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    grid_spec<span class="op">=</span>td.GridSpec.auto(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        min_steps_per_wvl<span class="op">=</span><span class="dv">25</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    ),  <span class="co"># automatic nonuniform FDTD grid with 25 grids per wavelength in the material</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    structures<span class="op">=</span>[square],</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    sources<span class="op">=</span>[source],</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    monitors<span class="op">=</span>[monitor],</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    run_time<span class="op">=</span><span class="fl">3e-13</span>,  <span class="co"># physical simulation time in second</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="9fd94b52-2751-4e74-a107-8d94c7274c9d" class="cell" data-tags="[]" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize in 3D</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sim.plot_3d()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+
+    <div class="simulation-viewer" data-width="800" data-height="800" data-simulation="H4sIAPrbb2gC/+1YS28bNxCW7AQwAhRIc2pzMvZsC5LWiqqe7NqK7SJ+IMqhgGsw9C4lE+GSW5IrSwp8b/9Bf0J/Sv9VOsN9SLuymqBAgKYVIezjm+FwXuTO6LeTo5dfPXn+pIZja6v2qPa0tjg+ZCN+Xn7P6W+zez27/5rd/9jI8bqjfZPhX2fyq3xvXvf7yP2hMvJ1mo/S+1ZtPf6P46R/cIn3n7L3PJ/+3Cjz/Ti4OCeDN69Pz49Lebn/D9et1x6nMur5+1ZJ7iZogs/f1usus58WtJTvMdzxfWMjhbcyzTdzQZX9Vqv9/q+Ow+D84qheeKFW295c5+Z6rMeXOvafwQm0Nf+GHx9evML722fl7/p+9v7eo9Zq432//f5+Z9uz05jBszfgUSKo5Up6gAZMWqYBv2o2mjvb+eUaSIbPcMLVHmJ+dkFCxEKeRCi3vIKkEU6QiRDwNtTsl4TJYEo0laMFAhVC3ZER5RKwIRWG4VwlBZeMamJiFsyZIxVm2lYIYz6rILeM2gqU23yWagxIzHTEreVjbqdAaaFZXqBkmAQFCPajOcZqABPN0MCriq0jpiJm9XTZC/maP6jJJzq41ejsbOeX62VP3tDg3UirRIakov4yQxGbjBRrrnSJuciD3DzvvxXS9qqQ3jufT6M8blcYCfg5WCU6eDDQZQ/kq18qLu0Rj5Vg5SDvujg+FOWl1YjlTnRlQRrFgtskZEV6xrfUsNSIBRWOaWIMp/IyAXd7WXSaQPF7nW6nDaPbfNFqtRo+0u54aG8dsdvd63z3Aqh7vW7DbwNRDYeGWSB23AKaRWrMSBiQQEWxkmAb0CBbGKrH0VKwm1qWoam3hxBqYhW5wTQ0C2mAvJrP0hMH9O5PPRcJx0j1NI9vxQ2TZSgWiflYihYBOnuFPpFJRASdMsfeQmNjqmGCTZGKKMNHESVKhy6WfoFELq9T92cInbjwdMpLXqJwgwu/o3FcFpUiqag0rhniRLnzFfYRxLqY1SqQRQUyxM1yaY1bisu1ax52zfw4TtPNQ3C6Tq51cn2u5Jqtk2udXJ8ruargAD+ezpFKcqv0QyVMPuclZyI8S/k+sTT1TvHDjjUUgAvPGVsWJm+Ikp2LXHkwpgK+6jRIq9sdtLl17coEoYJS4YA1i1PZ7/W6bb/d7fpuNHzkp7EK55VDNa6WajvPESbD+Ute7VTy52Aur/Bbpjra2ncFe9/Z2p/h9cQhJw45mXnXrnAZaR6uKFocabK6JzhIrDoGHldy0wkxARVpnbfninBz6+KxYvaxpiELz1IuJISilETwTIxlscE2gdyNBVbDnQdIhkcki3Ara3ac5tMvVvPZl6j5HR0zweRoMVWh8tagLCPl7tPtSQlHC5cjEmPzUcDuJCSaYQEewY52qVlQ53bwsMh5WMNk1Xi70Ws0ddB2jZRQlqQKkQQ2Ogrxfk6a/k3gGq1CJZJ3lQR6OSce+kIqkEckUcxCAnahLnPdk5uYT5hYdnQI+48FVvNgdRAu0xaChQegOR2BD9Ijj1kqVs8aWMp1QE3O/uCOLZboHx5CE6N0lNqBvRkGDxzr+kiVhtzHOUIZA6Z/ZPVED+EEPEV3UBmwvxHaLM9LPVUEyxT/15Ccx/Jw6ruEjpWxRILWC/9lJNCcWye413NtONoE3iNchsx9YFDqLWyL4RCnsd0mfvF0IvOO1Ge7Lf/+LwtPvitwGgAA"></div>
+    <script>
+        
+        /**
+        * Simulation Viewer Injector
+        *
+        * Monitors the document for elements being added in the form:
+        *
+        *    <div class="simulation-viewer" data-width="800" data-height="800" data-simulation="{...}" />
+        *
+        * This script will then inject an iframe to the viewer application, and pass it the simulation data
+        * via the postMessage API on request. The script may be safely included multiple times, with only the
+        * configuration of the first started script (e.g. viewer URL) applying.
+        *
+        */
+        (function() {
+            const TARGET_CLASS = "simulation-viewer";
+            const ACTIVE_CLASS = "simulation-viewer-active";
+            const VIEWER_URL = "https://tidy3d.simulation.cloud/simulation-viewer";
+
+            class SimulationViewerInjector {
+                constructor() {
+                    for (var node of document.getElementsByClassName(TARGET_CLASS)) {
+                        this.injectViewer(node);
+                    }
+
+                    // Monitor for newly added nodes to the DOM
+                    this.observer = new MutationObserver(this.onMutations.bind(this));
+                    this.observer.observe(document.body, {childList: true, subtree: true});
+                }
+
+                onMutations(mutations) {
+                    for (var mutation of mutations) {
+                        if (mutation.type === 'childList') {
+                            /**
+                            * Have found that adding the element does not reliably trigger the mutation observer.
+                            * It may be the case that setting content with innerHTML does not trigger.
+                            *
+                            * It seems to be sufficient to re-scan the document for un-activated viewers
+                            * whenever an event occurs, as Jupyter triggers multiple events on cell evaluation.
+                            */
+                            var viewers = document.getElementsByClassName(TARGET_CLASS);
+                            for (var node of viewers) {
+                                this.injectViewer(node);
+                            }
+                        }
+                    }
+                }
+
+                injectViewer(node) {
+                    // (re-)check that this is a valid simulation container and has not already been injected
+                    if (node.classList.contains(TARGET_CLASS) && !node.classList.contains(ACTIVE_CLASS)) {
+                        // Mark node as injected, to prevent re-runs
+                        node.classList.add(ACTIVE_CLASS);
+
+                        var uuid;
+                        if (window.crypto && window.crypto.randomUUID) {
+                            uuid = window.crypto.randomUUID();
+                        } else {
+                            uuid = "" + Math.random();
+                        }
+
+                        var frame = document.createElement("iframe");
+                        frame.width = node.dataset.width || 800;
+                        frame.height = node.dataset.height || 800;
+                        frame.style.cssText = `width:${frame.width}px;height:${frame.height}px;max-width:none;border:0;display:block`
+                        frame.src = VIEWER_URL + "?uuid=" + uuid;
+
+                        var postMessageToViewer;
+                        postMessageToViewer = event => {
+                            if(event.data.type === 'viewer' && event.data.uuid===uuid){
+                                frame.contentWindow.postMessage({ type: 'jupyter', uuid, value: node.dataset.simulation, fileType: 'hdf5'}, '*');
+
+                                // Run once only
+                                window.removeEventListener('message', postMessageToViewer);
+                            }
+                        };
+                        window.addEventListener(
+                            'message',
+                            postMessageToViewer,
+                            false
+                        );
+
+                        node.appendChild(frame);
+                    }
+                }
+            }
+
+            if (!window.simulationViewerInjector) {
+                window.simulationViewerInjector = new SimulationViewerInjector();
+            }
+        })();
+    
+    </script>
+    
+</div>
+</div>
+<div id="21f75a2a" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"simulation grid is shaped </span><span class="sc">{</span>sim<span class="sc">.</span>grid<span class="sc">.</span>num_cells<span class="sc">}</span><span class="ss"> for </span><span class="sc">{</span><span class="bu">int</span>(np.prod(sim.grid.num_cells) <span class="op">/</span> <span class="fl">1e6</span>)<span class="sc">}</span><span class="ss"> million cells."</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>simulation grid is shaped [179, 147, 147] for 3 million cells.</code></pre>
+</div>
+</div>
+<p>The <a href="../api/submit_simulations.html">python web API</a> is used to <a href="../api/_autosummary/tidy3d.web.run.html#tidy3d.web.run">run</a> your simulation quickly in the cloud. The output data is stored in a <a href="../api/_autosummary/tidy3d.SimulationData.html#tidy3d.SimulationData">SimulationData</a> container.</p>
+<div id="53e62b20-bddd-4dc7-be88-c8dab6de5377" class="cell" data-tags="[]" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run simulation</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> td.web.run(sim, task_name<span class="op">=</span><span class="st">"quickstart"</span>, path<span class="op">=</span><span class="st">"data/data.hdf5"</span>, verbose<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">11:27:54 EDT </span>Created task <span style="color: #008000; text-decoration-color: #008000">'quickstart'</span> with task_id                             
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">             </span><span style="color: #008000; text-decoration-color: #008000">'fdve-08497039-7352-4e15-9249-73b62fad435c'</span> and task_type <span style="color: #008000; text-decoration-color: #008000">'FDTD'</span>.  
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">             </span>View task using web UI at                                          
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">             </span><a href="https://tidy3d.simulation.cloud/workbench?taskId=fdve-08497039-7352-4e15-9249-73b62fad435c" target="_blank"><span style="color: #008000; text-decoration-color: #008000">'https://tidy3d.simulation.cloud/workbench?taskId=fdve-08497039-735</span></a>
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">             </span><a href="https://tidy3d.simulation.cloud/workbench?taskId=fdve-08497039-7352-4e15-9249-73b62fad435c" target="_blank"><span style="color: #008000; text-decoration-color: #008000">2-4e15-9249-73b62fad435c'</span></a>.                                         
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">             </span>Task folder: <a href="https://tidy3d.simulation.cloud/folders/folder-f7b925a9-b2c3-4519-8f36-17122860e556" target="_blank"><span style="color: #008000; text-decoration-color: #008000">'default'</span></a>.                                            
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"d34726e802034e628d58e23248674fae","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">11:28:00 EDT </span>Maximum FlexCredit cost: <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.025</span>. Minimum cost depends on task       
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">             </span>execution details. Use <span style="color: #008000; text-decoration-color: #008000">'web.real_cost(task_id)'</span> to get the billed  
+<span style="color: #7fbfbf; text-decoration-color: #7fbfbf">             </span>FlexCredit cost after a simulation run.                            
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">             </span>status = success                                                   
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"864166dcb4eb4913a7232b51013878a0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #7fbfbf; text-decoration-color: #7fbfbf">11:28:03 EDT </span>loading simulation from data/data.hdf5                             
+</pre>
+</div>
+</div>
+<div id="bfe889fc" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># see the log</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[02:49:23] INFO: Auto meshing using wavelength 0.7575 defined from sources.     
+           INFO: Auto meshing using wavelength 0.7575 defined from sources.     
+           USER: Simulation domain Nx, Ny, Nz: [179, 147, 147]                  
+           USER: Applied symmetries: (0, 0, 0)                                  
+           USER: Number of computational grid points: 4.0184e+06.               
+           USER: Subpixel averaging method: SubpixelSpec(attrs={},              
+           dielectric=PolarizedAveraging(attrs={}, type='PolarizedAveraging'),  
+           metal=Staircasing(attrs={}, type='Staircasing'),                     
+           pec=PECConformal(attrs={}, type='PECConformal',                      
+           timestep_reduction=0.3), lossy_metal=SurfaceImpedance(attrs={},      
+           type='SurfaceImpedance', timestep_reduction=0.0),                    
+           type='SubpixelSpec')                                                 
+           USER: Number of time steps: 7.5090e+03                               
+           USER: Automatic shutoff factor: 1.00e-05                             
+           USER: Time step (s): 3.9959e-17                                      
+           USER:                                                                
+                                                                                
+           USER: Compute source modes time (s):     0.0545                      
+[02:49:24] USER: Rest of setup time (s):            0.5844                      
+[02:49:26] USER: Compute monitor modes time (s):    0.0001                      
+[02:49:29] USER: Solver time (s):                   2.2550                      
+           USER: Time-stepping speed (cells/s):     3.56e+09                    
+           USER: Post-processing time (s):          0.2103                      
+
+ ====== SOLVER LOG ====== 
+
+Processing grid and structures...
+Building FDTD update coefficients...
+Solver setup time (s):             0.5530
+
+Running solver for 7509 time steps...
+- Time step    300 / time 1.20e-14s (  4 % done), field decay: 1.00e+00
+- Time step    501 / time 2.00e-14s (  6 % done), field decay: 1.00e+00
+- Time step    600 / time 2.40e-14s (  8 % done), field decay: 4.89e-01
+- Time step    901 / time 3.60e-14s ( 12 % done), field decay: 3.16e-03
+- Time step   1201 / time 4.80e-14s ( 16 % done), field decay: 7.81e-05
+- Time step   1501 / time 6.00e-14s ( 20 % done), field decay: 2.71e-06
+Field decay smaller than shutoff factor, exiting solver.
+Time-stepping time (s):            1.6936
+Data write time (s):               0.0081
+</code></pre>
+</div>
+</div>
+<p>This monitor data can be easily plotted through available <a href="../api/_autosummary/tidy3d.SimulationData.html#tidy3d.SimulationData.plot_field">plot methods</a>. You can also save, modify, and custom plot the raw <a href="../api/_autosummary/tidy3d.FieldData.html">FieldData</a> and more.</p>
+<div id="a94d3289-58f4-4310-bfad-62046ce48eb8" class="cell" data-tags="[]" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the field data stored in the monitor</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> data.plot_field(<span class="st">"fields"</span>, <span class="st">"Ey"</span>, z<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="StartHere_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>See all our <a href="https://www.flexcompute.com/tidy3d/learning-center/example-library/">examples</a> to help you with your own designs!</p>
+
+</main>
+<!-- /main column -->
+<script type="application/vnd.jupyter.widget-state+json">
+{"state":{"05a1e503b7a6457a8d0330da229762af":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"2092cd0e48434573b887ca6476cd1d12":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"29adb3b5db634c29bfb3f2973fc484de":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"4338890ff430410691c7225567377761":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/output","_model_module_version":"1.0.0","_model_name":"OutputModel","_view_count":null,"_view_module":"@jupyter-widgets/output","_view_module_version":"1.0.0","_view_name":"OutputView","layout":"IPY_MODEL_5fd8cda451b3476c9392d90f121c27d2","msg_id":"","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #008000; text-decoration-color: #008000; font-weight: bold\">↓</span> <span style=\"color: #000080; text-decoration-color: #000080; font-weight: bold\">monitor_data.hdf5</span> <span style=\"color: #729c1f; text-decoration-color: #729c1f\">━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100.0%</span> • <span style=\"color: #008000; text-decoration-color: #008000\">945.8/945.8 kB</span> • <span style=\"color: #800000; text-decoration-color: #800000\">2.1 MB/s</span> • <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span>\n</pre>\n","text/plain":"\u001b[1;32m↓\u001b[0m \u001b[1;34mmonitor_data.hdf5\u001b[0m \u001b[38;2;114;156;31m━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100.0%\u001b[0m • \u001b[32m945.8/945.8 kB\u001b[0m • \u001b[31m2.1 MB/s\u001b[0m • \u001b[36m0:00:00\u001b[0m\n"},"metadata":{},"output_type":"display_data"}],"tabbable":null,"tooltip":null}},"5fd8cda451b3476c9392d90f121c27d2":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"709061c5e9034b9984468d411e0f0739":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/output","_model_module_version":"1.0.0","_model_name":"OutputModel","_view_count":null,"_view_module":"@jupyter-widgets/output","_view_module_version":"1.0.0","_view_name":"OutputView","layout":"IPY_MODEL_29adb3b5db634c29bfb3f2973fc484de","msg_id":"","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #800000; text-decoration-color: #800000; font-weight: bold\">↑</span> <span style=\"color: #000080; text-decoration-color: #000080; font-weight: bold\">simulation.hdf5.gz</span> <span style=\"color: #729c1f; text-decoration-color: #729c1f\">━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100.0%</span> • <span style=\"color: #008000; text-decoration-color: #008000\">1.2/1.2 kB</span> • <span style=\"color: #800000; text-decoration-color: #800000\">?</span> • <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span>\n</pre>\n","text/plain":"\u001b[1;31m↑\u001b[0m \u001b[1;34msimulation.hdf5.gz\u001b[0m \u001b[38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100.0%\u001b[0m • \u001b[32m1.2/1.2 kB\u001b[0m • \u001b[31m?\u001b[0m • \u001b[36m0:00:00\u001b[0m\n"},"metadata":{},"output_type":"display_data"}],"tabbable":null,"tooltip":null}},"7aa5a17756f5445aa57fe0cc7d413232":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/output","_model_module_version":"1.0.0","_model_name":"OutputModel","_view_count":null,"_view_module":"@jupyter-widgets/output","_view_module_version":"1.0.0","_view_name":"OutputView","layout":"IPY_MODEL_05a1e503b7a6457a8d0330da229762af","msg_id":"","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #008000; text-decoration-color: #008000\">🚶 </span> <span style=\"color: #008000; text-decoration-color: #008000; font-weight: bold\">Starting 'quickstart'...</span>\n</pre>\n","text/plain":"\u001b[32m🚶 \u001b[0m \u001b[1;32mStarting 'quickstart'...\u001b[0m\n"},"metadata":{},"output_type":"display_data"}],"tabbable":null,"tooltip":null}},"b61754ee984f493695b0728b72f6a250":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/output","_model_module_version":"1.0.0","_model_name":"OutputModel","_view_count":null,"_view_module":"@jupyter-widgets/output","_view_module_version":"1.0.0","_view_name":"OutputView","layout":"IPY_MODEL_2092cd0e48434573b887ca6476cd1d12","msg_id":"","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">solver progress (field decay = 1.64e-03) <span style=\"color: #729c1f; text-decoration-color: #729c1f\">━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span style=\"color: #800080; text-decoration-color: #800080\">100%</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:00</span>\n</pre>\n","text/plain":"solver progress (field decay = 1.64e-03) \u001b[38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[35m100%\u001b[0m \u001b[36m0:00:00\u001b[0m\n"},"metadata":{},"output_type":"display_data"}],"tabbable":null,"tooltip":null}},"e5fc86e45a91478b9dc9a09f8c12a584":{"model_module":"@jupyter-widgets/output","model_module_version":"1.0.0","model_name":"OutputModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/output","_model_module_version":"1.0.0","_model_name":"OutputModel","_view_count":null,"_view_module":"@jupyter-widgets/output","_view_module_version":"1.0.0","_view_name":"OutputView","layout":"IPY_MODEL_f5146d23d88f49e4a60c18accdbaffea","msg_id":"","outputs":[{"data":{"text/html":"<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #008000; text-decoration-color: #008000\">🏃 </span> <span style=\"color: #008000; text-decoration-color: #008000; font-weight: bold\">Finishing 'quickstart'...</span>\n</pre>\n","text/plain":"\u001b[32m🏃 \u001b[0m \u001b[1;32mFinishing 'quickstart'...\u001b[0m\n"},"metadata":{},"output_type":"display_data"}],"tabbable":null,"tooltip":null}},"f5146d23d88f49e4a60c18accdbaffea":{"model_module":"@jupyter-widgets/base","model_module_version":"2.0.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"2.0.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"2.0.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border_bottom":null,"border_left":null,"border_right":null,"border_top":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}}},"version_major":2,"version_minor":0}
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
