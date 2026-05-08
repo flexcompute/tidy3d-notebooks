@@ -1,0 +1,8 @@
+project:
+  type: website
+  render:
+    - Primer.qmd
+    - StartHere.qmd
+
+execute:
+  freeze: true
