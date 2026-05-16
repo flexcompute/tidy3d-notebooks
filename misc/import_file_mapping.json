@@ -132,6 +132,10 @@
         "rf_autograd_1_patch_antenna_optimization.npy",
         "rf_autograd_1_patch_opt_state.pkl"
     ],
+    "RFAutograd2RectangularMultiPatchAntenna.ipynb": [
+        "rf_autograd_2_multi_patch_antenna_optimization.npy",
+        "rf_autograd_2_multi_patch_opt_state.pkl"
+    ],
     "SMAEdgeMount.ipynb": [
         "SMA_model.stl"
     ],
