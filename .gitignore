@@ -1,5 +1,6 @@
 tests/tmp/*
 docs/source/notebooks/tmp/*
+config.yaml
 *.hdf5
 *.hdf5.gz
 data/
