@@ -9,3 +9,4 @@ Tidy3D grid specifications enable the efficient simulation of intricate geometri
 
     ../../AutoGrid
     ../../LayerRefinement
+    ../../LocalSubpixel
