@@ -28,7 +28,6 @@
     "GDS component",
     "Global optimization",
     "Heat",
-    "Lumped port",
     "Material fitting",
     "Mesh override",
     "Mode analysis",
@@ -37,9 +36,7 @@
     "Perturbation medium",
     "Resonance finder",
     "STL component",
-    "Smatrix plugin",
     "Topology optimization",
-    "Total-field scattered-field",
-    "Wave port"
+    "Total-field scattered-field"
   ]
 }

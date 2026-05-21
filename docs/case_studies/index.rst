@@ -9,7 +9,6 @@ Use Cases
     pic_active
     photonic_opt
     metamaterials_gratings_periodic
-    microwave
     photonic_crystals
     scattering_far_field
     lenses
