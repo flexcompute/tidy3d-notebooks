@@ -36,28 +36,8 @@
         "blue_eps.csv",
         "red_eps.csv"
     ],
-    "CPWRFPhotonics1.ipynb": [
-        "cpw_fem_mode.csv",
-        "cpw_fit_mode.csv",
-        "cpw_fem_sparam.csv",
-        "cpw_fit_sparam.csv"
-    ],
-    "CPWRFPhotonics2.ipynb": [
-        "seg_fem_sparam.csv",
-        "cpw_lxt_data.csv"
-    ],
-    "DifferentialStripline.ipynb": [
-        "stripline_fem_mode.csv",
-        "stripline_fit_mode.txt",
-        "stripline_fem_sparam_long.csv",
-        "stripline_fit_sparams_long.txt"
-    ],
     "DirectionalCoupler.ipynb": [
         "coupler.gds"
-    ],
-    "EdgeFeedPatchAntennaBenchmark.ipynb": [
-        "edge_feed_patch_fem.csv",
-        "edge_feed_patch_fem_gain.csv"
     ],
     "Fitting.ipynb": [
         "nk_data.csv"
@@ -74,15 +54,8 @@
     "GDSImport.ipynb": [
         "coupler.gds"
     ],
-    "GroundedCPWViaFence.ipynb": [
-        "gcpw_sain_experimental.csv",
-        "gcpw_sain_simulated.csv"
-    ],
     "HeatDissipationSOI.ipynb": [
         "heat_dissipation_SOI.xlsx"
-    ],
-    "HybridMicrostripCPWBandpassFilter.ipynb": [
-        "mccpw_fem.csv"
     ],
     "KLayoutPlugin_DRCQuickstart.ipynb": [
         "drc_runset.drc"
@@ -92,10 +65,6 @@
     ],
     "MetasurfaceBIC.ipynb": [
         "amorphous_silicon_from_paper.txt"
-    ],
-    "MicroringRFElectrode.ipynb": [
-        "mrr_fem_sparam.csv",
-        "mrr-electrode.gds"
     ],
     "MoS2Waveguide.ipynb": [
         "MoS2_nk.csv"
@@ -132,9 +101,6 @@
         "rf_autograd_1_patch_antenna_optimization.npy",
         "rf_autograd_1_patch_opt_state.pkl"
     ],
-    "SMAEdgeMount.ipynb": [
-        "SMA_model.stl"
-    ],
     "STLImport.ipynb": [
         "box.stl",
         "box_with_hole.stl",
@@ -149,15 +115,6 @@
     ],
     "UnstructuredData.ipynb": [
         "unstructured_grid.vtu"
-    ],
-    "WPDHarmonicSuppression1.ipynb": [
-        "wpd-part1-fem.csv"
-    ],
-    "WPDHarmonicSuppression2.ipynb": [
-        "wpd-part2-fem.csv"
-    ],
-    "WPDHarmonicSuppression3.ipynb": [
-        "wpd-part3-fem.csv"
     ],
     "XarrayTutorial.ipynb": [
         "gaussian_beam_data.h5",
