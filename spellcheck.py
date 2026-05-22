@@ -9,6 +9,7 @@ import argparse
 import ast
 import concurrent.futures
 import io
+import json
 import logging
 import os
 import re
@@ -47,14 +48,20 @@ def load_custom_words(spell: SpellChecker):
 
 def add_words_to_custom_dictionary(new_words: set[str]):
     """Adds words to the custom dictionary file."""
-    temp_spell = SpellChecker(language=None)
     if os.path.exists(CUSTOM_DICT_PATH):
-        temp_spell.word_frequency.load_dictionary(CUSTOM_DICT_PATH)
+        with open(CUSTOM_DICT_PATH, encoding="utf-8") as custom_dict_file:
+            custom_words = json.load(custom_dict_file)
+    else:
+        custom_words = {}
 
     for word in new_words:
-        temp_spell.word_frequency.add(word)
+        normalized_word = word.lower()
+        custom_words[normalized_word] = custom_words.get(normalized_word, 0) + 1
 
-    temp_spell.export(CUSTOM_DICT_PATH, gzipped=False)
+    with open(CUSTOM_DICT_PATH, "w", encoding="utf-8") as custom_dict_file:
+        json.dump(custom_words, custom_dict_file, indent=2, sort_keys=True)
+        custom_dict_file.write("\n")
+
     logging.info(f"Updated {CUSTOM_DICT_PATH} with {len(new_words)} new word(s).")
 
 
