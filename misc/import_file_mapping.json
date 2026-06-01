@@ -17,6 +17,10 @@
     "Autograd13Metasurface.ipynb": [
         "logo.png"
     ],
+    "Autograd28FiberLens.ipynb": [
+        "fiber_lens.stl",
+        "fiber_lens_params.npy"
+    ],
     "Autograd3InverseDesign.ipynb": [
         "inv_des_mode_conv.gds"
     ],
