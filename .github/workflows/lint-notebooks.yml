@@ -2,9 +2,13 @@ name: "notebook checks"
 
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - develop
+      - "pre/**"
   pull_request:
-    branches: [ develop ]
+    branches:
+      - develop
+      - "pre/**"
   workflow_dispatch:
 
 permissions:
