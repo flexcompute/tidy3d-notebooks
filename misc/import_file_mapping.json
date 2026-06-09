@@ -9,6 +9,9 @@
     "Autograd13Metasurface.ipynb": [
         "logo.png"
     ],
+    "Autograd32WDMContourOptimization.ipynb": [
+        "wdm_contour_only_pixel_density.npy"
+    ],
     "CMOSRGBSensor.ipynb": [
         "green_eps.csv",
         "blue_eps.csv",
