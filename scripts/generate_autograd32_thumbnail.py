@@ -108,6 +108,19 @@ def style_panel(ax: plt.Axes, title: str) -> None:
     ax.set_xlim(0.0, 10.0)
     ax.set_ylim(0.0, 10.0)
     ax.axis("off")
+    ax.add_patch(
+        Rectangle(
+            (0.02, 0.02),
+            0.96,
+            0.96,
+            transform=ax.transAxes,
+            fill=False,
+            edgecolor="0.25",
+            linewidth=0.9,
+            joinstyle="round",
+            zorder=0,
+        )
+    )
     ax.text(0.5, 1.01, title, transform=ax.transAxes, ha="center", va="bottom", fontsize=12)
 
 
@@ -177,8 +190,9 @@ def build_figure(output_path: Path) -> None:
     smoothed = laplacian_smooth(polygon, weight=0.22, steps=14)
     fine_tuned = perturb_polygon(smoothed, scale=3.0)
 
-    fig = plt.figure(figsize=(8.4, 6.4), facecolor="white")
-    gs = fig.add_gridspec(2, 2, wspace=0.12, hspace=0.34)
+    fig = plt.figure(figsize=(6.6, 6.4), facecolor="white")
+    # Match the physical frame-to-frame gap horizontally to the vertical gap.
+    gs = fig.add_gridspec(2, 2, wspace=0.247, hspace=0.34)
 
     ax_pixel = fig.add_subplot(gs[0, 0])
     ax_fine = fig.add_subplot(gs[0, 1])
