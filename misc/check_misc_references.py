@@ -17,6 +17,9 @@ from pathlib import Path
 
 # Methods that write files to misc directory (these references should be ignored)
 WRITE_METHODS = [
+    "save",
+    "savetxt",
+    "to_stl",
     "write_gds",
     "to_gds_file",
     "to_file",
@@ -25,12 +28,18 @@ WRITE_METHODS = [
 # Variable name patterns that indicate output/write file paths
 # These are checked as substrings in variable names before "="
 WRITE_VAR_PATTERNS = [
+    "gc_file",
     "history_fname",
     "history_file_path",
+    "npy_export_path",
+    "restart_fname",
+    "stl_export_path",
 ]
 
 # File name whitelist - these are output files that should be ignored
 WRITE_FILE_WHITELIST = [
+    "fiber_lens.stl",
+    "fiber_lens_params.npy",
     "my_medium.json",
     "inv_des_diamond_light_extractor.gds",
 ]
