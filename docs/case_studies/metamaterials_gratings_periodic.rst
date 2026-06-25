@@ -23,3 +23,4 @@ In addition, Tidy3D’s speed and scalability allow users to model the response 
     ../../MIMResonator  
     ../../VortexMetasurface
     ../../MetasurfaceBIC
+    ../../QMRSMetasurface
