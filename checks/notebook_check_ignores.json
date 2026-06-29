@@ -51,6 +51,7 @@
     "SWGBroadbandPolarizer.ipynb",
     "SelfIntersectingPolyslab.ipynb",
     "ThermoOpticDopedModulator.ipynb",
-    "WebAPI.ipynb"
+    "WebAPI.ipynb",
+    "AnisotropicBendsEME.ipynb"
   ]
 }
