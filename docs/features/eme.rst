@@ -9,3 +9,4 @@ Eigenmode expansion (EME) is a frequency-domain method particularly suitable for
 
     ../../EMESolver
     ../../EMEBends
+    ../../AnisotropicBendsEME
